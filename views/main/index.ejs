@@ -8,8 +8,13 @@
   <title>Document</title>
 </head>
 <body>
+  <% if ( userInfo._uid ) { %>
+    <h2><%= userInfo.username %></h2>
+  <% } else {%>
+    <h2>尚未登录</h2>
+  <% } %>
   <div class="login">
-    <form action="" method="post">
+    <form action="/api/user/login" method="post">
       <label for="login-username">
         <input type="text" id="login-username" name="username" placeholder="请输入用户名">
       </label>
@@ -38,6 +43,9 @@
       </label>
     </form>
     <p><span>已有账号？</span><a href="javascript:void(0)" class="toLogin">马上登陆</a></p>
+  </div>
+  <div>
+    <button class="btn">退出登录</button>
   </div>
 </body>
 <script src="/public/js/jquery-3.3.1.js"></script>

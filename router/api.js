@@ -81,4 +81,64 @@ router.post('/user/register',function(req,res) {
   }
 })
 
+
+/*
+  用户登录
+    |-登录逻辑
+      1.用户名不能为空
+      2.密码不能为空
+      |- 数据库查询
+        1.用户是否存在。
+*/
+router.post('/user/login',(req,res) => {
+  let username = req.body.username
+  let password = req.body.password
+  if(username === '' || password==='') {
+    responseData.code = 1
+    responseData.message = '用户名或密码不能为空'
+    res.render('error/registerError',responseData)
+    return false
+  } else {
+    // 查询数据库中相同用户名和密码的记录是否存在。
+    User.findOne({
+      username: username,
+      password: password
+    }).then((userInfo) => {
+      if(!userInfo){
+        responseData.code = 2
+        responseData.message = '用户名或密码错误'
+        res.render('error/registerError',responseData)
+        return false
+      } else {
+        responseData.code = true
+        responseData.message = '登录成功'
+        responseData.userInfo = {
+          _id: userInfo._id,
+          username: userInfo.username
+        }
+        res.cookie('userInfo',{
+          _uid: userInfo._id,
+          username: userInfo.username
+        })
+        res.redirect('/');
+        // res.render('main/index',{userInfo: responseData.userInfo})
+        return true
+      }
+    })
+  }
+})
+
+/*
+  logout
+*/
+router.get('/user/logout',function(req,res,next) {
+  if( req.cookies.userInfo) {
+    res.clearCookie('userInfo');
+  }
+  res.json({
+    code: 1,
+    message: '退出成功'
+  })
+})
+
 module.exports = router

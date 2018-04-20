@@ -7,6 +7,9 @@ let mongoose = require('mongoose')
 // 加载body-parser, 用来处理post提交过来的数据
 let bodyParser = require('body-parser')
 
+// 加载cookie
+let cookieParser = require('cookie-parser')
+
 // 设置静态文件托管
 app.use('/public', express.static(__dirname + '/public'))
 
@@ -29,6 +32,9 @@ app.set('view cache', false);
 
 // bodyparser设置
 app.use(bodyParser.urlencoded({extended:true}))
+
+// cookie-parser设置
+app.use(cookieParser())
 
 // 根据功能 划分模块
 app.use('/admin',require('./router/admin'))
