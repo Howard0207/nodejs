@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="/public/css/main.css">
+  <title>Document</title>
+</head>
+<body>
+  <div class="login">
+    <form action="" method="post">
+      <label for="login-username">
+        <input type="text" id="login-username" name="username" placeholder="请输入用户名">
+      </label>
+      <label for="login-password">
+        <input type="text" id="login-password" name="password" placeholder="请输入密码">
+      </label>
+      <label for="login-submit">
+        <input type="submit" id="login-submit" value="登陆">
+      </label>
+    </form>
+    <p><span>还没注册？</span><a href="javascript:void(0)" class="toReg">马上注册</a></p>
+  </div>
+  <div class="register">
+    <form action="/api/user/register" method="post">
+      <label for="register-username">
+        <input type="text" id="register-username" name="username" placeholder="请输入用户名">
+      </label>
+      <label for="register-password">
+        <input type="text" id="register-password" name="password" placeholder="请输入密码">
+      </label>
+      <label for="check-register-password">
+        <input type="text" id="check-register-password" name="repassword" placeholder="请输入密码">
+      </label>
+      <label for="register-submit">
+        <input type="submit" id="register-submit" value="注册">
+      </label>
+    </form>
+    <p><span>已有账号？</span><a href="javascript:void(0)" class="toLogin">马上登陆</a></p>
+  </div>
+</body>
+<script src="/public/js/jquery-3.3.1.js"></script>
+<script src="/public/js/index.js"></script>
+</html>

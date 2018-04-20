@@ -1,2 +1,6 @@
 node_modules/
+<<<<<<< HEAD
 .idea/
+=======
+db/
+>>>>>>> 93a5cbbdcc02878a6b4688ce296c5e86af5c7221

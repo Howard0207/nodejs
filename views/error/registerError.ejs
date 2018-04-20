@@ -4,13 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="/public/css/main.css">
   <title>Document</title>
 </head>
 <body>
-  <h1>我买了一个iPhone X <%= news[0] %></h1>
-  <% for(var i =  0 ; i < news.length ; i++){ %>
-    <p> <%= news[i] %> </p>
-  <% } %>
+  <h1>注册失败</h1>
+  <div>
+    <span>错误代码：</span><span><%= code %></span>
+    <span>错误原因：</span><span><%= message %></span>
+  </div>
 </body>
 </html>
