@@ -4,12 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="/public/css/main.css">
+  <link rel="stylesheet" href="/public/css/main/main.css">
   <title>Document</title>
 </head>
 <body>
   <% if ( userInfo._uid ) { %>
     <h2><%= userInfo.username %></h2>
+    <% if ( userInfo.isAdmin ) { %>
+      <span> 你好，伟大的王！ </span> <a href="/admin">进入管理</a>
+    <% } else {%>
+      <span> 欢迎登陆我的博客 </span>
+    <% } %>
   <% } else {%>
     <h2>尚未登录</h2>
   <% } %>

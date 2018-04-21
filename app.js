@@ -10,11 +10,14 @@ let bodyParser = require('body-parser')
 // 加载cookie
 let cookieParser = require('cookie-parser')
 
+// 用户模型
+let User = require('./models/User')
+
 // 设置静态文件托管
 app.use('/public', express.static(__dirname + '/public'))
 
 // 数据库连接
-mongoose.connect('mongodb://localhost:27018/blog',function(err){
+mongoose.connect('mongodb://localhost:27017/blog',function(err){
   if(err){
     console.log('数据库连接失败')
   } else {
@@ -36,6 +39,29 @@ app.use(bodyParser.urlencoded({extended:true}))
 // cookie-parser设置
 app.use(cookieParser())
 
+app.use((req,res,next) => {
+  req.userInfo = {}
+  if(req.cookies.userInfo) {
+      try {
+        req.userInfo = req.cookies.userInfo
+
+        // 获取当前登陆用户信息，是否是管理员
+        User.findById(req.cookies.userInfo._uid).then((userInfo) => {
+          req.userInfo.isAdmin = Boolean(userInfo.isAdmin)
+          next()
+          return true
+        })
+      } catch (e) {
+        req.userInfo = {_uid: 0,username:'',isAdmin:false}
+        next()
+        return true
+      }
+  } else {
+    req.userInfo = {_uid: 0,username:'',isAdmin:false}
+    next()
+    return true
+  }
+})
 // 根据功能 划分模块
 app.use('/admin',require('./router/admin'))
 app.use('/api',require('./router/api'))

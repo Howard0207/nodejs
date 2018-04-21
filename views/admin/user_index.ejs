@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>用户管理</title>
+</head>
+<body>
+  <nav>
+    <div>
+      <ul>
+      <li><a href="/admin">后台管理</a></li>
+      <li><a href="/admin/user">用户管理</a></li>
+    </ul>
+    </div>
+    <div>
+      <span></span>
+    </div>
+  </nav>
+  <section>
+    <table>
+      <tr>
+        <th>_uid</th>
+        <th>用户名</th>
+        <th>密码</th>
+        <th>是否是管理员</th>
+      </tr>
+      <% for(let i=0,len=users.length;i<len;i++){%>
+        <tr>
+          <td><%= users[i]._id %></td>
+          <td><%= users[i].username %></td>
+          <td><%= users[i].password %></td>
+          <% if( users[i].isAdmin ) { %>
+            <td>是</td>
+          <% } else { %>
+            <td></td>
+          <% } %>
+        </tr>
+      <% } %>
+    </table>
+  </section>
+</body>
+</html>

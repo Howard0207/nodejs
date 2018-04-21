@@ -75,8 +75,11 @@ router.post('/user/register',function(req,res) {
         return user.save()
       }
     }).then((newUserInfo) => {
-      console.log(newUserInfo)
-      res.render('main/index',{})
+      res.cookie('userInfo',{
+        _uid: newUserInfo._id,
+        username: newUserInfo.username
+      })
+      res.redirect('/');
     })
   }
 })
