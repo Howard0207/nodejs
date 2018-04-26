@@ -64,7 +64,7 @@ router.get('/category',(req,res,next) => {
  * 分类的添加
  */
 router.get('/category/add',(req,res,next) => {
-  res.render('/admin/category_add',{
+  res.render('admin/category_add',{
     userInfo: req.userInfo
   })
 })
@@ -99,7 +99,7 @@ router.post('/category/add',(req,res,next) => {
       }).save()
     }
   }).then((newCategory) => {
-    res.render('admin/success',{
+    res.render('success/category_add',{
       userInfo:req.userInfo,
       message:'分类保存成功',
       url:'/admin/category'

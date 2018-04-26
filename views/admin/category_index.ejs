@@ -4,22 +4,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="/public/css/admin/user_index.css">
+  <link rel="stylesheet" href="/public/css/admin/admin_index.css">
   <title>用户管理</title>
 </head>
 <body>
   <nav>
     <div>
-      <ul>
-      <li><a href="/">管理首页</a></li>
-      <li><a href="/admin/user">用户管理</a></li>
-      <li><a href="/admin/category">分类管理</a></li>
-    </ul>
-    </div>
-    <div>
-      <span></span>
+        <ul>
+          <li><a href="/admin">后台管理</a></li>
+          <li><a href="/admin/user">用户管理</a></li>
+          <li class="category-management">
+            <a href="javascript:void(0)">分类管理</a>
+            <ul class="category-list">
+              <li><a href="/admin/category">分类首页</a></li>
+              <li><a href="/admin/category/add">添加分类</a></li>
+            </ul>
+          </li>
+        </ul>
     </div>
   </nav>
+  <h3>分类列表</h3>
   <section>
     <table class="table table-hover">
       <thead>
@@ -30,31 +34,7 @@
           <th>是否是管理员</th>
         </tr>
       </thead>
-      <% for(let i=0,len=users.length;i<len;i++){%>
-        <tr>
-          <!-- <td><%= users[i]._id %></td> -->
-          <td><%= (page-1)*limit + i + 1 %></td>
-          <td><%= users[i].username %></td>
-          <td><%= users[i].password %></td>
-          <% if( users[i].isAdmin ) { %>
-            <td>是</td>
-          <% } else { %>
-            <td></td>
-          <% } %>
-        </tr>
-      <% } %>
     </table>
-  </section>
-  <section>
-    <ul>
-      <li>
-        <a href="/admin/user?page=<%= page-1 %>">上一页</a>
-      </li>
-      <li>一共有<%=count %>条数据，每页显示<%=limit %>条数据，一共<%=pages %>页，当前第<%=page%>页</li>
-      <li>
-        <a href="/admin/user?page=<%= page+1 %>">下一页</a>
-      </li>
-    </ul>
   </section>
 </body>
 </html>

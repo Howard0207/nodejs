@@ -11,10 +11,16 @@
   <nav>
     <div>
       <ul>
-      <li><a href="/admin">后台管理</a></li>
-      <li><a href="/admin/user">用户管理</a></li>
-      <li><a href="/admin/category">内容管理</a></li>
-    </ul>
+        <li><a href="/admin">后台管理</a></li>
+        <li><a href="/admin/user">用户管理</a></li>
+        <li class="category-management">
+          <a href="javascript:void(0)">分类管理</a>
+          <ul class="category-list">
+            <li><a href="/admin/category">分类首页</a></li>
+            <li><a href="/admin/category/add">添加分类</a></li>
+          </ul>
+        </li>
+      </ul>
     </div>
     <div>
       <span></span>

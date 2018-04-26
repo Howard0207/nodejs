@@ -1,3 +1,14 @@
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+ul{
+  list-style: none;
+}
+li{
+  display: block; 
+}
 nav{
   display:flex;
   justify-content: space-between;
@@ -12,4 +23,49 @@ nav>div>ul{
 }
 nav>div>ul>li{
   margin: 0 10px;
+}
+
+.category-management{
+  position: relative;
+}
+
+.category-list{
+  display:none;
+  position: absolute;
+}
+
+.category-management:hover .category-list{
+  display:block;
+}
+
+
+.table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 20px;
+  border-spacing: 0;
+  border-collapse: collapse;
+  background-color: transparent;
+}
+.table>thead:first-child>tr:first-child>th{
+  border-top: 0;
+}
+.table>thead>tr>th{
+  vertical-align: bottom;
+  border-bottom: 2px solid #ddd;
+  text-align: left;
+}
+.table>tbody>tr>td,
+.table>tbody>tr>th,
+.table>tfoot>tr>td,
+.table>tfoot>tr>th,
+.table>thead>tr>td,
+.table>thead>tr>th{
+  padding: 8px;
+  line-height: 1.42857143;
+  vertical-align: top;
+  border-top: 1px solid #ddd;
+}
+.table-hover>tbody>tr:hover{
+  background-color: #f5f5f5;
 }
