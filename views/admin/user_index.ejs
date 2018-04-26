@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="/public/css/admin/user_index.css">
   <title>用户管理</title>
 </head>
 <body>
@@ -19,16 +20,19 @@
     </div>
   </nav>
   <section>
-    <table>
-      <tr>
-        <th>_uid</th>
-        <th>用户名</th>
-        <th>密码</th>
-        <th>是否是管理员</th>
-      </tr>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>_uid</th>
+          <th>用户名</th>
+          <th>密码</th>
+          <th>是否是管理员</th>
+        </tr>
+      </thead>
       <% for(let i=0,len=users.length;i<len;i++){%>
         <tr>
-          <td><%= users[i]._id %></td>
+          <!-- <td><%= users[i]._id %></td> -->
+          <td><%= (page-1)*limit + i + 1 %></td>
           <td><%= users[i].username %></td>
           <td><%= users[i].password %></td>
           <% if( users[i].isAdmin ) { %>
@@ -39,6 +43,17 @@
         </tr>
       <% } %>
     </table>
+  </section>
+  <section>
+    <ul>
+      <li>
+        <a href="/admin/user?page=<%= page-1 %>">上一页</a>
+      </li>
+      <li>一共有<%=count %>条数据，每页显示<%=limit %>条数据，一共<%=pages %>页，当前第<%=page%>页</li>
+      <li>
+        <a href="/admin/user?page=<%= page+1 %>">下一页</a>
+      </li>
+    </ul>
   </section>
 </body>
 </html>
