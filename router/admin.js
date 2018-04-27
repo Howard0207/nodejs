@@ -2,7 +2,7 @@ let express = require('express')
 let router = express.Router()
 // 引入用户模型
 let User = require('../models/User')
-let category = require('../models/Category')
+let Category = require('../models/Category')
 
 router.use((req,res,next) => {
   if(!req.userInfo.isAdmin) {
@@ -54,9 +54,33 @@ router.get('/user',(req,res,next) => {
   
 })
 
+
+/**
+ * 分类首页
+ */
 router.get('/category',(req,res,next) => {
-  res.render('admin/category_index',{
-    userInfo:req.userInfo
+  let page = Number(req.query.page)||1 // 实际要判断传递数据的类型是否是number，这里暂不处理
+  let pages = 0
+  let limit = 2
+  Category.count().then((count) => {
+    // 计算总页数
+    pages = Math.ceil(count / limit)
+    // 取值不能超过pages
+    page = Math.min(page,pages)
+    // 取值不能小于1
+    page = Math.max( page, 1)
+    // 计算跳过的页数
+    let skip = (page -1)*limit
+
+    Category.find().limit(limit).skip(skip).then((categories) => {
+      res.render('admin/category_index',{
+        categories: categories,
+        page: page,
+        limit: limit,
+        count: count,
+        pages: pages
+      })
+    })
   })
 })
 
@@ -84,7 +108,7 @@ router.post('/category/add',(req,res,next) => {
   }
 
   // 数据库中是否已经存在同名分类名称
-  category.findOne({
+  Category.findOne({
     name: name
   }).then((rs) => {
     if(rs) {
@@ -94,12 +118,12 @@ router.post('/category/add',(req,res,next) => {
       })
     } else {
       // 数据库中不存在该分类，可以保存
-      return new category({
+      return new Category({
         name:name
       }).save()
     }
   }).then((newCategory) => {
-    res.render('success/category_add',{
+    res.render('success/category',{
       userInfo:req.userInfo,
       message:'分类保存成功',
       url:'/admin/category'
@@ -107,4 +131,91 @@ router.post('/category/add',(req,res,next) => {
   })
 })
 
+
+/**
+ * 分类的修改
+ */
+router.get('/category/edit',(req,res) => {
+  let id = req.query.id || ''
+  Category.findOne({
+    _id: id
+  }).then((category) => {
+    if(!category) {
+      res.render('error/category',{
+        userInfo: req.userInfo,
+        message: '分类信息不存在'
+      })
+    } else {
+      res.render('admin/category_edit',{
+        userInfo:req.userInfo,
+        category:category
+      })
+    }
+  })
+})
+
+/**
+ * 分类的i需改保存
+ */
+router.post('/category/edit',(req,res) => {
+  let id = req.query.id || ''
+  let name = req.body.name || ''
+  Category.findOne({
+    _id: id
+  }).then((category) => {
+    if(!category) {
+      res.render('error/category',{
+        userInfo: req.userInfo,
+        message: '分类信息不存在'
+      })
+      return Promise.reject()
+    } else {
+      // 当用户没有做任何修改提交的时候
+      //要修改的分类名称是否已经在数据库中存在
+      if(name === category.name) {
+        res.render('success/category',{
+          userInfo: req.userInfo,
+          message: '修改成功',
+          url: '/admin/category'
+        })
+        return Promise.reject()
+      } else {
+        // 要修改的分类名称是否已经在数据库中存在
+        return Category.findOne({
+          _id:{$ne: id},
+          name: name
+        })
+      }
+    }
+  }).then((sameCategory) => {
+    if(sameCategory) {
+      res.render('error/category',{
+        userInfo: req.userInfo,
+        message: '数据库已经存在同名分类'
+      })
+    } else {
+      Category.update({
+        _id: id
+      },{
+        $set:{name: name}
+      },(error) => {
+        if(error) {
+          res.render('error/category',{
+            userInfo: req.userInfo,
+            message: '修改失败'
+          })
+        } else {
+           res.render('success/category',{
+            userInfo: req.userInfo,
+            message: '修改成功',
+            url: '/admin/category'
+          })
+        }
+      })
+    }
+  })
+})
+/**
+ * 分类的删除
+ */
 module.exports = router

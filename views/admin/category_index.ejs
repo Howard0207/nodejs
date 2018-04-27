@@ -28,12 +28,21 @@
     <table class="table table-hover">
       <thead>
         <tr>
-          <th>_uid</th>
-          <th>用户名</th>
-          <th>密码</th>
-          <th>是否是管理员</th>
+          <th>ID</th>
+          <th>分类名称</th>
+          <th>操作</th>
         </tr>
       </thead>
+      <% for(let i=0,len=categories.length;i<len;i++){%>
+        <tr>
+          <td><%= (page-1)*limit + i + 1 %></td>
+          <td><%=categories[i].name %></td>
+          <td>
+            <a href="/admin/category/edit?id=<%=categories[i].id%>">修改</a> | 
+            <a href="/admin/category/delete?id=<%=categories[i].id%>">删除</a>
+          </td>
+        </tr>
+      <% } %>
     </table>
   </section>
 </body>
