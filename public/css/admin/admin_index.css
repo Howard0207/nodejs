@@ -25,18 +25,22 @@ nav>div>ul>li{
   margin: 0 10px;
 }
 
-.category-management{
+.category-management,
+.content-management{
   position: relative;
 }
 
-.category-list{
+.category-list,
+.content-list{
   display:none;
   position: absolute;
 }
 
-.category-management:hover .category-list{
+.category-management:hover .category-list,
+.content-management:hover .content-list{
   display:block;
 }
+
 
 
 .table {

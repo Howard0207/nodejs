@@ -8,6 +8,17 @@
   <title>Document</title>
 </head>
 <body>
+  <nav>
+    <div class="menu">
+      <ul>
+        <li><a href="#">首页</a></li>
+        <% for(let i = 0, len = categories.length; i < len; i++) { %>
+          <li><a href="#"><%= categories[i].name %></a></li>
+        <% } %>          
+      </ul>
+    </div>
+  </nav>
+
   <% if ( userInfo._uid ) { %>
     <h2><%= userInfo.username %></h2>
     <% if ( userInfo.isAdmin ) { %>

@@ -1,8 +1,14 @@
 let express = require('express')
 let router = express.Router()
-
+// Category 模型
+let Category = require('../models/Category')
 router.get('/',function(req,res) {
-  res.render('main/index',{userInfo: req.userInfo})
+  Category.find().then((categories) => {
+    res.render('main/index',{
+      userInfo: req.userInfo,
+      categories: categories
+    })
+  })
 })
 
 module.exports = router

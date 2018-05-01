@@ -3,6 +3,7 @@ let router = express.Router()
 // 引入用户模型
 let User = require('../models/User')
 let Category = require('../models/Category')
+let Content = require('../models/Content')
 
 router.use((req,res,next) => {
   if(!req.userInfo.isAdmin) {
@@ -71,8 +72,12 @@ router.get('/category',(req,res,next) => {
     page = Math.max( page, 1)
     // 计算跳过的页数
     let skip = (page -1)*limit
-
-    Category.find().limit(limit).skip(skip).then((categories) => {
+    /**
+     * sort() 数据排序，
+     *  1：升序
+     * -1：降序
+     */
+    Category.find().sort({_id:-1}).limit(limit).skip(skip).then((categories) => {
       res.render('admin/category_index',{
         categories: categories,
         page: page,
@@ -218,4 +223,102 @@ router.post('/category/edit',(req,res) => {
 /**
  * 分类的删除
  */
+
+router.get('/category/delete',(req,res) => {
+  //获取要删除的分类的id
+  let id = req.query.id || ''
+  Category.remove({
+    _id: id
+  }).then(() => {
+    res.render('success/category',{
+      userInfo: req.userInfo,
+      message: '删除成功',
+      url: '/admin/category'
+    })
+  })
+})
+
+
+
+/**
+ * 内容首页
+ */
+
+router.get('/content',(req,res) => {
+  let page = Number(req.query.page)||1 // 实际要判断传递数据的类型是否是number，这里暂不处理
+  let pages = 0
+  let limit = 10
+  Content.count().then((count) => {
+    // 计算总页数
+    pages = Math.ceil(count / limit)
+    // 取值不能超过pages
+    page = Math.min(page,pages)
+    // 取值不能小于1
+    page = Math.max( page, 1)
+    // 计算跳过的页数
+    let skip = (page -1)*limit
+    /**
+      * sort() 数据排序，
+      *  1：升序
+      * -1：降序
+      */
+    Content.find().sort({_id:-1}).limit(limit).skip(skip).then((contents) => {
+      res.render('admin/content_index',{
+        contents: contents,
+        page: page,
+        limit: limit,
+        count: count,
+        pages: pages
+      })
+    })
+  })
+})
+
+
+/**
+ * 内容添加页面
+ */
+router.get('/content/add',(req,res) => {
+  Category.find().sort({_id: -1}).then((categories) => {
+    res.render('admin/content_add',{
+      userInfo: req.userInfo,
+      categories: categories
+    })
+  })
+})
+
+
+/**
+ * 内容保存
+ */
+router.post('/content/add',(req,res) => {
+  if(req.body.category === '') {
+    res.render('error/category',{
+      userInfo:req.userInfo,
+      message: '内容分类不能为空'
+    })
+    return
+  } else if (req.body.title === '' ) {
+    res.render('error/category',{
+      userInfo: req.userInfo,
+      message: '内容标题不能为空'
+    })
+    return
+  } else {
+    // 保存数据导数据库
+    new Content({
+      category: req.body.category,
+      title: req.body.title,
+      description: req.body.description,
+      content: req.body.content
+    }).save().then((rs) => {
+      res.render('success/category',{
+        userInfo: req.userInfo,
+        message: '内容保存成功',
+        url: '/admin/content'
+      })
+    })
+  }
+})
+
 module.exports = router
