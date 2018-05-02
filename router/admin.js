@@ -5,6 +5,16 @@ let User = require('../models/User')
 let Category = require('../models/Category')
 let Content = require('../models/Content')
 
+function fillZero(num) {
+  if(typeof num !== 'number') {
+    throw new Error('access parameter is not a number')
+  } else if(num<10) {
+    return '0' + num
+  } else {
+    return num
+  }
+}
+
 router.use((req,res,next) => {
   if(!req.userInfo.isAdmin) {
     res.send('对不起，只有管理员才可以进入后台管理')
@@ -262,7 +272,18 @@ router.get('/content',(req,res) => {
       *  1：升序
       * -1：降序
       */
-    Content.find().sort({_id:-1}).limit(limit).skip(skip).populate('category').then((contents) => {
+    Content.find().sort({_id:-1}).limit(limit).skip(skip).populate(['category','user']).then((contents) => {
+      for(let i=0,len=contents.length;i<len;i++) {
+        let timeStamp = contents[i].addTime
+        let day = fillZero(timeStamp.getDate())
+        let month = fillZero(timeStamp.getMonth() + 1)
+        let year = timeStamp.getFullYear()
+        let hours = fillZero(timeStamp.getHours())
+        let minutes = fillZero(timeStamp.getMinutes())
+        let seconds = fillZero(timeStamp.getSeconds())
+        contents[i].addFormateTime = year+'-'+month+'-'+day+' '+hours+':'+minutes+':'+seconds
+        contents[i].addTime = year+'-'+month+'-'+day+' '+hours+':'+minutes+':'+seconds
+      }
       res.render('admin/content_index',{
         contents: contents,
         page: page,
@@ -309,6 +330,7 @@ router.post('/content/add',(req,res) => {
     new Content({
       category: req.body.category,
       title: req.body.title,
+      user: req.userInfo._uid,
       description: req.body.description,
       content: req.body.content
     }).save().then((rs) => {
@@ -347,6 +369,65 @@ router.get('/content/edit', (req,res) => {
         categories: categories
       })
     }
+  })
+})
+
+/**
+ * 保存修改内容
+ */
+router.post('/content/edit',(req,res) => {
+  let id = req.query.id || ''
+  if(req.body.category === '') {
+    res.render('error/category',{
+      userInfo:req.userInfo,
+      message: '内容分类不能为空'
+    })
+    return
+  } else if (req.body.title === '' ) {
+    res.render('error/category',{
+      userInfo: req.userInfo,
+      message: '内容标题不能为空'
+    })
+    return
+  } else {
+    Content.update({
+      _id: id
+    },{
+      $set:{
+        category: req.body.category,
+        title: req.body.title,
+        description: req.body.description,
+        content: req.body.content
+      }
+    },(error) => {
+      if(error) {
+        res.render('error/category',{
+          userInfo: req.userInfo,
+          message: '修改失败'
+        })
+      } else {
+        res.render('success/category',{
+          userInfo: req.userInfo,
+          message: '内容保存成功',
+          url: '/admin/content/edit?id='+id
+        })
+      }
+    })
+  }
+})
+/**
+ * 内容删除
+ */
+router.get('/content/delete',(req,res) => {
+  let id = req.query.id || ''
+  Content.remove({
+    _id: id
+  }).then(() => {
+    res.render('success/category',{
+      userInfo: req.userInfo,
+      message: '删除成功',
+      url: '/admin/content'
+    })
   })
 })
 module.exports = router

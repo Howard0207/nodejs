@@ -12,6 +12,26 @@ module.exports = new mongoose.Schema({
     // 引用
     ref:'Category'
   },
+  // 关联字段-用户
+  user: {
+    // 类型
+    type: mongoose.Schema.Types.ObjectId,
+    // 引用
+    ref:'User'
+  },
+
+  // 添加时间
+  addTime:{
+    type: Date,
+    default: new Date()
+  },
+
+  // 阅读量
+  views: {
+    type: Number,
+    default: 0
+  },
+
   // 分类名称
   title: String,
   // 简介
