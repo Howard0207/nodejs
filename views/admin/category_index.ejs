@@ -38,8 +38,8 @@
           <td><%= (page-1)*limit + i + 1 %></td>
           <td><%=categories[i].name %></td>
           <td>
-            <a href="/admin/category/edit?id=<%=categories[i].id%>">修改</a> | 
-            <a href="/admin/category/delete?id=<%=categories[i].id%>">删除</a>
+            <a href="/admin/category/edit?id=<%=categories[i]._id%>">修改</a> | 
+            <a href="/admin/category/delete?id=<%=categories[i]._id%>">删除</a>
           </td>
         </tr>
       <% } %>

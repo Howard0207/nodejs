@@ -46,8 +46,8 @@
             <td><%= contents[i].addFormateTime %></td>
             <td><%= contents[i].views %></td>
             <td>
-              <a href="/admin/content/edit?id=<%=contents[i].id%>">修改</a> | 
-              <a href="/admin/content/delete?id=<%=contents[i].id%>">删除</a>
+              <a href="/admin/content/edit?id=<%=contents[i]._id%>">修改</a> | 
+              <a href="/admin/content/delete?id=<%=contents[i]._id%>">删除</a>
             </td>
           </tr>
         <% } %>
