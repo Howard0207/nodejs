@@ -30,16 +30,18 @@
         <tr>
           <th>ID</th>
           <th>分类名称</th>
+          <th>标题</th>
           <th>操作</th>
         </tr>
       </thead>
       <% for(let i=0,len=contents.length;i<len;i++){%>
           <tr>
             <td><%= (page-1)*limit + i + 1 %></td>
+            <td><%= contents[i].category.name %></td>
             <td><%= contents[i].title %></td>
             <td>
-              <a href="/admin/category/edit?id=<%=contents[i].id%>">修改</a> | 
-              <a href="/admin/category/delete?id=<%=contents[i].id%>">删除</a>
+              <a href="/admin/content/edit?id=<%=contents[i].id%>">修改</a> | 
+              <a href="/admin/content/delete?id=<%=contents[i].id%>">删除</a>
             </td>
           </tr>
         <% } %>

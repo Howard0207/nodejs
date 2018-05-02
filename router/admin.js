@@ -262,7 +262,7 @@ router.get('/content',(req,res) => {
       *  1：升序
       * -1：降序
       */
-    Content.find().sort({_id:-1}).limit(limit).skip(skip).then((contents) => {
+    Content.find().sort({_id:-1}).limit(limit).skip(skip).populate('category').then((contents) => {
       res.render('admin/content_index',{
         contents: contents,
         page: page,
@@ -321,4 +321,32 @@ router.post('/content/add',(req,res) => {
   }
 })
 
+/**
+ * 修改内容
+ */
+router.get('/content/edit', (req,res) => {
+  let id = req.query.id || ''
+  let categories = []
+  Category.find().sort({_id: -1}).then((rs) => {
+    categories = rs
+    return Content.findOne({
+      _id: id
+    }).populate('category')
+  })
+  .then((content) => {
+    if(!content) {
+      res.render('error/category',{
+        userInfo: req.userInfo,
+        message: '指定的内容不存在'
+      })
+      return Promise.reject()
+    }else {
+      res.render('admin/content_edit',{
+        userInfo: req.userInfo,
+        content: content,
+        categories: categories
+      })
+    }
+  })
+})
 module.exports = router
