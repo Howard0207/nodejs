@@ -53,5 +53,20 @@
         <% } %>
     </table>
   </section>
+  <section>
+    <ul class="pagination">
+      <li class="disabled"><a href="/admin/user?page=<%= page-1 %>" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+      <% for(let i=0;i<pages;i++) { %>
+        <% if(i+1 === page) { %>
+          <li class="active"><a href="#"><%=i+1%></a></li>
+        <%} else {%>
+          <li><a href="/admin/content?page=<%=i+1%>"><%=i+1%></a></li>
+        <%}%>
+      <% } %>
+      <li><a href="/admin/content?page=<%= page+1 %>" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+      <li><a>总共<%=pages %>页</a></li>
+      <li><a>跳转至<input type="text">页</a></li>
+    </ul>
+  </section>
 </body>
 </html>
