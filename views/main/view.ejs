@@ -11,13 +11,13 @@
   <nav>
     <div class="menu">
       <ul>
-        <% if (category === '' ) { %>
+        <% if (content.category === '' ) { %>
           <li><a href="/" class="focus">首页</a></li>
         <% } else {%>
           <li><a href="/">首页</a></li>
         <% } %>
         <% for(let i = 0, len = categories.length; i < len; i++) { %>
-          <% if (category == categories[i]._id ) { %>
+          <% if (content.category == categories[i]._id ) { %>
             <li><a href="/?category=<%=categories[i]._id%>" class="focus"><%= categories[i].name %></a></li>
           <% } else {%>
             <li><a href="/?category=<%=categories[i]._id%>"><%= categories[i].name %></a></li>
@@ -74,46 +74,16 @@
   </div>
   <main>
     <section>
-      <% for(let i=0,len=contents.length;i<len;i++) { %>
         <div>
-          <h1><%= contents[i].title%></h1>
+          <h1><%= content.title%></h1>
           <p>
-            作者：<span><%= contents[i].user.username%></span> -
-            时间：<span><%= contents[i].addTime%></span> -
-            阅读：<span><%= contents[i].views%></span> -
+            作者：<span><%= content.user.username%></span> -
+            时间：<span><%= content.addTime%></span> -
+            阅读：<span><%= content.views%></span> -
             评论：<span>10</span> 
           </p>
-          <dfn><p><%= contents[i].description%></p></dfn>
-          <div><a href="/view?contentid=<%=contents[i]._id%>">阅读全文</a></div>
+          <dfn><%= content.content%></dfn>
         </div>
-      <% } %>
-    </section>
-    <section>
-      <% if(pages>0) {%>
-      <ul class="pagination">
-        <% if(page===1) {%>
-          <li class="disabled"><a href="javascript:void(0)" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-        <%} else {%>
-          <li><a href="/?category=<%=category%>&page=<%= page-1 %>" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-        <% } %>
-        <% for(let i=0;i<pages;i++) { %>
-          <% if(i+1 === page) { %>
-            <li class="active"><a href="#"><%=i+1%></a></li>
-          <%} else {%>
-            <li><a href="?page=<%=i+1%>"><%=i+1%></a></li>
-          <%}%>
-        <% } %>
-        <% if(page===pages) {%>
-          <li class="disabled"><a href="javascript:void(0)" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
-        <%} else {%>
-          <li><a href="/?category=<%=category%>&page=<%= page+1 %>" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
-        <% } %>
-        <li><a>总共<%=pages %>页</a></li>
-        <li><a>跳转至<input type="text">页</a></li>
-      </ul>
-      <% } else {%>
-        <div><p>当前分类没有内容</p></div>
-      <% } %>
     </section>
   </main>
 </body>
