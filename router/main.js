@@ -59,7 +59,7 @@ router.get('/view', (req,res) => {
   let contentId = req.query.contentid || ''
   Content.findOne({
     _id: contentId
-  }).then((content) => {
+  }).populate('user').then((content) => {
     data.content = content
     content.views++
     content.save()

@@ -85,8 +85,25 @@
           <dfn><%= content.content%></dfn>
         </div>
     </section>
+    <section>
+      <div class="listBox message">
+        <h3 class="textLeft"><strong>评论</strong><span>一共有<em id="messageCount">0</em>条评论</span></h3>
+        <p class="textLeft">zmouse</p>
+        <p class="textLeft clear">
+          <textarea id="messageContent" cols="30" rows="10"></textarea>
+          <input type="hidden" id="contentId" value="<%=content._id%>">
+          <button id="messageBtn" class="submit">提交</button>
+        </p>
+
+        <p>你还没有登陆，请先登陆！</p>
+      </div>
+      <div class="messageList">
+
+      </div>
+    </section>
   </main>
 </body>
 <script src="/public/js/jquery-3.3.1.js"></script>
 <script src="/public/js/index.js"></script>
+<script src="/public/js/view_index.js"></script>
 </html>

@@ -1,7 +1,7 @@
 let express = require('express')
 let router = express.Router()
 let User = require('../models/User')
-
+let Content = require('../models/Content')
 // 统一返回格式
 let responseData;
 
@@ -141,6 +141,45 @@ router.get('/user/logout',function(req,res,next) {
   res.json({
     code: 1,
     message: '退出成功'
+  })
+})
+
+/**
+ * 获取指定文章的所有评论
+ */
+router.get('/comment',(req,res) => {
+  let contentId = req.query.contentid || ''
+  Content.findOne({
+    _id: contentId
+  }).then((content) => {
+    responseData.data = content.comments
+    res.json(responseData)
+  })
+})
+
+
+/**
+ * 评论提交
+ */
+
+router.post('/comment/post', (req,res) => {
+  // 内容id
+  let contentId = req.body.contentid || ''
+  let postData = {
+    username: req.userInfo.username,
+    postTime: new Date(),
+    content: req.body.content
+  }
+  // 查询当前这篇内容的信息
+  Content.findOne({
+    _id: contentId
+  }).then((content) => {
+    content.comments.push(postData)
+    return content.save()
+  }).then((newContent) => {
+    responseData.message = '评论成功'
+    responseData.data = newContent
+    res.json(responseData)
   })
 })
 
