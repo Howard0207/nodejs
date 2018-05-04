@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,116 +8,205 @@
   <link rel="stylesheet" href="/public/css/main/main.css">
   <title>Document</title>
 </head>
-<body>
-  <nav>
-    <div class="menu">
-      <ul>
-        <% if (category === '' ) { %>
-          <li><a href="/" class="focus">首页</a></li>
-        <% } else {%>
-          <li><a href="/">首页</a></li>
-        <% } %>
-        <% for(let i = 0, len = categories.length; i < len; i++) { %>
-          <% if (category == categories[i]._id ) { %>
-            <li><a href="/?category=<%=categories[i]._id%>" class="focus"><%= categories[i].name %></a></li>
-          <% } else {%>
-            <li><a href="/?category=<%=categories[i]._id%>"><%= categories[i].name %></a></li>
-          <% } %>
-         
-        <% } %>          
-      </ul>
-    </div>
-  </nav>
 
-  <% if ( userInfo._uid ) { %>
-    <h2><%= userInfo.username %></h2>
-    <% if ( userInfo.isAdmin ) { %>
-      <span> 你好，伟大的王！ </span> <a href="/admin">进入管理</a>
-    <% } else {%>
-      <span> 欢迎登陆我的博客 </span>
-    <% } %>
-  <% } else {%>
-    <h2>尚未登录</h2>
-  <% } %>
-  <div class="login">
-    <form action="/api/user/login" method="post">
-      <label for="login-username">
-        <input type="text" id="login-username" name="username" placeholder="请输入用户名">
-      </label>
-      <label for="login-password">
-        <input type="text" id="login-password" name="password" placeholder="请输入密码">
-      </label>
-      <label for="login-submit">
-        <input type="submit" id="login-submit" value="登陆">
-      </label>
-    </form>
-    <p><span>还没注册？</span><a href="javascript:void(0)" class="toReg">马上注册</a></p>
-  </div>
-  <div class="register">
-    <form action="/api/user/register" method="post">
-      <label for="register-username">
-        <input type="text" id="register-username" name="username" placeholder="请输入用户名">
-      </label>
-      <label for="register-password">
-        <input type="text" id="register-password" name="password" placeholder="请输入密码">
-      </label>
-      <label for="check-register-password">
-        <input type="text" id="check-register-password" name="repassword" placeholder="请输入密码">
-      </label>
-      <label for="register-submit">
-        <input type="submit" id="register-submit" value="注册">
-      </label>
-    </form>
-    <p><span>已有账号？</span><a href="javascript:void(0)" class="toLogin">马上登陆</a></p>
-  </div>
-  <div>
-    <button class="btn">退出登录</button>
-  </div>
-  <main>
-    <section>
-      <% for(let i=0,len=contents.length;i<len;i++) { %>
-        <div>
-          <h1><%= contents[i].title%></h1>
-          <p>
-            作者：<span><%= contents[i].user.username%></span> -
-            时间：<span><%= contents[i].addTime%></span> -
-            阅读：<span><%= contents[i].views%></span> -
-            评论：<span>10</span> 
-          </p>
-          <dfn><p><%= contents[i].description%></p></dfn>
-          <div><a href="/view?contentid=<%=contents[i]._id%>">阅读全文</a></div>
+<body>
+  <div id="wrapper">
+    <header>
+      <div class="headtop"></div>
+      <div class="contenttop">
+        <div class="logo f_l">
+          <span><%= userInfo.username %>的博客</span>
         </div>
-      <% } %>
-    </section>
-    <section>
-      <% if(pages>0) {%>
-      <ul class="pagination">
-        <% if(page===1) {%>
-          <li class="disabled"><a href="javascript:void(0)" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-        <%} else {%>
-          <li><a href="/?category=<%=category%>&page=<%= page-1 %>" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-        <% } %>
-        <% for(let i=0;i<pages;i++) { %>
-          <% if(i+1 === page) { %>
-            <li class="active"><a href="#"><%=i+1%></a></li>
-          <%} else {%>
-            <li><a href="?page=<%=i+1%>"><%=i+1%></a></li>
-          <%}%>
-        <% } %>
-        <% if(page===pages) {%>
-          <li class="disabled"><a href="javascript:void(0)" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
-        <%} else {%>
-          <li><a href="/?category=<%=category%>&page=<%= page+1 %>" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
-        <% } %>
-        <li><a>总共<%=pages %>页</a></li>
-        <li><a>跳转至<input type="text">页</a></li>
-      </ul>
-      <% } else {%>
-        <div><p>当前分类没有内容</p></div>
-      <% } %>
-    </section>
-  </main>
+        <div class="blank"></div>
+
+        <nav>
+          <div class="navigation">
+            <ul class="menu">
+              <li><a href="/">网站首页</a></li>
+              <li>
+                <a href="#">关于我</a>
+                <ul>
+                  <li><a href="about.html">个人简介</a></li>
+                  <li><a href="listpic.html">个人相册</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">我的日记</a>
+                <ul>
+                  <li><a href="newslistpic.html">个人日记</a></li>
+                  <li><a href="newslistpic.html">学习笔记</a></li>
+                </ul>
+              </li>
+              <li><a href="newslistpic.html">管理</a></li>
+              <li><a href="#">登录|注册</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <div class="jztop"></div>
+    <div class="container">
+      <div class="bloglist f_l">
+        <ul>
+          <% for(let i=0,len=contents.length;i<len;i++) { %>
+            <li>
+              <h3 class="blogtitle">
+                <span>个人博客</span>
+                <a href="/view?contentid=<%=contents[i]._id%>" target="_blank"><%= contents[i].title%></a>
+              </h3>
+              <div class="bloginfo">
+                <div class="blogpic">
+                  <a href="/view?contentid=<%=contents[i]._id%>" title="帝国cms 首页或者列表无图，不使用默认图片的方法">
+                    <img src="/public/imgs/base/01.jpg" alt="帝国cms 首页或者列表无图，不使用默认图片的方法">
+                  </a>
+                </div>
+                <p><%= contents[i].description%></p>
+              </div>
+              <div class="autor">
+                <span class="lm f_l"></span>
+                <span class="dtime f_l"><%= contents[i].addFormateTime%></span>
+                <span class="viewnum f_l">浏览（<%= contents[i].views%>）</span>
+                <span class="viewnum f_l">评论（<%= contents[i].views%>）</span>
+                <span class="f_r"><a href="/view?contentid=<%=contents[i]._id%>" class="more">阅读原文&gt;&gt;</a></span>
+              </div>
+            </li>
+            <% } %>
+        </ul>
+        <section>
+          <% if(pages>0) {%>
+            <ul class="pagination">
+              <% if(page===1) {%>
+                <li class="disabled"><a href="javascript:void(0)" aria-label="Previous"><span aria-hidden="true">上一页</span></a></li>
+              <%} else {%>
+                <li><a href="/?category=<%=category%>&page=<%= page-1 %>" aria-label="Previous"><span aria-hidden="true">上一页</span></a></li>
+              <% } %>
+              <% for(let i=0;i<pages;i++) { %>
+                <% if(i+1 === page) { %>
+                  <li class="active"><a href="#"><%=i+1%></a></li>
+                <%} else {%>
+                  <li><a href="?page=<%=i+1%>"><%=i+1%></a></li>
+                <%}%>
+              <% } %>
+              <% if(page===pages) {%>
+                <li class="disabled"><a href="javascript:void(0)" aria-label="Next"><span aria-hidden="true">下一页</span></a></li>
+              <%} else {%>
+                <li><a href="/?category=<%=category%>&page=<%= page+1 %>" aria-label="Next"><span aria-hidden="true">下一页</span></a></li>
+              <% } %>
+              <li><a>总共<%=pages %>页</a></li>
+              <li><a>跳转至<input type="text">页</a></li>
+            </ul>
+          <% } else {%>
+            <div><p>当前分类没有内容</p></div>
+          <% } %>
+        </section>
+      </div>
+      <div class="r_box f_r">
+        <div class="tit01">
+          <h3 class="tit">博主介绍</h3>
+          <div class="gzwm">
+            <ul>
+              <li>
+                <a class="email" href="#" target="_blank">我的电话</a>
+              </li>
+              <li>
+                <a class="qq" href="#mailto:admin@admin.com" target="_blank">我的邮箱</a>
+              </li>
+              <li>
+                <a class="tel" href="#" target="_blank">我的QQ</a>
+              </li>
+              <li>
+                <a class="prize" href="#">个人奖项</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!--tit01 end-->
+
+        <div class="tuwen">
+          <h3 class="tit">个人分类</h3>
+          <ul>
+            <% for(let i = 0, len = categories.length; i < len; i++) { %>
+              <% if (category == categories[i]._id ) { %>
+                <li><a href="/?category=<%=categories[i]._id%>" class="focus"><%= categories[i].name %></a></li>
+              <% } else {%>
+                <li><a href="/?category=<%=categories[i]._id%>"><%= categories[i].name %></a></li>
+              <% } %>
+            <% } %>
+          </ul>
+        </div>
+        <div class="ph">
+          <h3 class="tit">点击排行</h3>
+          <ul class="rank">
+            <li>
+              <a href="/jstt/bj/2017-07-13/784.html" title="【心路历程】请不要在设计这条路上徘徊啦" target="_blank">【心路历程】请不要在设计这条路上徘徊啦</a>
+            </li>
+            <li>
+              <a href="/news/s/2016-05-20/751.html" title="IP要突破2000+了" target="_blank">IP要突破2000+了</a>
+            </li>
+            <li>
+              <a href="/jstt/web/2015-07-03/749.html" title="帝国cms首页、自定义页面如何实现分页" target="_blank">帝国cms首页、自定义页面如何实现分页</a>
+            </li>
+            <li>
+              <a href="/jstt/web/2015-02-25/745.html" title="【已评选】给我模板PSD源文件，我给你设计HTML！" target="_blank">【已评选】给我模板PSD源文件，我给你设计HTML！</a>
+            </li>
+            <li>
+              <a href="/jstt/bj/2015-02-14/744.html" title="【郑重申明】本站只提供静态模板下载！" target="_blank">【郑重申明】本站只提供静态模板下载！</a>
+            </li>
+            <li>
+              <a href="/news/s/2015-01-23/741.html" title="【孕期日记】生活本该如此" target="_blank">【孕期日记】生活本该如此</a>
+            </li>
+            <li>
+              <a href="/jstt/bj/2015-01-09/740.html" title="【匆匆那些年】总结个人博客经历的这四年…" target="_blank">【匆匆那些年】总结个人博客经历的这四年…</a>
+            </li>
+            <li>
+              <a href="/jstt/web/2015-01-01/739.html" title=" 2014年度优秀个人博客排名公布" target="_blank"> 2014年度优秀个人博客排名公布</a>
+            </li>
+            <li>
+              <a href="/jstt/web/2014-12-18/736.html" title="2014年度优秀个人博客评选活动" target="_blank">2014年度优秀个人博客评选活动</a>
+            </li>
+            <li>
+              <a href="/jstt/css3/2014-12-09/734.html" title="使用CSS3制作文字、图片倒影" target="_blank">使用CSS3制作文字、图片倒影</a>
+            </li>
+            <li>
+              <a href="/jstt/css3/2014-11-18/733.html" title="【分享】css3侧边栏导航不同方向划出效果" target="_blank">【分享】css3侧边栏导航不同方向划出效果</a>
+            </li>
+            <li>
+              <a href="/jstt/bj/2014-11-06/732.html" title="分享我的个人博客访问量如何做到IP从10到600的(图文)" target="_blank">分享我的个人博客访问量如何做到IP从10到600的(图文)</a>
+            </li>
+          </ul>
+        </div>
+        <div class="ad">
+          <img src="/public/imgs/base/03.jpg"> </div>
+      </div>
+    </div>
+    <!-- container代码 结束 -->
+    <div class="jzend"></div>
+    <footer>
+      <div class="footer">
+        <div class="f_l">
+          <p>All Rights Reserved 版权所有：
+            <a href="http://www.yangqq.com">杨青个人博客</a> 备案号：蜀ICP备00000000号</p>
+        </div>
+        <div class="f_r textr">
+          <p>Design by DanceSmile</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
 </body>
 <script src="/public/js/jquery-3.3.1.js"></script>
 <script src="/public/js/index.js"></script>
+<script type=text/javascript>
+  // Navigation Menu
+  $(function() {
+    $(".menu ul").css({display: "none"}); // Opera Fix
+    $(".menu li").hover(function(){
+      $(this).find('ul:first').css({visibility: "visible",display: "none"}).slideDown("normal");
+    },function(){
+      $(this).find('ul:first').css({visibility: "hidden"});
+    });
+  });
+</script>
+
 </html>

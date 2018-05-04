@@ -6,6 +6,16 @@ let Content = require('../models/Content')
 
 let data = {}
 
+
+function fillZero(num) {
+  if(typeof num !== 'number') {
+    throw new Error('access parameter is not a number')
+  } else if(num<10) {
+    return '0' + num
+  } else {
+    return num
+  }
+}
 /**
  * 处理通用的数据
  */
@@ -29,7 +39,7 @@ router.get('/',function(req,res) {
   data.count = 0
   data.page =  Number(req.query.page || 1)// 实际要判断传递数据的类型是否是number，这里暂不处理
   data.pages = 0
-  data.limit = 3
+  data.limit = 6
   let where = {}
 
   if(data.category) {
@@ -50,6 +60,17 @@ router.get('/',function(req,res) {
     return Content.where(where).find().limit(data.limit).skip(skip).populate(['category','user']).sort({addTime: -1})
    
   }).then((contents) => {
+   
+    for(let i=0,len=contents.length;i<len;i++) {
+      let timeStamp = contents[i].addTime
+      let day = fillZero(timeStamp.getDate())
+      let month = fillZero(timeStamp.getMonth() + 1)
+      let year = timeStamp.getFullYear()
+      let hours = fillZero(timeStamp.getHours())
+      let minutes = fillZero(timeStamp.getMinutes())
+      let seconds = fillZero(timeStamp.getSeconds())
+      contents[i].addFormateTime = year+'-'+month+'-'+day
+    }
     data.contents = contents
     res.render('main/index',data)
   })

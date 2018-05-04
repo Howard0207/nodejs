@@ -282,7 +282,6 @@ router.get('/content',(req,res) => {
         let minutes = fillZero(timeStamp.getMinutes())
         let seconds = fillZero(timeStamp.getSeconds())
         contents[i].addFormateTime = year+'-'+month+'-'+day+' '+hours+':'+minutes+':'+seconds
-        contents[i].addTime = year+'-'+month+'-'+day+' '+hours+':'+minutes+':'+seconds
       }
       res.render('admin/content_index',{
         contents: contents,
