@@ -24,7 +24,7 @@ router.use((req,res,next) => {
 })
 
 router.get('/',(req,res,next) => {
-  res.render('admin/index',{})
+  res.render('admin/index',{userInfo:req.userInfo})
 })
 
 router.get('/user',(req,res,next) => {

@@ -22,7 +22,7 @@
         <nav>
           <div class="navigation">
             <ul class="menu">
-              <li><a href="/">网站首页</a></li>
+              <li><a href="/">博客首页</a></li>
               <li>
                 <a href="#">关于我</a>
                 <ul>
@@ -37,8 +37,12 @@
                   <li><a href="newslistpic.html">学习笔记</a></li>
                 </ul>
               </li>
-              <li><a href="newslistpic.html">管理</a></li>
-              <li><a href="#">登录|注册</a></li>
+              <% if(userInfo._uid) {%>
+                <li><a href="/admin">管理</a></li>
+              <%} else {%>
+                <li><a href="/api/user/login">管理</a></li>
+                <li><a href="/api/user/login">登录|注册</a></li>
+              <% } %>
             </ul>
           </div>
         </nav>

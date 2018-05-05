@@ -85,6 +85,12 @@ router.post('/user/register',function(req,res) {
 })
 
 
+
+// 进入登陆注册页面
+router.get('/user/login',(req,res) => {
+  res.render('login/login',{})
+})
+
 /*
   用户登录
     |-登录逻辑
