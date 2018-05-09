@@ -4,10 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <link rel="stylesheet" href="/public/css/admin/content_add.css">
+  <title>博客修改</title>
 </head>
 <body>
-  <ol>
+  <!-- <ol>
     <li><a href="/">管理首页</a></li>
     <li><span>内容修改</span> </li>
   </ol>
@@ -38,6 +39,153 @@
       <textarea name="content" id="content" cols="30" rows="10" placeholder="请输入内容"><%=content.content%></textarea>
     </div>
     <input type="submit">
-  </form>
+  </form> -->
+  <header>
+    <div class="headtop"></div>
+    <div class="contenttop">
+      <div class="logo f_l">
+        <span>
+          <%= userInfo.username %>的博客</span>
+      </div>
+      <div class="blank"></div>
+      <nav>
+        <div class="navigation">
+          <ul class="menu">
+            <li>
+              <a href="/">博客首页</a>
+            </li>
+            <li>
+              <a href="/admin">管理首页</a>
+            </li>
+            <li>
+              <a href="#">博客修改</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+</header>
+<main>
+  <div class="wrapper">
+    <form method="post" id="blog">
+      <div class="form-header">
+        <div class="form-group">
+          <label for="title" class="title-title">博客标题</label>
+          <input type="text" id="title" placeholder="请输入内容标题" name="title" value="<%=content.title%>">
+          <input type="hidden" value="<%=content._id%>" id="content-id">
+        </div>
+        <div class="form-group">
+          <label for="category" class="category-title">博客分类</label>
+          <input type="hidden" id="category" name="category" value="<%=content.category._id%>">
+          <div class="category-wrapper">
+            <div class="category-selected">
+              <p data-value="<%=content.category._id%>"><%= content.category.name %></p>
+            </div>
+            <div class="category-options" style="display: none;">
+              <% for( let i=0, len=categories.length; i<len ;i++){ %>
+                <p data-value="<%=categories[i]._id%>"><%= categories[i].name %></p>
+              <% } %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="description" class="description-title">博客简介</label>
+        <div class="description">
+          <textarea name="description" id="description" maxlength="200" placeholder="请输入内容简介"><%=content.description%></textarea>
+          <span class="description-count">0</span>
+          <span class="description-count">/200</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="content" class="content-title">博客内容</label>
+        <textarea name="content" id="content"></textarea>
+      </div>
+      <div>
+        <script id="editor" type="text/plain" style="width:1024px;height:500px;"></script>
+      </div>
+      <button type="button" class="publish-btn">发布博客</button>
+    </form>
+  </div>
+</main>
+<footer>
+  <div class="footer">
+    <div class="f_l">
+      <p>All Rights Reserved 版权所有：
+        <a href="http://www.yangqq.com">杨青个人博客</a> 备案号：蜀ICP备00000000号</p>
+    </div>
+    <div class="f_r textr">
+      <p>Design by DanceSmile</p>
+    </div>
+  </div>
+</footer>
+</body>
+<script type="text/javascript" charset="utf-8" src="/public/js/jquery-3.3.1.js"></script>
+<script type="text/javascript" charset="utf-8" src="/public/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="/public/ueditor/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="/public/ueditor/lang/zh-cn/zh-cn.js"> </script>
+<script>
+let ue = UE.getEditor('editor');
+function getContent() {
+  return UE.getEditor('editor').getContent();
+}
+
+
+// 博客发布按钮
+document.querySelector('.publish-btn').onclick = function() {
+  let form = document.getElementById('blog');
+  let contentBox = document.querySelector('#content');
+  contentBox.value = getContent();
+  console.log(contentBox.value);
+}
+
+
+class SelectList{
+  constructor(sel,lis,cb1,cb2){
+    if(typeof sel !== 'string' || typeof lis !== 'string') {
+      throw new Error('parameter Error! new SelectList(string|"#Selected",string|"#list",function|cb1,function|cb2)');
+    }
+    this.selectedClick(cb1);
+    this.optionsClick(cb2);
+  }
+  selectedClick(action) {
+    action();
+  }
+  optionsClick(action) {
+    action();
+  }
+}
+
+function category() {
+  $('.category-options').find('p').click(function() {
+    let id = $(this).attr('data-value');
+    let value = $(this).text();
+    $('#category').val(id);
+    $('.category-selected').find('p').text(value).attr('data-value',id);
+    $('.category-options').slideToggle('fast');
+  })
+}
+function options() {
+  $('.category-selected').click(function() {
+    $('.category-options').slideToggle('fast');
+  })
+}
+new SelectList('.category-selected','.category-options',category,options);
+
+window.onload = function () {
+  let id = $('#content-id').val();
+  $.ajax({
+    url: '/admin/content/edit/info?id='+id,
+    type: 'get',
+    success: function(content) {
+      console.log($('#editor'));
+      console.log(content);
+    },
+    error: function (err) {
+      throw new Error(err);
+    }
+  })
+}
+</script>
 </body>
 </html>

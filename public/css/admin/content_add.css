@@ -1,4 +1,8 @@
-
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 /* 共用css */
 body { font: 14px "微软雅黑", Arial, Helvetica, sans-serif; background: url(../../imgs/base/bg.jpg) repeat; color: #555 }
 img { border: 0; display: block }
@@ -37,7 +41,12 @@ nav { margin: 0 0 15px 0 }
 #mnav h2.open .navicon:after { margin-top: 0; -webkit-transform: rotate(-45deg); transform: rotate(-45deg); }
 #mnav h2.open .navicon:before, #mnav h2.open .navicon:after { content: ''; display: block; width: 30px; height: 5px; position: absolute; background: #fff; -webkit-transition-property: margin, -webkit-transform; transition-property: margin, -webkit-transform; transition-property: margin, transform; transition-property: margin, transform, -webkit-transform; -webkit-transition-duration: 300ms; transition-duration: 300ms; }
 
-
+/*footer*/
+footer { background: url(../../imgs/base/footerbg.png) repeat-x; padding: 20px 0; color: #ccc; margin: 20px 0 0 0 }
+.footer { width: 1000px; margin: auto; overflow: hidden }
+.footer p { line-height: 24px; }
+.footer a{ color:#ccc}
+.textr { text-align: right }
 
 .wrapper {
   width: 1026px;
@@ -48,19 +57,19 @@ nav { margin: 0 0 15px 0 }
   display: none;
 }
 
-form .form-header {
+#blog .form-header {
   display: flex;
   justify-content: space-between;
 }
 
-form .form-header .form-group {
+#blog .form-header .form-group {
   flex: 1;
 }
 
-form .form-group .title-title,
-form .form-group .category-title,
-form .form-group .description-title,
-form .form-group .content-title {
+#blog .form-group .title-title,
+#blog .form-group .category-title,
+#blog .form-group .description-title,
+#blog .form-group .content-title {
   display: block;
   padding: 5px 15px;
   margin: 20px 0 10px;
@@ -71,7 +80,7 @@ form .form-group .content-title {
   font-family: 楷体;
 }
 
-form .form-group #title {
+#blog .form-group #title {
   width: 300px;
   height: 30px;
   padding: 0 10px;
@@ -82,11 +91,11 @@ form .form-group #title {
   color: #555;
 }
 
-.wrapper form .form-header .form-group .category-wrapper{
+.wrapper #blog .form-header .form-group .category-wrapper{
   width: 200px;
   height: 32px;
 }
-.wrapper form .form-header .form-group .category-wrapper .category-selected{
+.wrapper #blog .form-header .form-group .category-wrapper .category-selected{
   position: relative;
   width: 100%;
   height: 32px;
@@ -99,7 +108,7 @@ form .form-group #title {
   user-select: none;
 }
 
-.wrapper form .form-header .form-group .category-wrapper .category-selected::after{
+.wrapper #blog .form-header .form-group .category-wrapper .category-selected::after{
   content:'';
   position: absolute;
   top: 12px;
@@ -113,13 +122,13 @@ form .form-group #title {
   border-left: 8px solid transparent;
 }
 
-.wrapper form .form-header .form-group .category-wrapper .category-selected p{
+.wrapper #blog .form-header .form-group .category-wrapper .category-selected p{
   margin: 0;
   padding: 0 10px;
   font-size: 14px;
 }
 
-.wrapper form .form-header .form-group .category-wrapper .category-options{
+.wrapper #blog .form-header .form-group .category-wrapper .category-options{
   position: absolute;
   z-index: 10000;
   padding: 10px;
@@ -130,16 +139,55 @@ form .form-group #title {
   border-radius: 5px;
   border: 1px solid #ccc;
 }
-.wrapper form .form-header .form-group .category-wrapper .category-options p{
+.wrapper #blog .form-header .form-group .category-wrapper .category-options p{
+  position: relative;
   margin: 10px   5px;
   padding: 0 5px;
-  border-left: 2px solid #8c8c8c;
+  box-sizing: border-box;
+  /* border-left: 2px solid #8c8c8c; */
   font-size: 14px;
   cursor: pointer;
 }
 
+.wrapper #blog .form-header .form-group .category-wrapper .category-options p:before{
+  content:'';
+  position: absolute;
+  bottom: -1px;
+  left: -2px;
+  display: block;
+  width: 0;
+  height: 100%;
+  box-sizing: border-box;
+  border: 1px solid #8c8c8c;
+  transition: all 0.2s ease 0.2s;
+  
+}
 
-form .form-group .description #description {
+.wrapper #blog .form-header .form-group .category-wrapper .category-options p:hover::before{
+  height: 0;
+}
+
+
+.wrapper #blog .form-header .form-group .category-wrapper .category-options p::after{
+  content:'';
+  position: absolute;
+  bottom: -1px;
+  left: -2px;
+  display: block;
+  width: 0;
+  height: 0;
+  box-sizing: border-box;
+  border: 1px solid #8c8c8c;
+  transition: all 0.2s ease 0.2s;
+}
+
+.wrapper #blog .form-header .form-group .category-wrapper .category-options p:hover::after{
+  width: 100%;
+}
+
+
+
+#blog .form-group .description #description {
   padding: 10px;
   width: 1024px;
   height: 60px;
@@ -150,7 +198,23 @@ form .form-group .description #description {
   outline: none;
 }
 
-form .form-group .description .description-count {
+#blog .form-group .description .description-count {
   vertical-align: text-top;
   color: #828282;
+}
+
+
+#blog .publish-btn{
+  margin-bottom: 30px;
+  width: 310px;
+  height: 50px;
+  background: url(/public/imgs/base/rtitbg.png) no-repeat 0 4px;
+  border: none;
+  outline: none;
+  text-align: left;
+  text-indent: 50px;
+  letter-spacing: 2px;
+  font-size: 18px;
+  color: #fff;
+  cursor: pointer;
 }
