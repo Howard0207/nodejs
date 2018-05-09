@@ -4,6 +4,8 @@ let app = express()
 
 let mongoose = require('mongoose')
 
+let ueditor = require("./router/ue3rdparty");
+
 // 加载body-parser, 用来处理post提交过来的数据
 let bodyParser = require('body-parser')
 
@@ -66,4 +68,20 @@ app.use((req,res,next) => {
 app.use('/admin',require('./router/admin'))
 app.use('/api',require('./router/api'))
 app.use('/',require('./router/main'))
+app.use("/public/ueditor/ue", ueditor(__dirname + '/public', function (req, res, next) {
+    //客户端上传文件设置
+    var imgDir = '/img/ueditor/'
+    var ActionType = req.query.action;
+    if (ActionType === 'uploadimage') {
+      var file_url = imgDir;//默认图片上传地址
+      res.ue_up(file_url); //你只要输入要保存的地址 。保存操作交给ueditor来做
+      res.setHeader('Content-Type', 'text/html');
+    }
+    // 客户端发起其它请求
+    else {
+      res.setHeader('Content-Type', 'application/json');
+      res.redirect('/public/ueditor/nodejs/config.json');
+    }
+  })
+);
 

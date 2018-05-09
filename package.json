@@ -10,9 +10,12 @@
   "author": "GH",
   "license": "ISC",
   "dependencies": {
+    "busboy": "^0.2.14",
     "cookie-parser": "^1.4.3",
     "ejs": "^2.5.9",
     "express": "^4.16.3",
-    "mongoose": "^5.0.15"
+    "fs-extra": "^6.0.0",
+    "mongoose": "^5.0.15",
+    "node-snowflake": "0.0.1"
   }
 }
