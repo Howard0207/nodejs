@@ -4,76 +4,130 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="/public/css/admin/admin_index.css">
+  <link rel="stylesheet" href="/public/css/admin/common.css">
+  <link rel="stylesheet" href="/public/css/admin/content_index.css">
   <title>内容首页</title>
 </head>
 <body>
-  <nav>
-    <div>
-        <ul>
-          <li><a href="/admin">后台管理</a></li>
-          <li><a href="/admin/user">用户管理</a></li>
-          <li class="category-management">
-            <a href="javascript:void(0)">分类管理</a>
-            <ul class="category-list">
-              <li><a href="/admin/category">分类首页</a></li>
-              <li><a href="/admin/category/add">添加分类</a></li>
+  <div id="wrapper">
+    <header>
+      <div class="headtop"></div>
+      <div class="contenttop">
+        <div class="logo f_l">
+          <span><%= userInfo.username %>的博客</span>
+        </div>
+        <div class="blank"></div>
+
+        <nav>
+          <div class="navigation">
+            <ul class="menu">
+              <li><a href="/">博客首页</a></li>
+              <li><a href="/admin">后台管理</a></li>
+              <li>
+                <a href="javascript:void(0)">分类管理</a>
+                <ul class="category-list">
+                  <li><a href="/admin/category">分类首页</a></li>
+                  <li><a href="/admin/category/add">添加分类</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="javascript:void(0)">内容管理</a>
+                <ul class="content-list">
+                  <li><a href="/admin/content">内容首页</a></li>
+                  <li><a href="/admin/content/add">添加内容</a></li>
+                </ul>
+              </li>
             </ul>
-          </li>
-          <li class="content-management">
-            <a href="javascript:void(0)">内容管理</a>
-            <ul class="content-list">
-              <li><a href="/admin/content">内容首页</a></li>
-              <li><a href="/admin/content/add">添加内容</a></li>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <div class="jztop"></div>
+    <div class="container">
+      <main>
+        <section>
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>分类名称</th>
+                <th>标题</th>
+                <th>作者</th>
+                <th>添加时间</th>
+                <th>阅读量</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <% for(let i=0,len=contents.length;i<len;i++){%>
+                <tr>
+                  <td><%= (page-1)*limit + i + 1 %></td>
+                  <td><%= contents[i].category.name %></td>
+                  <td><%= contents[i].title %></td>
+                  <td><%= contents[i].user.username %></td>
+                  <td><%= contents[i].addFormateTime %></td>
+                  <td><%= contents[i].views %></td>
+                  <td>
+                    <a href="/admin/content/edit?id=<%=contents[i]._id%>">修改</a> | 
+                    <a href="/admin/content/delete?id=<%=contents[i]._id%>">删除</a>
+                  </td>
+                </tr>
+              <% } %>
+          </table>
+        </section>
+        <section>
+          <% if(pages>0) {%>
+            <ul class="pagination">
+              <% if(page===1) {%>
+                <li class="disabled"><a href="javascript:void(0)" aria-label="Previous"><span aria-hidden="true">上一页</span></a></li>
+              <%} else {%>
+                <li><a href="/?category=<%=category%>&page=<%= page-1 %>" aria-label="Previous"><span aria-hidden="true">上一页</span></a></li>
+              <% } %>
+              <% for(let i=0;i<pages;i++) { %>
+                <% if(i+1 === page) { %>
+                  <li class="active"><a href="#"><%=i+1%></a></li>
+                <%} else {%>
+                  <li><a href="/admin/content?page=<%=i+1%>"><%=i+1%></a></li>
+                <%}%>
+              <% } %>
+              <% if(page===pages) {%>
+                <li class="disabled"><a href="javascript:void(0)" aria-label="Next"><span aria-hidden="true">下一页</span></a></li>
+              <%} else {%>
+                <li><a href="/?category=<%=category%>&page=<%= page+1 %>" aria-label="Next"><span aria-hidden="true">下一页</span></a></li>
+              <% } %>
+              <li><a>总共<%=pages %>页</a></li>
+              <li><a>跳转至<input type="text">页</a></li>
             </ul>
-          </li>
-        </ul>
+          <% } else {%>
+            <div><p>当前分类没有内容</p></div>
+          <% } %>
+        </section>
+      </main>
     </div>
-  </nav>
-  <h3>分类列表</h3>
-  <section>
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>分类名称</th>
-          <th>标题</th>
-          <th>作者</th>
-          <th>添加时间</th>
-          <th>阅读量</th>
-          <th>操作</th>
-        </tr>
-      </thead>
-      <% for(let i=0,len=contents.length;i<len;i++){%>
-          <tr>
-            <td><%= (page-1)*limit + i + 1 %></td>
-            <td><%= contents[i].category.name %></td>
-            <td><%= contents[i].title %></td>
-            <td><%= contents[i].user.username %></td>
-            <td><%= contents[i].addFormateTime %></td>
-            <td><%= contents[i].views %></td>
-            <td>
-              <a href="/admin/content/edit?id=<%=contents[i]._id%>">修改</a> | 
-              <a href="/admin/content/delete?id=<%=contents[i]._id%>">删除</a>
-            </td>
-          </tr>
-        <% } %>
-    </table>
-  </section>
-  <section>
-    <ul class="pagination">
-      <li class="disabled"><a href="/admin/user?page=<%= page-1 %>" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-      <% for(let i=0;i<pages;i++) { %>
-        <% if(i+1 === page) { %>
-          <li class="active"><a href="#"><%=i+1%></a></li>
-        <%} else {%>
-          <li><a href="/admin/content?page=<%=i+1%>"><%=i+1%></a></li>
-        <%}%>
-      <% } %>
-      <li><a href="/admin/content?page=<%= page+1 %>" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
-      <li><a>总共<%=pages %>页</a></li>
-      <li><a>跳转至<input type="text">页</a></li>
-    </ul>
-  </section>
+    <!-- container代码 结束 -->
+    <div class="jzend"></div>
+  </div>
+  <footer>
+    <div class="footer">
+      <div class="f_l">
+        <p>All Rights Reserved 版权所有：
+          <a href="http://www.yangqq.com">杨青个人博客</a> 备案号：蜀ICP备00000000号</p>
+      </div>
+      <div class="f_r textr">
+        <p>Design by DanceSmile</p>
+      </div>
+    </div>
+  </footer>
 </body>
+<script src="/public/js/jquery-3.3.1.js"></script>
+<script type=text/javascript>
+  // Navigation Menu
+  $(function() {
+    $(".menu ul").css({display: "none"}); // Opera Fix
+    $(".menu li").hover(function(){
+      $(this).find('ul:first').css({visibility: "visible",display: "none"}).slideDown("normal");
+    },function(){
+      $(this).find('ul:first').css({visibility: "hidden"});
+    });
+  });
+</script>
 </html>

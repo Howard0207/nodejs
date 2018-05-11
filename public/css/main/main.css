@@ -9,7 +9,7 @@
 }
 
 /* 分页 */
-sectionnav	.pagination{
+section	.pagination{
   margin-top: 10px;
   margin-bottom: 10px;
   display: inline-block;

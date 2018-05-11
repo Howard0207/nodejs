@@ -72,7 +72,7 @@ router.get('/user', (req, res, next) => {
 router.get('/category', (req, res, next) => {
   let page = Number(req.query.page) || 1 // 实际要判断传递数据的类型是否是number，这里暂不处理
   let pages = 0
-  let limit = 2
+  let limit = 10
   Category.count().then((count) => {
     // 计算总页数
     pages = Math.ceil(count / limit)
@@ -89,6 +89,7 @@ router.get('/category', (req, res, next) => {
      */
     Category.find().sort({ _id: -1 }).limit(limit).skip(skip).then((categories) => {
       res.render('admin/category_index', {
+        userInfo: req.userInfo,
         categories: categories,
         page: page,
         limit: limit,
@@ -257,7 +258,7 @@ router.get('/category/delete', (req, res) => {
 router.get('/content', (req, res) => {
   let page = Number(req.query.page) || 1 // 实际要判断传递数据的类型是否是number，这里暂不处理
   let pages = 0
-  let limit = 10
+  let limit = 20
   Content.count().then((count) => {
     // 计算总页数
     pages = Math.ceil(count / limit)
@@ -284,6 +285,7 @@ router.get('/content', (req, res) => {
         contents[i].addFormateTime = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds
       }
       res.render('admin/content_index', {
+        userInfo: req.userInfo,
         contents: contents,
         page: page,
         limit: limit,

@@ -43,8 +43,10 @@ app.use(cookieParser())
 
 app.use((req,res,next) => {
   req.userInfo = {}
+
   if(req.cookies.userInfo) {
       try {
+        
         req.userInfo = req.cookies.userInfo
 
         // 获取当前登陆用户信息，是否是管理员

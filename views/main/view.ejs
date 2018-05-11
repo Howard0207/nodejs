@@ -8,104 +8,178 @@
   <title>Document</title>
 </head>
 <body>
-  <nav>
-    <div class="menu">
-      <ul>
-        <% if (content.category === '' ) { %>
-          <li><a href="/" class="focus">首页</a></li>
-        <% } else {%>
-          <li><a href="/">首页</a></li>
-        <% } %>
-        <% for(let i = 0, len = categories.length; i < len; i++) { %>
-          <% if (content.category == categories[i]._id ) { %>
-            <li><a href="/?category=<%=categories[i]._id%>" class="focus"><%= categories[i].name %></a></li>
-          <% } else {%>
-            <li><a href="/?category=<%=categories[i]._id%>"><%= categories[i].name %></a></li>
-          <% } %>
-         
-        <% } %>          
-      </ul>
-    </div>
-  </nav>
+    <body>
+        <div id="wrapper">
+          <header>
+            <div class="headtop"></div>
+            <div class="contenttop">
+              <div class="logo f_l">
+                <span><%= userInfo.username %>的博客</span>
+              </div>
+              <div class="blank"></div>
+      
+              <nav>
+                <div class="navigation">
+                  <ul class="menu">
+                    <li><a href="/">博客首页</a></li>
+                    <li>
+                      <a href="#">关于我</a>
+                      <ul>
+                        <li><a href="about.html">个人简介</a></li>
+                        <li><a href="listpic.html">个人相册</a></li>
+                      </ul>
+                    </li>
+                    <li>
+                      <a href="#">我的日记</a>
+                      <ul>
+                        <li><a href="newslistpic.html">个人日记</a></li>
+                        <li><a href="newslistpic.html">学习笔记</a></li>
+                      </ul>
+                    </li>
+                    <% if(userInfo._uid) {%>
+                      <li><a href="/admin">管理</a></li>
+                    <%} else {%>
+                      <li><a href="/api/user/login">管理</a></li>
+                      <li><a href="/api/user/login">登录|注册</a></li>
+                    <% } %>
+                  </ul>
+                </div>
+              </nav>
+            </div>
+          </header>
+          <div class="jztop"></div>
+          <div class="container">
+            <div class="bloglist f_l">
+                <main>
+                    <section>
+                        <div>
+                          <h1><%= content.title%></h1>
+                          <p>
+                            作者：<span><%= content.user.username%></span> -
+                            时间：<span><%= content.addTime%></span> -
+                            阅读：<span><%= content.views%></span> -
+                            评论：<span>10</span> 
+                          </p>
+                          <dfn><%= content.content%></dfn>
+                        </div>
+                    </section>
+                    <section>
+                      <div class="listBox message">
+                        <input type="hidden" id="contentId" value="<%=content._id%>">
+                        <% if(userInfo._uid) { %>
+                        <h3 class="textLeft"><strong>评论</strong><span>一共有<em id="messageCount">0</em>条评论</span></h3>
+                        <p class="textLeft clear">
+                          <textarea id="messageContent" cols="30" rows="10"></textarea>
+                          <button id="messageBtn" class="submit">提交</button>
+                        </p>
+                        <% } else { %>
+                        <p>你还没有登陆，请先登陆！</p>
+                        <% } %>
+                      </div>
+                      <div class="messageList">
+                
+                      </div>
+                    </section>
+                  </main>
+            </div>
+            <div class="r_box f_r">
+              <div class="tit01">
+                <h3 class="tit">博主介绍</h3>
+                <div class="gzwm">
+                  <ul>
+                    <li>
+                      <a class="email" href="#" target="_blank">我的电话</a>
+                    </li>
+                    <li>
+                      <a class="qq" href="#mailto:admin@admin.com" target="_blank">我的邮箱</a>
+                    </li>
+                    <li>
+                      <a class="tel" href="#" target="_blank">我的QQ</a>
+                    </li>
+                    <li>
+                      <a class="prize" href="#">个人奖项</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <!--tit01 end-->
+      
+              <div class="tuwen">
+                <h3 class="tit">个人分类</h3>
+                <ul>
+                  <% for(let i = 0, len = categories.length; i < len; i++) { %>
+                    <li><a href="/?category=<%=categories[i]._id%>"><%= categories[i].name %></a></li>
+                  <% } %>
+                </ul>
+              </div>
+              <div class="ph">
+                <h3 class="tit">点击排行</h3>
+                <ul class="rank">
+                  <li>
+                    <a href="/jstt/bj/2017-07-13/784.html" title="【心路历程】请不要在设计这条路上徘徊啦" target="_blank">【心路历程】请不要在设计这条路上徘徊啦</a>
+                  </li>
+                  <li>
+                    <a href="/news/s/2016-05-20/751.html" title="IP要突破2000+了" target="_blank">IP要突破2000+了</a>
+                  </li>
+                  <li>
+                    <a href="/jstt/web/2015-07-03/749.html" title="帝国cms首页、自定义页面如何实现分页" target="_blank">帝国cms首页、自定义页面如何实现分页</a>
+                  </li>
+                  <li>
+                    <a href="/jstt/web/2015-02-25/745.html" title="【已评选】给我模板PSD源文件，我给你设计HTML！" target="_blank">【已评选】给我模板PSD源文件，我给你设计HTML！</a>
+                  </li>
+                  <li>
+                    <a href="/jstt/bj/2015-02-14/744.html" title="【郑重申明】本站只提供静态模板下载！" target="_blank">【郑重申明】本站只提供静态模板下载！</a>
+                  </li>
+                  <li>
+                    <a href="/news/s/2015-01-23/741.html" title="【孕期日记】生活本该如此" target="_blank">【孕期日记】生活本该如此</a>
+                  </li>
+                  <li>
+                    <a href="/jstt/bj/2015-01-09/740.html" title="【匆匆那些年】总结个人博客经历的这四年…" target="_blank">【匆匆那些年】总结个人博客经历的这四年…</a>
+                  </li>
+                  <li>
+                    <a href="/jstt/web/2015-01-01/739.html" title=" 2014年度优秀个人博客排名公布" target="_blank"> 2014年度优秀个人博客排名公布</a>
+                  </li>
+                  <li>
+                    <a href="/jstt/web/2014-12-18/736.html" title="2014年度优秀个人博客评选活动" target="_blank">2014年度优秀个人博客评选活动</a>
+                  </li>
+                  <li>
+                    <a href="/jstt/css3/2014-12-09/734.html" title="使用CSS3制作文字、图片倒影" target="_blank">使用CSS3制作文字、图片倒影</a>
+                  </li>
+                  <li>
+                    <a href="/jstt/css3/2014-11-18/733.html" title="【分享】css3侧边栏导航不同方向划出效果" target="_blank">【分享】css3侧边栏导航不同方向划出效果</a>
+                  </li>
+                  <li>
+                    <a href="/jstt/bj/2014-11-06/732.html" title="分享我的个人博客访问量如何做到IP从10到600的(图文)" target="_blank">分享我的个人博客访问量如何做到IP从10到600的(图文)</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="ad">
+                <img src="/public/imgs/base/03.jpg"> </div>
+            </div>
+          </div>
+          <!-- container代码 结束 -->
+          <div class="jzend"></div>
+          <footer>
+            <div class="footer">
+              <div class="f_l">
+                <p>All Rights Reserved 版权所有：
+                  <a href="http://www.yangqq.com">杨青个人博客</a> 备案号：蜀ICP备00000000号</p>
+              </div>
+              <div class="f_r textr">
+                <p>Design by DanceSmile</p>
+              </div>
+            </div>
+          </footer>
+        </div>
 
-  <% if ( userInfo._uid ) { %>
-    <h2><%= userInfo.username %></h2>
-    <% if ( userInfo.isAdmin ) { %>
-      <span> 你好，伟大的王！ </span> <a href="/admin">进入管理</a>
-    <% } else {%>
-      <span> 欢迎登陆我的博客 </span>
-    <% } %>
-  <% } else {%>
-    <h2>尚未登录</h2>
-  <% } %>
-  <div class="login">
-    <form action="/api/user/login" method="post">
-      <label for="login-username">
-        <input type="text" id="login-username" name="username" placeholder="请输入用户名">
-      </label>
-      <label for="login-password">
-        <input type="text" id="login-password" name="password" placeholder="请输入密码">
-      </label>
-      <label for="login-submit">
-        <input type="submit" id="login-submit" value="登陆">
-      </label>
-    </form>
-    <p><span>还没注册？</span><a href="javascript:void(0)" class="toReg">马上注册</a></p>
-  </div>
-  <div class="register">
-    <form action="/api/user/register" method="post">
-      <label for="register-username">
-        <input type="text" id="register-username" name="username" placeholder="请输入用户名">
-      </label>
-      <label for="register-password">
-        <input type="text" id="register-password" name="password" placeholder="请输入密码">
-      </label>
-      <label for="check-register-password">
-        <input type="text" id="check-register-password" name="repassword" placeholder="请输入密码">
-      </label>
-      <label for="register-submit">
-        <input type="submit" id="register-submit" value="注册">
-      </label>
-    </form>
-    <p><span>已有账号？</span><a href="javascript:void(0)" class="toLogin">马上登陆</a></p>
-  </div>
+
   <div>
     <button class="btn">退出登录</button>
   </div>
-  <main>
-    <section>
-        <div>
-          <h1><%= content.title%></h1>
-          <p>
-            作者：<span><%= content.user.username%></span> -
-            时间：<span><%= content.addTime%></span> -
-            阅读：<span><%= content.views%></span> -
-            评论：<span>10</span> 
-          </p>
-          <dfn><%= content.content%></dfn>
-        </div>
-    </section>
-    <section>
-      <div class="listBox message">
-        <input type="hidden" id="contentId" value="<%=content._id%>">
-        <% if(userInfo._uid) { %>
-        <h3 class="textLeft"><strong>评论</strong><span>一共有<em id="messageCount">0</em>条评论</span></h3>
-        <p class="textLeft">zmouse</p>
-        <p class="textLeft clear">
-          <textarea id="messageContent" cols="30" rows="10"></textarea>
-          <button id="messageBtn" class="submit">提交</button>
-        </p>
-        <% } else { %>
-        <p>你还没有登陆，请先登陆！</p>
-        <% } %>
-      </div>
-      <div class="messageList">
-
-      </div>
-    </section>
-  </main>
+  
 </body>
 <script src="/public/js/jquery-3.3.1.js"></script>
 <script src="/public/js/index.js"></script>
 <script src="/public/js/view_index.js"></script>
+
 </html>

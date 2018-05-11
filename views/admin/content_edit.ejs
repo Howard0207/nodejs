@@ -4,66 +4,34 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="/public/css/admin/common.css">
   <link rel="stylesheet" href="/public/css/admin/content_add.css">
   <title>博客修改</title>
 </head>
 <body>
-  <!-- <ol>
-    <li><a href="/">管理首页</a></li>
-    <li><span>内容修改</span> </li>
-  </ol>
-  <h3>内容修改-<%=content.title%></h3>
-  <form method="post">
-    <div class="form-group">
-      <label for="category">分类：</label>
-      <select name="category" id="category">
-        <% for( let i=0, len=categories.length; i<len ;i++){ %>
-          <%if(content.category._id.toString() === categories[i]._id.toString()) {%>
-            <option value="<%=categories[i]._id%>" selected="selected"><%= categories[i].name %></option>
-          <%} else {%>
-            <option value="<%=categories[i]._id%>"><%= categories[i].name %></option>
-          <%}%>
-        <% } %>
-      </select>
+<header>
+  <div class="headtop"></div>
+  <div class="contenttop">
+    <div class="logo f_l">
+      <span><%= userInfo.username %>的博客</span>
     </div>
-    <div class="form-group">
-      <label for="title">内容标题</label>
-      <input type="text" id="title" placeholder="请输入内容标题" name="title" value="<%=content.title%>">
-    </div>
-    <div class="form-group">
-      <label for="description">内容简介</label>
-      <textarea name="description" id="description" cols="30" rows="10" placeholder="请输入内容简介"><%=content.description%></textarea>
-    </div>
-    <div class="form-group">
-      <label for="content">内容</label>
-      <textarea name="content" id="content" cols="30" rows="10" placeholder="请输入内容"><%=content.content%></textarea>
-    </div>
-    <input type="submit">
-  </form> -->
-  <header>
-    <div class="headtop"></div>
-    <div class="contenttop">
-      <div class="logo f_l">
-        <span>
-          <%= userInfo.username %>的博客</span>
+    <div class="blank"></div>
+    <nav>
+      <div class="navigation">
+        <ul class="menu">
+          <li>
+            <a href="/">博客首页</a>
+          </li>
+          <li>
+            <a href="/admin">管理首页</a>
+          </li>
+          <li>
+            <a href="#">博客修改</a>
+          </li>
+        </ul>
       </div>
-      <div class="blank"></div>
-      <nav>
-        <div class="navigation">
-          <ul class="menu">
-            <li>
-              <a href="/">博客首页</a>
-            </li>
-            <li>
-              <a href="/admin">管理首页</a>
-            </li>
-            <li>
-              <a href="#">博客修改</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
-    </div>
+    </nav>
+  </div>
 </header>
 <main>
   <div class="wrapper">
@@ -136,7 +104,7 @@ document.querySelector('.publish-btn').onclick = function() {
   let form = document.getElementById('blog');
   let contentBox = document.querySelector('#content');
   contentBox.value = getContent();
-  console.log(contentBox.value);
+  form.submit();
 }
 
 
@@ -180,6 +148,7 @@ window.onload = function () {
     success: function(content) {
       console.log($('#editor'));
       console.log(content);
+      UE.getEditor('editor').setContent(content.content.content, false);
     },
     error: function (err) {
       throw new Error(err);
