@@ -84,6 +84,11 @@ router.get('/view', (req,res) => {
     data.content = content
     content.views++
     content.save()
+    let timeStamp = data.content.addTime
+    let day = fillZero(timeStamp.getDate())
+    let month = fillZero(timeStamp.getMonth() + 1)
+    let year = timeStamp.getFullYear()
+    data.content.addFormateTime = year+'-'+month+'-'+day
     res.render('main/view',data)
   })
 })

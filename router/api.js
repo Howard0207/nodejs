@@ -13,6 +13,15 @@ router.use((req,res,next) => {
   next()
 })
 
+function fillZero(num) {
+  if(typeof num !== 'number') {
+    throw new Error('access parameter is not a number')
+  } else if(num<10) {
+    return '0' + num
+  } else {
+    return num
+  }
+}
 
 /*
   用户注册
@@ -159,6 +168,13 @@ router.get('/comment',(req,res) => {
     _id: contentId
   }).then((content) => {
     responseData.data = content.comments
+    for(let i=0,len=responseData.data.length;i<len;i++) {
+      let timeStamp = responseData.data[i].postTime
+      let day = fillZero(timeStamp.getDate())
+      let month = fillZero(timeStamp.getMonth() + 1)
+      let year = timeStamp.getFullYear()
+      responseData.data[i].addFormateTime = year+'-'+month+'-'+day
+    }
     res.json(responseData)
   })
 })
@@ -185,6 +201,13 @@ router.post('/comment/post', (req,res) => {
   }).then((newContent) => {
     responseData.message = '评论成功'
     responseData.data = newContent
+    for(let i=0,len=responseData.data.comments.length;i<len;i++) {
+      let timeStamp = responseData.data.comments[i].postTime
+      let day = fillZero(timeStamp.getDate())
+      let month = fillZero(timeStamp.getMonth() + 1)
+      let year = timeStamp.getFullYear()
+      responseData.data.comments[i].addFormateTime = year+'-'+month+'-'+day
+    }
     res.json(responseData)
   })
 })

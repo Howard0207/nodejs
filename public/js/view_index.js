@@ -23,7 +23,7 @@ $(function(){
       html += `<div class="messageBox">
                   <p class="name clear">
                     <span class="fl">${comments[val].username}</span>
-                    <span class="fr">${comments[val].postTime}</span>
+                    <span class="fr">${comments[val].addFormateTime}</span>
                   </p>
                   <p>${comments[val].content}</p>
                 </div>`
