@@ -73,7 +73,7 @@ router.get('/category', (req, res, next) => {
   let page = Number(req.query.page) || 1 // 实际要判断传递数据的类型是否是number，这里暂不处理
   let pages = 0
   let limit = 10
-  Category.count().then((count) => {
+  Category.where({user: req.userInfo._uid}).count().then((count) => {
     // 计算总页数
     pages = Math.ceil(count / limit)
     // 取值不能超过pages
@@ -87,7 +87,7 @@ router.get('/category', (req, res, next) => {
      *  1：升序
      * -1：降序
      */
-    Category.find().sort({ _id: -1 }).limit(limit).skip(skip).then((categories) => {
+    Category.where({user: req.userInfo._uid}).find().sort({ _id: -1 }).limit(limit).skip(skip).then((categories) => {
       res.render('admin/category_index', {
         userInfo: req.userInfo,
         categories: categories,
@@ -260,7 +260,7 @@ router.get('/content', (req, res) => {
   let page = Number(req.query.page) || 1 // 实际要判断传递数据的类型是否是number，这里暂不处理
   let pages = 0
   let limit = 20
-  Content.count().then((count) => {
+  Content.where({user: req.userInfo._uid}).count().then((count) => {
     // 计算总页数
     pages = Math.ceil(count / limit)
     // 取值不能超过pages
@@ -274,7 +274,7 @@ router.get('/content', (req, res) => {
       *  1：升序
       * -1：降序
       */
-    Content.find().sort({ _id: -1 }).limit(limit).skip(skip).populate(['category', 'user']).then((contents) => {
+    Content.where({user: req.userInfo._uid}).find().sort({ _id: -1 }).limit(limit).skip(skip).populate(['category', 'user']).then((contents) => {
       for (let i = 0, len = contents.length; i < len; i++) {
         let timeStamp = contents[i].addTime
         let day = fillZero(timeStamp.getDate())

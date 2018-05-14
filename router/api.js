@@ -139,7 +139,6 @@ router.post('/user/login',(req,res) => {
           username: userInfo.username
         })
         res.redirect('/');
-        // res.render('main/index',{userInfo: responseData.userInfo})
         return true
       }
     })
