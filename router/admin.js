@@ -135,7 +135,8 @@ router.post('/category/add', (req, res, next) => {
     } else {
       // 数据库中不存在该分类，可以保存
       return new Category({
-        name: name
+        name: name,
+        user: req.userInfo._uid
       }).save()
     }
   }).then((newCategory) => {
@@ -171,7 +172,7 @@ router.get('/category/edit', (req, res) => {
 })
 
 /**
- * 分类的i需改保存
+ * 分类的修改保存
  */
 router.post('/category/edit', (req, res) => {
   let id = req.query.id || ''

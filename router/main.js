@@ -25,7 +25,7 @@ router.use((req,res,next) => {
     categories: []
   }
 
-  Category.find().then((categories) => {
+  Category.where({user:req.userInfo._uid}).find().then((categories) => {
     data.categories = categories
     next()
   })
@@ -40,11 +40,17 @@ router.get('/',function(req,res) {
   data.page =  Number(req.query.page || 1)// 实际要判断传递数据的类型是否是number，这里暂不处理
   data.pages = 0
   data.limit = 6
-  let where = {}
+  let where = {
+    user : req.userInfo._uid
+  }
 
   if(data.category) {
     where.category = data.category
+    console.log(1)
   }
+
+
+  // let whereU = {user:'5ad9b60617612a114d968ffd'};
   // 读取所有分类信息
   Content.where(where).count().then((count) => {
     data.count =  count
@@ -57,10 +63,12 @@ router.get('/',function(req,res) {
     
     let skip = (data.page-1)*data.limit
 
+    // return Content.where(whereU).find().limit(data.limit).skip(skip).populate(['category','user']).sort({addTime: -1})
+
     return Content.where(where).find().limit(data.limit).skip(skip).populate(['category','user']).sort({addTime: -1})
    
   }).then((contents) => {
-   
+    
     for(let i=0,len=contents.length;i<len;i++) {
       let timeStamp = contents[i].addTime
       let day = fillZero(timeStamp.getDate())
