@@ -1,0 +1,139 @@
+/* setting 列表导航 */
+
+#wrapper .container .settings{
+  background: url(../../imgs/userCenter/perSetting-icon.png) no-repeat;
+  height: 48px;
+  line-height: 48px;
+  padding-left: 58px;
+  margin: 50px 80px 30px 80px;
+  font-size: 20px;
+}
+
+
+#wrapper .container .tabs{
+  display: flex;
+  justify-content: flex-start;
+  height: 30px;
+  margin: 0 80px 10px;
+  border-bottom: 1px solid crimson;
+}
+#wrapper .container .tabs a{
+  display: block;
+  flex-direction: row;
+  margin-right: 10px;
+  padding: 0 10px;
+  line-height: 30px;
+  text-decoration: none;
+  background: #ccc;
+  color: #555;
+}
+
+#wrapper .container .tabs a.active{
+  background: crimson;
+  color: #fff;
+}
+
+
+#wrapper .container .tab-content .row{
+  display:flex;
+  justify-content: flex-start;
+  margin: 15px 80px;
+}
+
+#wrapper .container .tab-content .row input{
+  margin-left: 10px;
+  outline: none;
+  border: 1px solid #ccc;
+  background: rgba(0,0,0,0);
+}
+
+#wrapper .container .tab-content .row input[type="text"]{
+  padding: 0 15px;
+  width: 230px;
+  height: 30px;
+  box-sizing: border-box;
+  color: #000;
+}
+
+#wrapper .container .tab-content .row input[type="radio"]{
+  vertical-align: middle;
+}
+
+
+#wrapper .container .tab-content .row .rowContent{
+  height: 30px;
+  line-height: 30px;
+  box-sizing: border-box;
+}
+
+#wrapper .container .tab-content .row .nickname,
+#wrapper .container .tab-content .row .job{
+  margin-right: 30px;
+}
+
+
+
+
+/* 城市联动 */
+#wrapper .container .tab-content .row .info{
+  position: relative;
+  margin-left: 14px;
+  width: 230px;
+  height: 30px;
+  overflow: hidden;
+  border: solid 1px #ccc;
+}
+
+#wrapper .container .tab-content .row .info::after{
+  content: '';
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  width: 0;
+  height: 0;
+  border-top: 5px solid #8a8a8a;
+  border-right: 5px solid transparent;
+  border-bottom: 0 solid transparent;
+  border-left: 5px solid transparent;
+}
+
+#wrapper .container .tab-content .row .s_city{
+  margin-left: 76px;
+}
+
+
+#wrapper .container .tab-content .row .info select{
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  appearance:none;
+  background:transparent;
+  border:none;
+  padding-left:10px;
+  width: 230px;
+  height:100%;
+  outline: none;
+}
+
+#wrapper .container .tab-content .row .info section option{
+  background: rgba(0,0,0,0);
+  color: #fff;
+}
+
+#wrapper .container .tab-content .row.form-footer{
+  margin-top: 30px;
+  margin-bottom: 80px;
+}
+
+#wrapper .container .tab-content .form-footer .submit{
+  width: 310px;
+  height: 50px;
+  background: url(/public/imgs/base/rtitbg.png) no-repeat 0 4px;
+  border: none;
+  outline: none;
+  text-align: left;
+  text-indent: 50px;
+  letter-spacing: 2px;
+  font-size: 18px;
+  color: #fff;
+  cursor: pointer;
+}

@@ -24,8 +24,12 @@ router.use((req,res,next) => {
     userInfo: req.userInfo,
     categories: []
   }
+  let where = {};
+  if(req.userInfo._uid) {
+    where.user = req.userInfo._uid;
+  }
 
-  Category.where({user:req.userInfo._uid}).find().then((categories) => {
+  Category.where(where).find().then((categories) => {
     data.categories = categories
     next()
   })
@@ -93,9 +97,6 @@ router.get('/',function(req,res) {
   data.page =  Number(req.query.page || 1)// 实际要判断传递数据的类型是否是number，这里暂不处理
   data.pages = 0
   data.limit = 6
-  let where = {
-    user : req.userInfo._uid
-  }
 
   if(data.category) {
     where.category = data.category
@@ -118,7 +119,6 @@ router.get('/',function(req,res) {
     return Content.find().limit(data.limit).skip(skip).populate(['category','user']).sort({views: -1})
    
   }).then((contents) => {
-    
     for(let i=0,len=contents.length;i<len;i++) {
       let timeStamp = contents[i].addTime
       let day = fillZero(timeStamp.getDate())
@@ -130,7 +130,7 @@ router.get('/',function(req,res) {
       contents[i].addFormateTime = year+'-'+month+'-'+day
     }
     data.contents = contents
-    res.render('main/self_index',data)
+    res.render('main/index',data)
   })
 })
 

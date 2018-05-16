@@ -15,7 +15,9 @@
       <div class="headtop"></div>
       <div class="contenttop">
         <div class="logo f_l">
-          <span><%= userInfo.username %>的博客</span>
+          <% if(userInfo._uid) {%>
+            <a href="/settings/basic"><img src="/public/imgs/avatar/default.jpg" alt=""><%= userInfo.username %>的博客</a>
+          <% } %>
         </div>
         <div class="blank"></div>
 
