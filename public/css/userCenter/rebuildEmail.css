@@ -1,0 +1,67 @@
+#wrapper .container .tab-content{
+  margin-top: 50px;
+}
+
+#wrapper .container .tab-content .row{
+  margin: 15px 80px;
+}
+
+#wrapper .container .tab-content .row .rowContent{
+  margin-left: 60px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+#wrapper .container .tab-content .row .rowContent .old{
+  display: block;
+  margin-right: 15px;
+  width: 120px;
+  height: 30px;
+  line-height: 30px;
+  text-align: right;
+}
+
+#wrapper .container .tab-content .row .rowContent .oldEmail{
+  display: block;
+  padding-left: 15px;
+  height: 30px;
+  line-height: 30px;
+}
+
+
+#wrapper .container .tab-content .row .rowContent label{
+  display: block;
+  margin-right: 15px;
+  width: 120px;
+  height: 30px;
+  line-height: 30px;
+  text-align: right;
+}
+
+#wrapper .container .tab-content .row .rowContent input{
+  display: block;
+  padding: 0 15px;
+  width: 160px;
+  height: 30px;
+  box-sizing: border-box;
+  outline: none;
+  border: 1px solid #ccc;
+}
+
+#wrapper .container .tab-content .row .rowContent .getEmailCode{
+  display: block;
+  margin-left: 16px;
+  width: 100px;
+  height: 30px;
+  box-sizing: border-box;
+  outline: none;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  background: rgba(0,0,0,0);
+  color:#555;
+}
+
+
+#wrapper .container .tab-content .form-footer .submit{
+  margin-left: 130px;
+}

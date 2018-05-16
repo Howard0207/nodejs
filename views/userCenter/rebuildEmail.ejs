@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="/public/css/admin/common.css">
   <link rel="stylesheet" href="/public/css/admin/content_index.css">
   <link rel="stylesheet" href="/public/css/userCenter/common.css">
-  <link rel="stylesheet" href="/public/css/userCenter/settings.css">
+  <link rel="stylesheet" href="/public/css/userCenter/rebuildEmail.css">
   <title>个人中心</title>
 </head>
 
@@ -69,10 +69,10 @@
         <section>
           <div class="settings">帐号设置</div>
           <div class="tabs clearfix">
-            <a href="/settings/basic" class="active">基本信息</a>
+            <a href="/settings/basic">基本信息</a>
             <a href="/settings/changepwd">修改密码</a>
-            <a href="/settings/secureqa">密码保护</a>
-            <a href="/settings/changeemail">修改邮箱</a>
+            <a href="/my/account/secureqa">密码保护</a>
+            <a href="/settings/changeemail" class="active">修改邮箱</a>
             <a href="/my/account/loginlog">登录日志</a>
             <a href="/my/account/bind">第三方帐号绑定</a>
             <a href="/my/account/privacy">个人主页隐私设置</a>
@@ -81,39 +81,19 @@
             <div class="tab-pane active">
               <form id="password_edit" role="form" class="form-horizontal">
                 <div class="row">
-                  <div class="nickname rowContent">
-                    <label for="nickname">昵称:</label>
-                    <input type="text" id="nickname">
-                  </div>
-                  <div class="gender rowContent">
-                      <label>性别:</label>
-                      <input type="radio" name="gender" value="1" checked="checked" id="man">
-                      <label for="man">男</label> 
-                      <input type="radio" name="gender" value="0" id="lady">
-                      <label for="lady">女</label>
+                  <div class="rowContent">
+                    <span class="old">旧邮箱:</span><span class="oldEmail">63******@qq.com</span>
                   </div>
                 </div>
                 <div class="row">
-                  <div class="job rowContent">
-                    <label for="curjob">职位:</label>
-                    <input type="text" id="curjob" name="curjob">
-                  </div>
-                  <div class="birthday rowContent">
-                    <label for="birthday">生日:</label>
-                    <input type="text" id="birthday" name="birthday">
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="pos rowContent">地区:</div>
-                  <div class="info rowContent">
-                    <select id="s_province" name="s_province"></select>
-                  </div>
-                  <div class="info rowContent s_city">
-                    <select id="s_city" name="s_city"></select>
+                  <div class="rowContent">
+                    <label for="newpassword">请输入验证码:</label>
+                    <input type="text" id="newpassword" name="newPwd" maxlength="4">
+                    <button class="getEmailCode">获取验证码</button>
                   </div>
                 </div>
                 <div class="row form-footer">
-                  <button type="button" class="submit">保存修改</button>
+                  <button type="button" class="submit">下一步</button>
                 </div>
               </form>
               <!-- password_edit 结束-->
@@ -138,8 +118,6 @@
   </footer>
 </body>
 <script src="/public/js/jquery-3.3.1.js"></script>
-<script src="/public/js/layDate/laydate.js"></script>
-<script src="/public/js/userCenter/dsy.js"></script>
 <script type=text/javascript>
   // Navigation Menu
   $(function() {
@@ -148,12 +126,6 @@
       $(this).find('ul:first').css({visibility: "visible",display: "none"}).slideDown("normal");
     },function(){
       $(this).find('ul:first').css({visibility: "hidden"});
-    });
-
-    // laydate plugin init
-    laydate.render({
-      elem: '#birthday',
-      format: 'yyyy-MM-dd'
     });
   });
 </script>

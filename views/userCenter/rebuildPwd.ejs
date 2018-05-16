@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="/public/css/admin/common.css">
   <link rel="stylesheet" href="/public/css/admin/content_index.css">
   <link rel="stylesheet" href="/public/css/userCenter/common.css">
-  <link rel="stylesheet" href="/public/css/userCenter/settings.css">
+  <link rel="stylesheet" href="/public/css/userCenter/rebuildPwd.css">
   <title>个人中心</title>
 </head>
 
@@ -20,7 +20,7 @@
         <div class="logo f_l">
           <a href="/settings/basic">
             <img src="/public/imgs/avatar/default.jpg" alt="">
-            <%= userInfo.username %></a>
+            <%= userInfo.username %>的博客</a>
         </div>
         <div class="blank"></div>
 
@@ -69,10 +69,10 @@
         <section>
           <div class="settings">帐号设置</div>
           <div class="tabs clearfix">
-            <a href="/settings/basic" class="active">基本信息</a>
-            <a href="/settings/changepwd">修改密码</a>
-            <a href="/settings/secureqa">密码保护</a>
-            <a href="/settings/changeemail">修改邮箱</a>
+            <a href="/settings/basic">基本信息</a>
+            <a href="/settings/changepwd" class="active">修改密码</a>
+            <a href="/my/account/secureqa">密码保护</a>
+            <a href="/my/account/changeemail">修改邮箱</a>
             <a href="/my/account/loginlog">登录日志</a>
             <a href="/my/account/bind">第三方帐号绑定</a>
             <a href="/my/account/privacy">个人主页隐私设置</a>
@@ -82,34 +82,20 @@
               <form id="password_edit" role="form" class="form-horizontal">
                 <div class="row">
                   <div class="nickname rowContent">
-                    <label for="nickname">昵称:</label>
-                    <input type="text" id="nickname">
-                  </div>
-                  <div class="gender rowContent">
-                      <label>性别:</label>
-                      <input type="radio" name="gender" value="1" checked="checked" id="man">
-                      <label for="man">男</label> 
-                      <input type="radio" name="gender" value="0" id="lady">
-                      <label for="lady">女</label>
+                    <label for="oldpassword">旧密码:</label>
+                    <input type="password" id="oldpassword" name="oldPwd">
                   </div>
                 </div>
                 <div class="row">
                   <div class="job rowContent">
-                    <label for="curjob">职位:</label>
-                    <input type="text" id="curjob" name="curjob">
-                  </div>
-                  <div class="birthday rowContent">
-                    <label for="birthday">生日:</label>
-                    <input type="text" id="birthday" name="birthday">
+                    <label for="newpassword">新密码:</label>
+                    <input type="password" id="newpassword" name="newPwd">
                   </div>
                 </div>
                 <div class="row">
-                  <div class="pos rowContent">地区:</div>
                   <div class="info rowContent">
-                    <select id="s_province" name="s_province"></select>
-                  </div>
-                  <div class="info rowContent s_city">
-                    <select id="s_city" name="s_city"></select>
+                    <label for="recheckpassword">再次确认密码:</label>
+                    <input type="password" id="recheckpassword" name="recheckPwd">
                   </div>
                 </div>
                 <div class="row form-footer">
@@ -129,7 +115,7 @@
     <div class="footer">
       <div class="f_l">
         <p>All Rights Reserved 版权所有：
-          <a href="http://www.yangqq.com">郭昊个人博客</a> 备案号：蜀ICP备00000000号</p>
+          <a href="http://www.yangqq.com">杨青个人博客</a> 备案号：蜀ICP备00000000号</p>
       </div>
       <div class="f_r textr">
         <p>Design by DanceSmile</p>
@@ -138,8 +124,6 @@
   </footer>
 </body>
 <script src="/public/js/jquery-3.3.1.js"></script>
-<script src="/public/js/layDate/laydate.js"></script>
-<script src="/public/js/userCenter/dsy.js"></script>
 <script type=text/javascript>
   // Navigation Menu
   $(function() {
@@ -148,12 +132,6 @@
       $(this).find('ul:first').css({visibility: "visible",display: "none"}).slideDown("normal");
     },function(){
       $(this).find('ul:first').css({visibility: "hidden"});
-    });
-
-    // laydate plugin init
-    laydate.render({
-      elem: '#birthday',
-      format: 'yyyy-MM-dd'
     });
   });
 </script>

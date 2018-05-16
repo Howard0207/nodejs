@@ -1,0 +1,55 @@
+#wrapper .container .settings{
+  background: url(../../imgs/userCenter/perSetting-icon.png) no-repeat;
+  height: 48px;
+  line-height: 48px;
+  padding-left: 58px;
+  margin: 50px 80px 30px 80px;
+  font-size: 20px;
+}
+
+
+#wrapper .container .tabs{
+  display: flex;
+  justify-content: flex-start;
+  height: 30px;
+  margin: 0 80px 10px;
+  box-sizing: border-box;
+  border-bottom: 1px solid crimson;
+}
+#wrapper .container .tabs a{
+  display: block;
+  flex-direction: row;
+  margin-right: 10px;
+  padding: 0 10px;
+  line-height: 30px;
+  text-decoration: none;
+  background: #ccc;
+  color: #555;
+}
+
+#wrapper .container .tabs a.active{
+  background: crimson;
+  color: #fff;
+}
+
+
+
+
+#wrapper .container .tab-content .row.form-footer{
+  margin-top: 30px;
+  margin-bottom: 80px;
+}
+
+#wrapper .container .tab-content .form-footer .submit{
+  width: 310px;
+  height: 50px;
+  background: url(/public/imgs/base/rtitbg.png) no-repeat 0 4px;
+  border: none;
+  outline: none;
+  text-align: left;
+  text-indent: 100px;
+  letter-spacing: 2px;
+  font-size: 18px;
+  color: #fff;
+  cursor: pointer;
+}

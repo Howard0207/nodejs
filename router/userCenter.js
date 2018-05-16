@@ -20,4 +20,16 @@ router.get('/basic',(req,res) => {
   })
 })
 
+router.get('/changepwd',(req,res) => {
+  res.render('userCenter/rebuildPwd',{
+    userInfo:req.userInfo
+  })
+})
+
+router.get('/changeemail',(req,res) => {
+  res.render('userCenter/rebuildEmail',{
+    userInfo:req.userInfo
+  })
+})
+
 module.exports = router
