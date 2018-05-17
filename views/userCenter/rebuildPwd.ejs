@@ -20,7 +20,7 @@
         <div class="logo f_l">
           <a href="/settings/basic">
             <img src="/public/imgs/avatar/default.jpg" alt="">
-            <%= userInfo.username %>的博客</a>
+            <%= userInfo.username %></a>
         </div>
         <div class="blank"></div>
 
@@ -71,8 +71,8 @@
           <div class="tabs clearfix">
             <a href="/settings/basic">基本信息</a>
             <a href="/settings/changepwd" class="active">修改密码</a>
-            <a href="/my/account/secureqa">密码保护</a>
-            <a href="/my/account/changeemail">修改邮箱</a>
+            <a href="/settings/secureqa">密码保护</a>
+            <a href="/settings/changeemail">修改邮箱</a>
             <a href="/my/account/loginlog">登录日志</a>
             <a href="/my/account/bind">第三方帐号绑定</a>
             <a href="/my/account/privacy">个人主页隐私设置</a>
@@ -81,19 +81,19 @@
             <div class="tab-pane active">
               <form id="password_edit" role="form" class="form-horizontal">
                 <div class="row">
-                  <div class="nickname rowContent">
+                  <div class="rowContent">
                     <label for="oldpassword">旧密码:</label>
                     <input type="password" id="oldpassword" name="oldPwd">
                   </div>
                 </div>
                 <div class="row">
-                  <div class="job rowContent">
+                  <div class="rowContent">
                     <label for="newpassword">新密码:</label>
                     <input type="password" id="newpassword" name="newPwd">
                   </div>
                 </div>
                 <div class="row">
-                  <div class="info rowContent">
+                  <div class="rowContent">
                     <label for="recheckpassword">再次确认密码:</label>
                     <input type="password" id="recheckpassword" name="recheckPwd">
                   </div>
