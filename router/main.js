@@ -24,9 +24,9 @@ router.use((req,res,next) => {
     userInfo: req.userInfo,
     categories: []
   }
-  let where = {};
+  let where = {}
   if(req.userInfo._uid) {
-    where.user = req.userInfo._uid;
+    where.user = req.userInfo._uid
   }
 
   Category.where(where).find().then((categories) => {
@@ -40,7 +40,7 @@ router.use((req,res,next) => {
 router.get('/index',function(req,res) {
   if(!req.userInfo._uid){
     res.redirect('/user/login')
-    return;
+    return
   }
   data.category = req.query.category || ''
   data.count = 0
@@ -56,7 +56,7 @@ router.get('/index',function(req,res) {
   }
 
 
-  // let whereU = {user:'5ad9b60617612a114d968ffd'};
+  // let whereU = {user:'5ad9b60617612a114d968ffd'}
   // 读取所有分类信息
   Content.where(where).count().then((count) => {
     data.count =  count
@@ -80,9 +80,6 @@ router.get('/index',function(req,res) {
       let day = fillZero(timeStamp.getDate())
       let month = fillZero(timeStamp.getMonth() + 1)
       let year = timeStamp.getFullYear()
-      let hours = fillZero(timeStamp.getHours())
-      let minutes = fillZero(timeStamp.getMinutes())
-      let seconds = fillZero(timeStamp.getSeconds())
       contents[i].addFormateTime = year+'-'+month+'-'+day
     }
     data.contents = contents
@@ -98,12 +95,8 @@ router.get('/',function(req,res) {
   data.pages = 0
   data.limit = 6
 
-  if(data.category) {
-    where.category = data.category
-  }
 
-
-  // let whereU = {user:'5ad9b60617612a114d968ffd'};
+  // let whereU = {user:'5ad9b60617612a114d968ffd'}
   // 读取所有分类信息
   Content.count().then((count) => {
     data.count =  count
@@ -124,9 +117,6 @@ router.get('/',function(req,res) {
       let day = fillZero(timeStamp.getDate())
       let month = fillZero(timeStamp.getMonth() + 1)
       let year = timeStamp.getFullYear()
-      let hours = fillZero(timeStamp.getHours())
-      let minutes = fillZero(timeStamp.getMinutes())
-      let seconds = fillZero(timeStamp.getSeconds())
       contents[i].addFormateTime = year+'-'+month+'-'+day
     }
     data.contents = contents

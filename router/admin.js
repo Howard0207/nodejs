@@ -23,11 +23,11 @@ router.use((req, res, next) => {
   next()
 })
 
-router.get('/', (req, res, next) => {
+router.get('/', (req, res) => {
   res.render('admin/index', { userInfo: req.userInfo })
 })
 
-router.get('/user', (req, res, next) => {
+router.get('/user', (req, res) => {
   /* 
     从数据库中读取用户数据
     |- 限制获取数据的条数
@@ -69,11 +69,11 @@ router.get('/user', (req, res, next) => {
 /**
  * 分类首页
  */
-router.get('/category', (req, res, next) => {
+router.get('/category', (req, res) => {
   let page = Number(req.query.page) || 1 // 实际要判断传递数据的类型是否是number，这里暂不处理
   let pages = 0
   let limit = 10
-  Category.where({user: req.userInfo._uid}).count().then((count) => {
+  Category.where({ user: req.userInfo._uid }).count().then((count) => {
     // 计算总页数
     pages = Math.ceil(count / limit)
     // 取值不能超过pages
@@ -87,7 +87,7 @@ router.get('/category', (req, res, next) => {
      *  1：升序
      * -1：降序
      */
-    Category.where({user: req.userInfo._uid}).find().sort({ _id: -1 }).limit(limit).skip(skip).then((categories) => {
+    Category.where({ user: req.userInfo._uid }).find().sort({ _id: -1 }).limit(limit).skip(skip).then((categories) => {
       res.render('admin/category_index', {
         userInfo: req.userInfo,
         categories: categories,
@@ -103,7 +103,7 @@ router.get('/category', (req, res, next) => {
 /**
  * 分类的添加
  */
-router.get('/category/add', (req, res, next) => {
+router.get('/category/add', (req, res) => {
   res.render('admin/category_add', {
     userInfo: req.userInfo
   })
@@ -114,7 +114,7 @@ router.get('/category/add', (req, res, next) => {
  * 分类的保存
  */
 
-router.post('/category/add', (req, res, next) => {
+router.post('/category/add', (req, res) => {
   let name = req.body.name || ''
   if (name === '') {
     res.render('error/category', {
@@ -139,7 +139,7 @@ router.post('/category/add', (req, res, next) => {
         user: req.userInfo._uid
       }).save()
     }
-  }).then((newCategory) => {
+  }).then(() => {
     res.render('success/category', {
       userInfo: req.userInfo,
       message: '分类保存成功',
@@ -214,21 +214,21 @@ router.post('/category/edit', (req, res) => {
       Category.update({
         _id: id
       }, {
-          $set: { name: name }
-        }, (error) => {
-          if (error) {
-            res.render('error/category', {
-              userInfo: req.userInfo,
-              message: '修改失败'
-            })
-          } else {
-            res.render('success/category', {
-              userInfo: req.userInfo,
-              message: '修改成功',
-              url: '/admin/category'
-            })
-          }
-        })
+        $set: { name: name }
+      }, (error) => {
+        if (error) {
+          res.render('error/category', {
+            userInfo: req.userInfo,
+            message: '修改失败'
+          })
+        } else {
+          res.render('success/category', {
+            userInfo: req.userInfo,
+            message: '修改成功',
+            url: '/admin/category'
+          })
+        }
+      })
     }
   })
 })
@@ -260,7 +260,7 @@ router.get('/content', (req, res) => {
   let page = Number(req.query.page) || 1 // 实际要判断传递数据的类型是否是number，这里暂不处理
   let pages = 0
   let limit = 20
-  Content.where({user: req.userInfo._uid}).count().then((count) => {
+  Content.where({ user: req.userInfo._uid }).count().then((count) => {
     // 计算总页数
     pages = Math.ceil(count / limit)
     // 取值不能超过pages
@@ -274,7 +274,7 @@ router.get('/content', (req, res) => {
       *  1：升序
       * -1：降序
       */
-    Content.where({user: req.userInfo._uid}).find().sort({ _id: -1 }).limit(limit).skip(skip).populate(['category', 'user']).then((contents) => {
+    Content.where({ user: req.userInfo._uid }).find().sort({ _id: -1 }).limit(limit).skip(skip).populate(['category', 'user']).then((contents) => {
       for (let i = 0, len = contents.length; i < len; i++) {
         let timeStamp = contents[i].addTime
         let day = fillZero(timeStamp.getDate())
@@ -335,7 +335,7 @@ router.post('/content/add', (req, res) => {
       user: req.userInfo._uid,
       description: req.body.description,
       content: req.body.content
-    }).save().then((rs) => {
+    }).save().then(() => {
       res.render('success/category', {
         userInfo: req.userInfo,
         message: '内容保存成功',
@@ -379,21 +379,21 @@ router.get('/content/edit/info', (req, res) => {
   Content.findOne({
     _id: id
   })
-  .populate('category')
-  .then((content) => {
-    if (!content) {
-      res.json({
-        userInfo: req.userInfo,
-        message: '指定的内容不存在'
-      })
-      return Promise.reject()
-    } else {
-      res.json({
-        userInfo: req.userInfo,
-        content: content
-      })
-    }
-  })
+    .populate('category')
+    .then((content) => {
+      if (!content) {
+        res.json({
+          userInfo: req.userInfo,
+          message: '指定的内容不存在'
+        })
+        return Promise.reject()
+      } else {
+        res.json({
+          userInfo: req.userInfo,
+          content: content
+        })
+      }
+    })
 })
 
 /**
@@ -417,26 +417,26 @@ router.post('/content/edit', (req, res) => {
     Content.update({
       _id: id
     }, {
-        $set: {
-          category: req.body.category,
-          title: req.body.title,
-          description: req.body.description,
-          content: req.body.content
-        }
-      }, (error) => {
-        if (error) {
-          res.render('error/category', {
-            userInfo: req.userInfo,
-            message: '修改失败'
-          })
-        } else {
-          res.render('success/category', {
-            userInfo: req.userInfo,
-            message: '内容保存成功',
-            url: '/admin/content/edit?id=' + id
-          })
-        }
-      })
+      $set: {
+        category: req.body.category,
+        title: req.body.title,
+        description: req.body.description,
+        content: req.body.content
+      }
+    }, (error) => {
+      if (error) {
+        res.render('error/category', {
+          userInfo: req.userInfo,
+          message: '修改失败'
+        })
+      } else {
+        res.render('success/category', {
+          userInfo: req.userInfo,
+          message: '内容保存成功',
+          url: '/admin/content/edit?id=' + id
+        })
+      }
+    })
   }
 })
 /**

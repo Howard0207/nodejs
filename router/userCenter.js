@@ -1,9 +1,6 @@
 let express = require('express')
 let router = express.Router()
 // User 模型
-let User = require('../models/User')
-
-let data = {}
 
 // 登陆检测
 router.use((req, res, next) => {

@@ -3,7 +3,7 @@ let router = express.Router()
 let User = require('../models/User')
 let Content = require('../models/Content')
 // 统一返回格式
-let responseData;
+let responseData
 
 router.use((req,res,next) => {
   responseData = {
@@ -53,17 +53,17 @@ router.post('/user/register',function(req,res) {
     responseData.code = 1
     responseData.message = '用户名不能为空'
     res.render('error/registerError',responseData)
-    return false;
+    return false
   } else if (password === '') {
     responseData.code = 2
     responseData.message = '密码不能为空'
     res.render('error/registerError',responseData)
-    return false;
+    return false
   } else if ( repassword !== password ) {
     responseData.code = 3
     responseData.message = '两次输入的密码不一致'
     res.render('error/registerError',responseData)
-    return false;
+    return false
   } else {
     // 用户名是否已经被注册
     User.findOne({
@@ -88,7 +88,7 @@ router.post('/user/register',function(req,res) {
         _uid: newUserInfo._id,
         username: newUserInfo.username
       })
-      res.redirect('/');
+      res.redirect('/')
     })
   }
 })
@@ -138,7 +138,7 @@ router.post('/user/login',(req,res) => {
           _uid: userInfo._id,
           username: userInfo.username
         })
-        res.redirect('/');
+        res.redirect('/')
         return true
       }
     })
@@ -148,9 +148,9 @@ router.post('/user/login',(req,res) => {
 /*
   logout
 */
-router.get('/user/logout',function(req,res,next) {
+router.get('/user/logout',function(req,res) {
   if( req.cookies.userInfo) {
-    res.clearCookie('userInfo');
+    res.clearCookie('userInfo')
   }
   res.json({
     code: 1,

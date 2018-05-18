@@ -22,7 +22,7 @@ $(function(){
           alert('退出失败')
         }
       },
-      error: function (e) {
+      error: function () {
         alert('退出失败')
       }
     })
