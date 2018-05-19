@@ -137,6 +137,21 @@
   width: 200px;
   height: 200px;
 }
+
+#wrapper .container main .upload .upload-avatar-wrapper .upload-preview .avatar-cut{
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  z-index: 10;
+  width: 150px;
+  height: 150px;
+  box-sizing: border-box;
+  background: rgba(42, 42, 42, 0.1);
+  border: 1px dotted #ccc;
+  border-radius: 50%;
+  cursor: move;
+}
+
 #wrapper .container main .upload .upload-avatar-wrapper .upload-options{
   display:flex;
   justify-content: space-between;

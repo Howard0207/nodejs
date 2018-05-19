@@ -119,24 +119,24 @@
               <!-- password_edit 结束-->
             </div>
             <div class="avatar-wrapper">
-              <img src="/public/imgs/avatar/default.jpg" alt="" class="avatar">
+              <img src="/public/imgs/avatar/default.jpg" alt="" class="avatar" id="avatar"
               <span class="avatar-edit"></span>
             </div>
           </div>
         </section>
-        <section class="upload">
+        <section class="upload" style="display:none;">
           <div class="upload-avatar-wrapper">
             <div class="upload-tip">
               <span>仅支持JPG,PNG格式;文件小于2M</span>
             </div>
-            <div class="upload-preview">
+            <div class="upload-preview" id="upload-preview">
               <img src="/public/imgs/avatar/default.jpg" alt="" class="avatar-new">
-              <div class="avator-cut"></div>
+              <div class="avatar-cut" id="avatar-cut"></div>
             </div>
             <div class="upload-options">
               <div class="opt-select">
                 <a href="javascript:void(0)" class="select-pic">
-                  选择图片<input type="file">
+                  选择图片<input type="file" id="avatar-file">
                 </a>
               </div>
               <div class="opt-cancel-save">
@@ -181,6 +181,101 @@
       elem: '#birthday',
       format: 'yyyy-MM-dd'
     });
+
+    // avatar edit List Show
+    $('#avatar').click(function() {
+      $('.upload').show('normal')
+    })
+
+    // avatar edit List Hide
+    $('.cancel').click(function() {
+      $('.upload').hide()
+    })
+
+    // avatar select
+    $('#avatar-file').on('change',function() {
+
+      var docObj=document.getElementById("#avatar-file");
+
+      var imgObjPreview=document.getElementById("avatar");
+
+      if(docObj.files &&docObj.files[0]) {
+        //火狐下，直接设img属性
+        imgObjPreview.style.display = 'block';
+        imgObjPreview.style.width = '150px';
+        imgObjPreview.style.height = '150px';
+
+        //火狐7以上版本不能用上面的getAsDataURL()方式获取，需要一下方式
+        imgObjPreview.src = window.URL.createObjectURL(docObj.files[0]);
+        avatarCutPreview();
+
+      } else {
+        //IE下，使用滤镜
+        docObj.select();
+        var imgSrc = document.selection.createRange().text;
+        var localImagId = document.getElementById("localImag");
+        //必须设置初始大小
+        localImagId.style.width = "150px";
+        localImagId.style.height = "150px";
+        //图片异常的捕捉，防止用户修改后缀来伪造图片
+        try {
+          localImagId.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+          localImagId.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = imgSrc;
+        }
+        catch (e) {
+          alert("您上传的图片格式不正确，请重新选择!");
+          return false;
+        }
+        imgObjPreview.style.display = 'none';
+        document.selection.empty();
+        avatarCutPreview();
+      }
+    })
+
+    // avatar - cut
+    $('#avatar-cut').on('mousedown',function(e) {
+      e.preventDefault()
+      if(e == window.event) {
+        e.cancleBubble()
+        console.log('window.event')
+      } else {
+        e.stopPropagation()
+        console.log('event')
+      }
+      let max = $('#upload-preview').width() - $('#avatar-cut').width()
+      let left = $('#avatar-cut').position().left,top = $('#avatar-cut').position().top
+      console.log(left, top,max)
+      let curL = e.clientX, curT = e.clientY
+
+
+      $(document).on('mousemove',function(e) {
+        e.preventDefault()
+        if(e === window.event) {
+          e.cancleBubble()
+        } else {
+          e.stopPropagation()
+        }
+        let actL = e.clientX,actT = e.clientY
+        let newL = left + actL - curL, newT = top + actT - curT
+        newL = Math.max(0,newL)
+        newT = Math.max(0,newT)
+
+        newL = Math.min(max,newL)
+        newT = Math.min(max,newT)
+        $('#avatar-cut').css({left: newL,top:newT});
+        console.log(newL,newT)
+      })
+      $(document).on('mouseup',function(e) {
+        e.preventDefault()
+        if(e === window.event) {
+          e.cancleBubble()
+        } else {
+          e.stopPropagation()
+        }
+        $(document).unbind('mousemove').unbind('mouseup')
+      })
+    })
+
   });
 </script>
 
