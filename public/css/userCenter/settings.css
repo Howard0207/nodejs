@@ -124,7 +124,6 @@
   padding: 12px 0 8px;
   text-align: center;
   color: #555;
-  border-bottom: 1px solid #ccc;
 }
 #wrapper .container main .upload .upload-avatar-wrapper .upload-preview{
   position: relative;
@@ -163,16 +162,16 @@
 #wrapper .container main .upload .upload-avatar-wrapper .upload-options .opt-select .select-pic{
   position: relative;
   z-index: 1000;
-  background: #be0000;
+  display: block;
+  margin-bottom: 20px;
   width: 98px;
   height: 28px;
   line-height: 28px;
+  background: #be0000;
   color: #fff;
   font-size: 14px;
-  display: block;
   text-align: center;
   text-decoration: none;
-  margin-bottom: 20px;
 }
 #wrapper .container main .upload .upload-avatar-wrapper .upload-options .opt-select input{
   position: absolute;

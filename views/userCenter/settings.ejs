@@ -126,12 +126,12 @@
         </section>
         <section class="upload" style="display:none;">
           <div class="upload-avatar-wrapper">
+            <div class="upload-preview" id="upload-preview">
+              <img src="" alt="" class="avatar-new" id="avatar-new">
+              <div class="avatar-cut" id="avatar-cut"></div>
+            </div>
             <div class="upload-tip">
               <span>仅支持JPG,PNG格式;文件小于2M</span>
-            </div>
-            <div class="upload-preview" id="upload-preview">
-              <img src="/public/imgs/avatar/default.jpg" alt="" class="avatar-new">
-              <div class="avatar-cut" id="avatar-cut"></div>
             </div>
             <div class="upload-options">
               <div class="opt-select">
@@ -184,6 +184,8 @@
 
     // avatar edit List Show
     $('#avatar').click(function() {
+      let avatar_src = $('#avatar').attr('src')
+      $('#avatar-new').attr('src',avatar_src)
       $('.upload').show('normal')
     })
 
@@ -195,20 +197,22 @@
     // avatar select
     $('#avatar-file').on('change',function() {
 
-      var docObj=document.getElementById("#avatar-file");
+      var docObj=document.getElementById("avatar-file");
 
-      var imgObjPreview=document.getElementById("avatar");
+      var imgObjPreview=document.getElementById("avatar-new");
 
       if(docObj.files &&docObj.files[0]) {
-        //火狐下，直接设img属性
-        imgObjPreview.style.display = 'block';
-        imgObjPreview.style.width = '150px';
-        imgObjPreview.style.height = '150px';
-
-        //火狐7以上版本不能用上面的getAsDataURL()方式获取，需要一下方式
-        imgObjPreview.src = window.URL.createObjectURL(docObj.files[0]);
-        avatarCutPreview();
-
+        // 判断文件格式
+        if(docObj.files[0].type === 'image/jpeg' || docObj.files[0].type === 'image/png') {
+          //火狐下，直接设img属性
+          imgObjPreview.style.display = 'block';
+          imgObjPreview.style.width = '200px';
+          imgObjPreview.style.height = '200px';
+          //火狐7以上版本不能用上面的getAsDataURL()方式获取，需要一下方式
+          imgObjPreview.src = window.URL.createObjectURL(docObj.files[0]);
+        } else {
+          return
+        }
       } else {
         //IE下，使用滤镜
         docObj.select();
@@ -228,7 +232,6 @@
         }
         imgObjPreview.style.display = 'none';
         document.selection.empty();
-        avatarCutPreview();
       }
     })
 
@@ -237,16 +240,12 @@
       e.preventDefault()
       if(e == window.event) {
         e.cancleBubble()
-        console.log('window.event')
       } else {
         e.stopPropagation()
-        console.log('event')
       }
-      let max = $('#upload-preview').width() - $('#avatar-cut').width()
+      let max = $('#upload-preview').width() - $('#avatar-cut').width() - 1
       let left = $('#avatar-cut').position().left,top = $('#avatar-cut').position().top
-      console.log(left, top,max)
       let curL = e.clientX, curT = e.clientY
-
 
       $(document).on('mousemove',function(e) {
         e.preventDefault()
@@ -263,7 +262,6 @@
         newL = Math.min(max,newL)
         newT = Math.min(max,newT)
         $('#avatar-cut').css({left: newL,top:newT});
-        console.log(newL,newT)
       })
       $(document).on('mouseup',function(e) {
         e.preventDefault()

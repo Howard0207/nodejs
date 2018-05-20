@@ -6,7 +6,7 @@ const formidable = require('formidable')
 // User 模型
 
 
-const cacheFolder = './cacheFolder/temp'
+const cacheFolder = '../public/imgs/cacheFolder/temp'
 
 // 清空缓存文件夹
 let emptyDir = function (fileUrl) {
