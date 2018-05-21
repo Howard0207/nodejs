@@ -1,11 +1,21 @@
 body, dl, dd, h1, h2, h3, h4, h5, h6, p, form{margin: 0;}
 ol,li,ul{	margin: 0;	padding: 0;}
 body { font: 14px "微软雅黑", Arial, Helvetica, sans-serif; background: url(../../imgs/base/bg.jpg) repeat; color: #555 }
+html,body,.wrapper{ height: 100%;}
+
 .wrapper .headtop { background: url(../../imgs/base/topbg.jpg) repeat-x; height: 28px; }
+
+.wrapper main{
+  position: relative;
+  top: 50%;
+  transform-origin: center;
+  transform: translateY(-50%);
+}
 .wrapper .header-content{
   width: 154px;
   height: 150px;
-  margin: 10% auto 70px;
+  margin: 0 auto;
+  transform: translateX(20px);
   background-size: cover!important;
 }
 

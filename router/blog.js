@@ -18,17 +18,17 @@ function fillZero(num) {
 }
 
 // 处理通用的数据
-router.use((req, res, next) => {
-  if (!req.params.id) {
+router.param('id',(req, res, next,id) => {
+  if (!id) {
     res.render('error/404',{message:'查找的页面不存在'})
   } else {
     data = {
       userInfo: req.userInfo,
-      blogger: req.params.id,
+      blogger: id,
       categories: []
     }
     let where = {
-      user: req.params.id
+      user: id
     }
     Category.where(where).find().then((categories) => {
       data.categories = categories
