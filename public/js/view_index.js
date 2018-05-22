@@ -1,4 +1,4 @@
-$(function(){
+$(function () {
   /**
    * 提交评论-- view.ejs
    */
@@ -10,7 +10,7 @@ $(function(){
         contentid: $('#contentId').val(),
         content: $('#messageContent').val()
       },
-      success: function(responseData) {
+      success: function (responseData) {
         $('#messageContent').val('')
         renderComment(responseData.data.comments.reverse())
       }
@@ -18,35 +18,35 @@ $(function(){
   })
 
   function renderComment(comments) {
-    let html=''
-    for(let val in comments){
-      html += `<div class="messageBox">
-                  <p class="name clear">
-                    <span class="fl">${comments[val].username}</span>
-                    <span class="fr">${comments[val].addFormateTime}</span>
+    let html = ''
+    for (let val in comments) {
+      html += `<div class='messageBox'>
+                  <p class='name clear'>
+                    <span class='fl'>${comments[val].username}</span>
+                    <span class='fr'>${comments[val].addFormateTime}</span>
                   </p>
                   <p>${comments[val].content}</p>
                 </div>`
     }
-    $('.messageList').html(html);
+    $('.messageList').html(html)
   }
 
   $.ajax({
     type: 'get',
-    url:'/api/comment',
+    url: '/api/comment',
     data: {
       contentid: $('#contentId').val()
     },
-    success: function(responseData) {
+    success: function (responseData) {
       renderComment(responseData.data.reverse())
     }
   })
 
 
-  $(".menu ul").css({display: "none"}); // Opera Fix
-  $(".menu li").hover(function(){
-    $(this).find('ul:first').css({visibility: "visible",display: "none"}).slideDown("normal");
-  },function(){
-    $(this).find('ul:first').css({visibility: "hidden"});
-  });
+  $('.menu ul').css({ display: 'none' }) // Opera Fix
+  $('.menu li').hover(function () {
+    $(this).find('ul:first').css({ visibility: 'visible', display: 'none' }).slideDown('normal')
+  }, function () {
+    $(this).find('ul:first').css({ visibility: 'hidden' })
+  })
 })

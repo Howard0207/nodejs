@@ -143,8 +143,8 @@
   height: 60px;
   resize: none;
   box-sizing: border-box;
+  border: 1px solid #ccc;
   border-radius: 5px;
-  border-color: #ccc;
   outline: none;
 }
 

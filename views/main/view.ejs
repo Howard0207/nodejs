@@ -23,7 +23,7 @@
                   <ul class="menu">
                     <li><a href="/">博客首页</a></li>
                     <% if(userInfo._uid) {%>
-                      <li><a href="/index">我的博客</a></li>
+                      <li><a href="/blog/<%= userInfo._uid%>">我的博客</a></li>
                     <% } %>
                     <li>
                       <a href="#">关于我</a>

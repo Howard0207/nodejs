@@ -23,7 +23,7 @@
           <div class="navigation">
             <ul class="menu">
               <li><a href="/">博客首页</a></li>
-              <li><a href="/index">我的博客</a></li>
+              <li><a href="/blog/<%= userInfo._uid%>">我的博客</a></li>
               <li>
                 <a href="#">关于我</a>
                 <ul>
@@ -83,7 +83,7 @@
               <% if(page===1) {%>
                 <li class="disabled"><a href="javascript:void(0)" aria-label="Previous"><span aria-hidden="true">上一页</span></a></li>
               <%} else {%>
-                <li><a href="/?category=<%=category%>&page=<%= page-1 %>" aria-label="Previous"><span aria-hidden="true">上一页</span></a></li>
+                <li><a href="/blog/<%=blogger%>/?category=<%=category%>&page=<%= page-1 %>" aria-label="Previous"><span aria-hidden="true">上一页</span></a></li>
               <% } %>
               <% for(let i=0;i<pages;i++) { %>
                 <% if(i+1 === page) { %>
@@ -95,7 +95,7 @@
               <% if(page===pages) {%>
                 <li class="disabled"><a href="javascript:void(0)" aria-label="Next"><span aria-hidden="true">下一页</span></a></li>
               <%} else {%>
-                <li><a href="/?category=<%=category%>&page=<%= page+1 %>" aria-label="Next"><span aria-hidden="true">下一页</span></a></li>
+                <li><a href="/blog/<%=blogger%>/?category=<%=category%>&page=<%= page+1 %>" aria-label="Next"><span aria-hidden="true">下一页</span></a></li>
               <% } %>
               <li><a>总共<%=pages %>页</a></li>
               <li><a>跳转至<input type="text">页</a></li>
@@ -132,9 +132,9 @@
           <ul>
             <% for(let i = 0, len = categories.length; i < len; i++) { %>
               <% if (category == categories[i]._id ) { %>
-                <li><a href="/?category=<%=categories[i]._id%>" class="focus"><%= categories[i].name %></a></li>
+                <li><a href="/blog/<%=blogger%>/?category=<%=categories[i]._id%>" class="focus"><%= categories[i].name %></a></li>
               <% } else {%>
-                <li><a href="/?category=<%=categories[i]._id%>"><%= categories[i].name %></a></li>
+                <li><a href="/blog/<%=blogger%>/?category=<%=categories[i]._id%>"><%= categories[i].name %></a></li>
               <% } %>
             <% } %>
           </ul>

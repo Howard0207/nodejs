@@ -54,8 +54,14 @@ router.get('/:id',function(req,res) {
     user : bloggerId
   }
 
-  if(data.category) {
+  if(req.query.category) {
+ 
+    where.category = req.query.category
+ 
+  } else if(data.category) {
+ 
     where.category = data.category
+ 
   }
 
 
