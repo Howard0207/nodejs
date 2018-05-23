@@ -123,8 +123,9 @@ router.post('/category/add', (req, res) => {
     return
   }
 
+  let where = {user: req.userInfo._uid}
   // 数据库中是否已经存在同名分类名称
-  Category.findOne({
+  Category.where(where).findOne({
     name: name
   }).then((rs) => {
     if (rs) {
@@ -302,7 +303,8 @@ router.get('/content', (req, res) => {
  * 内容添加页面
  */
 router.get('/content/add', (req, res) => {
-  Category.find().sort({ _id: -1 }).then((categories) => {
+  let where = {user: req.userInfo._uid}
+  Category.where(where).find().sort({ _id: -1 }).then((categories) => {
     res.render('admin/content_add', {
       userInfo: req.userInfo,
       categories: categories
@@ -351,7 +353,8 @@ router.post('/content/add', (req, res) => {
 router.get('/content/edit', (req, res) => {
   let id = req.query.id || ''
   let categories = []
-  Category.find().sort({ _id: -1 }).then((rs) => {
+  let where = {user: req.userInfo._uid}
+  Category.where(where).find().sort({ _id: -1 }).then((rs) => {
     categories = rs
     return Content.findOne({
       _id: id
