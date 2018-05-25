@@ -184,17 +184,19 @@ router.get('/comment',(req,res) => {
  */
 
 router.post('/comment/post', (req,res) => {
+  let content = req.body.content
+  content = content.replace(/</g,'&lt;').replace(/>/g,'&gt;')
   // 内容id
   let contentId = req.body.contentid || ''
   let postData = {
     username: req.userInfo.username,
     postTime: new Date(),
-    content: req.body.content
+    content: content
   }
   // 查询当前这篇内容的信息
   Content.findOne({
     _id: contentId
-  }).then((content) => {
+  }).select('comments').then((content) => {
     content.comments.push(postData)
     return content.save()
   }).then((newContent) => {

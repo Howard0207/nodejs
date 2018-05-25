@@ -96,7 +96,7 @@
                     <%= content.views%>
                   </span>
                   评论：
-                  <span><%= content.comments.length%></span>
+                  <span class="comments-num"><%= content.comments.length%></span>
                 </p>
                 <div class="blog-content">
                   <%- content.content%>
@@ -109,7 +109,7 @@
                 <% if(userInfo._uid) { %>
                   <div class="textLeft comments-header">
                     <span class="text">评论:</span>
-                    <span class="count">一共有<em id="messageCount"><%= content.comments.length%></em>条评论</span>
+                    <span class="count">一共有<em id="messageCount" class="comments-num"><%= content.comments.length%></em>条评论</span>
                   </div>
                   <div class="textLeft clear">
                     <textarea id="messageContent" maxlength="600"></textarea>
