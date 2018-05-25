@@ -21,11 +21,15 @@ $(function () {
     let html = ''
     for (let val in comments) {
       html += `<div class='messageBox'>
-                  <p class='name clear'>
-                    <span class='fl'>${comments[val].username}</span>
-                    <span class='fr'>${comments[val].addFormateTime}</span>
-                  </p>
-                  <p>${comments[val].content}</p>
+                  <div class='message-header>
+                    <a class='message-user'>
+                      <span class='message-username'>${comments[val].username}</span>
+                    </a>
+                    <span class='message-addTime'>${comments[val].addFormateTime}</span>
+                  </div>
+                  <div class='message-content'>
+                    <p class='message-detail'>${comments[val].content}</p>
+                  </div>
                 </div>`
     }
     $('.messageList').html(html)
