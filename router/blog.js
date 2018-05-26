@@ -79,7 +79,7 @@ router.get('/:id',function(req,res) {
 
     // return Content.where(whereU).find().limit(data.limit).skip(skip).populate(['category','user']).sort({addTime: -1})
 
-    return Content.where(where).find().limit(data.limit).skip(skip).populate(['category','user']).sort({addTime: -1})
+    return Content.where(where).find().select('-content').limit(data.limit).skip(skip).populate(['category','user']).sort({addTime: -1})
    
   }).then((contents) => {
     
@@ -91,6 +91,7 @@ router.get('/:id',function(req,res) {
       contents[i].addFormateTime = year+'-'+month+'-'+day
     }
     data.contents = contents
+    console.log(data)
     res.render('main/self_index',data)
   })
 })

@@ -2,6 +2,8 @@ let express = require('express')
 let router = express.Router()
 let User = require('../models/User')
 let Content = require('../models/Content')
+let nodemailer = require('nodemailer');
+
 // 统一返回格式
 let responseData
 
@@ -13,6 +15,7 @@ router.use((req,res,next) => {
   next()
 })
 
+
 function fillZero(num) {
   if(typeof num !== 'number') {
     throw new Error('access parameter is not a number')
@@ -23,14 +26,83 @@ function fillZero(num) {
   }
 }
 
+
+/**
+ * 用户邮箱注册-发送验证码
+ *  验证邮箱是否符合规则。
+ *  
+ *  @return code:
+ *    100： 邮箱格式错误
+ *    101： 发送成功
+ *    102： 发送失败
+ */
+router.post('/user/emailCheck',function(req,res) {
+  
+  let validateCode = 0
+
+  let mailTo = req.body.email
+
+  // 邮件验证
+  let reg = /^[A-Za-z0-9]+([-_.][A-Za-z0-9]+)*@([A-Za-z0-9]+[-.])+[A-Za-z0-9]{2,5}$/;
+  if (!mailTo.match(reg)) {
+    return res.json({code: 100, message: "邮箱地址不符合规范，请重新输入！"});
+  }
+
+  // 随机验证code
+  validateCode = Math.floor(Math.random()*10000)
+  // session 存储
+  req.session.validateCode = validateCode
+  // 邮件发送
+  nodemailer.createTestAccount((err, account) => {
+    // create reusable transporter object using the default SMTP transport
+    let transporter = nodemailer.createTransport({
+        host: 'smtp.163.com',
+        port: 465,
+        secure: true, // true for 465, false for other ports
+        auth: {
+            user: 'wode163_youjian@163.com', // generated ethereal user
+            pass: 'wodeyoujian163' // generated ethereal password
+        }
+    });
+
+    // setup email data with unicode symbols
+    let mailOptions = {
+        from: '"Blog World👻" <wode163_youjian@163.com>', // sender address
+        to: '"User👻 " '+mailTo+'', // list of receivers
+        subject: 'Blog Wrold 邮箱验证', // Subject line
+        text: '', // plain text body
+        html: '<h2>注册验证：</h2><div style="padding: 0 20px;display: flex;line-height: 30px;font-size: 20px;"><p style="margin: 0;">验证码：</p><span style="display: block;">'+validateCode+'</span></div> ' // html body
+    };
+
+    // send mail with defined transport object
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            return console.log(error);
+            res.json({code: 102 , message: 'error'})
+        }
+        //console.log('Message sent: %s', info.messageId);
+        // Preview only available when sending through an Ethereal account
+        //console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+        res.json({code: 101 , message: 'ok'})
+        // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+        // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+    });
+});
+})
+
+// 进入注册页面
+router.get('/user/register',(req,res) => {
+  res.render('register/register',{})
+})
+
 /*
   用户注册
     |-注册逻辑
-      1.用户名不能为空
-      2.密码不能为空
-      3.两次输入密码必须一致
+      1.用户名不能为空 code:1
+      2.密码不能为空   code:2
+      3.验证码错误     code:3
       |- 数据库查询
-        1.用户是否已经被注册了。
+        1.用户是否已经被注册了。 code:4
 */
 router.post('/user/register',function(req,res) {
   /*
@@ -41,13 +113,12 @@ router.post('/user/register',function(req,res) {
   */
   let username = req.body.username
   let password = req.body.password
-  let repassword = req.body.repassword
-
+  let validate = parseInt(req.body.validateCode)
+  let sessionCode = req.session.validateCode
   /* 
     数据验证
     |- 用户名验证
     |- 密码为空验证
-    |- 两次密码是否一致验证
   */
   if( username === '' ) {
     responseData.code = 1
@@ -59,9 +130,9 @@ router.post('/user/register',function(req,res) {
     responseData.message = '密码不能为空'
     res.render('error/registerError',responseData)
     return false
-  } else if ( repassword !== password ) {
+  } else if ( sessionCode !== validate ) {
     responseData.code = 3
-    responseData.message = '两次输入的密码不一致'
+    responseData.message = '验证码错误'
     res.render('error/registerError',responseData)
     return false
   } else {
@@ -95,7 +166,7 @@ router.post('/user/register',function(req,res) {
 
 
 
-// 进入登陆注册页面
+// 进入登陆页面
 router.get('/user/login',(req,res) => {
   res.render('login/login',{})
 })

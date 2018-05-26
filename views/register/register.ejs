@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="/public/css/login/index.css">
+  <title>登陆</title>
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <div class="headtop"></div>
+    </header>
+    <main>
+      <section>
+        <div class="header-content" style="background:url(/public/imgs/base/signUp.png) no-repeat"></div>
+      </section>
+      <section class="signUp">
+        <form action="/api/user/register" method="POST" id="form-register">
+          <div class="register-username register-wrapper">
+            <label for="register-username">用户名：</label>
+            <input type="text" placeholder="邮箱" id="register-username" name="username" class="info">
+          </div>
+          <div class="register-password register-wrapper">
+            <label for="register-password">密&ensp;&ensp;码：</label>
+            <input type="password" placeholder="密码" id="register-password" name="password" class="info">
+          </div>
+          <div class="register-validate register-wrapper">
+            <label for="register-validate">验证码：</label>
+            <div class="validateCode-wrapper">
+                <input type="text" class="validateCode" id="register-validate" name="validateCode"placeholder="邮箱验证码">
+                <button type="button" class="getValidateCode">发送验证码</button>
+            </div>
+          </div>
+          <div class="register-submit">
+            <input type="button" value="注册" class="submit">
+          </div>
+        </form>
+        <div class="jump"><span>已有账号？</span><a href="/api/user/login" class="toLogin">马上登陆</a></div>
+      </section>
+    </main>
+  </div>
+</body>
+<script src="/public/js/jquery-3.3.1.js"></script>
+<script src="/public/js/register.js"></script>
+</html>

@@ -12,6 +12,10 @@ let bodyParser = require('body-parser')
 // 加载cookie
 let cookieParser = require('cookie-parser')
 
+// 加载session
+let session = require('express-session')
+
+
 // 用户模型
 let User = require('./models/User')
 
@@ -41,6 +45,8 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 // cookie-parser设置
 app.use(cookieParser())
+
+app.use(session({ secret: 'keyboard cat',resave: false,  saveUninitialized: true, cookie: { maxAge: 120000 }}))
 
 app.use((req, res, next) => {
   req.userInfo = {}

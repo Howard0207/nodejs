@@ -243,6 +243,10 @@ router.get('/category/delete', (req, res) => {
   Category.remove({
     _id: id
   }).then(() => {
+    return Content.remove({
+      category: id
+    })
+  }).then(() => {
     res.render('success/category', {
       userInfo: req.userInfo,
       message: '删除成功',

@@ -17,39 +17,24 @@
         <div class="header-content" style="background:url(/public/imgs/base/signIn.png) no-repeat"></div>
       </section>
       <section class="signIn">
-        <form action="/api/user/login" method="POST">
+        <form action="/api/user/login" method="POST" id="form-login">
           <div class="login-username login-wrapper">
             <label for="login-username">用户名：</label>
-            <input type="text" placeholder="邮箱/手机号" id="login-username" name="username" class="info">
+            <input type="text" placeholder="邮箱" id="login-username" name="username" class="info">
           </div>
           <div class="login-password login-wrapper">
             <label for="login-password">密&ensp;&ensp;码：</label>
             <input type="password" placeholder="密码" id="login-password" name="password" class="info">
           </div>
           <div class="login-submit">
-            <input type="submit" value="登陆" class="submit">
+            <input type="button" value="登陆" class="submit">
           </div>
         </form>
-        <div class="jump"><span>还没注册？</span><a href="javascript:void(0)" class="toReg">马上注册</a></div>
-      </section>
-      <section class="signUp"  style="display: none">
-        <form action="/api/user/register" method="POST">
-          <div class="register-username register-wrapper">
-            <label for="register-username">用户名：</label>
-            <input type="text" placeholder="邮箱/手机号" id="register-username" name="username" class="info">
-          </div>
-          <div class="register-password register-wrapper">
-            <label for="register-password">密&ensp;&ensp;码：</label>
-            <input type="password" placeholder="密码" id="register-password" name="password" class="info">
-          </div>
-          <div class="register-submit">
-            <input type="submit" value="注册" class="submit">
-          </div>
-        </form>
-        <div class="jump"><span>已有账号？</span><a href="javascript:void(0)" class="toLogin">马上登陆</a></div>
+        <div class="jump"><span>还没注册？</span><a href="/api/user/register" class="toReg">马上注册</a></div>
       </section>
     </main>
   </div>
 </body>
+<script src="/public/js/jquery-3.3.1.js"></script>
 <script src="/public/js/login.js"></script>
 </html>

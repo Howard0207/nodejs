@@ -3,13 +3,23 @@ ol,li,ul{	margin: 0;	padding: 0;}
 body { font: 14px "微软雅黑", Arial, Helvetica, sans-serif; background: url(../../imgs/base/bg.jpg) repeat; color: #555 }
 html,body,.wrapper{ height: 100%;}
 
+/**
+  火狐浏览器button，input虚框
+*/
+button::-moz-focus-inner,
+input[type="button"]::-moz-focus-inner,
+input[type="submit"]::-moz-focus-inner{
+  border: none;
+}
+
+
 .wrapper .headtop { background: url(../../imgs/base/topbg.jpg) repeat-x; height: 28px; }
 
 .wrapper main{
   position: relative;
   top: 50%;
   transform-origin: center;
-  transform: translateY(-50%);
+  transform: translateY(-70%);
 }
 .wrapper .header-content{
   width: 154px;
@@ -21,7 +31,7 @@ html,body,.wrapper{ height: 100%;}
 
 .wrapper .signIn form,
 .wrapper .signUp form{
-  width: 300px;
+  width: 340px;
   margin: 0 auto;
 }
 
@@ -33,7 +43,6 @@ html,body,.wrapper{ height: 100%;}
 
 .wrapper .signIn .login-wrapper label,
 .wrapper .signUp .register-wrapper label{
-  flex: 1 1 15%;
   height: 30px;
   line-height: 30px;
   font-size: 20px;
@@ -41,13 +50,51 @@ html,body,.wrapper{ height: 100%;}
 
 .wrapper .signIn .login-wrapper .info,
 .wrapper .signUp .register-wrapper .info{
-  flex: 1 1 53%;
-  width: 250px;
+  flex: 1;
+  display: block;
+  width: 250px!important;
   padding: 0 15px;
   box-sizing: border-box;
   outline: none;
-  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #555;
 }
+
+
+.wrapper .signUp .register-wrapper .validateCode-wrapper{
+  flex: 1;
+  display: flex;
+  width: 250px!important;
+  height: 30px;
+  overflow: hidden;
+}
+
+.wrapper .signUp .register-wrapper .validateCode-wrapper .validateCode{
+  display: block;
+  padding: 0 15px;
+  width: 150px!important;
+  height: 30px;
+  box-sizing: border-box;
+  outline: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #555;
+}
+
+.wrapper .signUp .register-wrapper .validateCode-wrapper .getValidateCode{
+  flex: 1;
+  display: block;
+  width: 100px !important;
+  margin-left: 10px;
+  outline: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
 
 .wrapper .signIn .login-submit .submit,
 .wrapper .signUp .register-submit .submit{
@@ -86,4 +133,25 @@ html,body,.wrapper{ height: 100%;}
 .wrapper .signIn .toReg:hover,
 .wrapper .signUp .toLogin:hover{
   text-decoration: underline;
+}
+
+.email-sending{
+  background: #ccc;
+  color: #00593b;
+  cursor: wait;
+}
+
+.uncomplete-info{
+  animation: blink 4s ease-in-out infinite;
+}
+@keyframes blink{
+  0%{
+    box-shadow: 0 0 2px 1px #ff0000;
+  }
+  50%{
+    box-shadow: 0 0 5px 1px #c90000;
+  }
+  100%{
+    box-shadow: 0 0 2px 1px #ff0000;
+  }
 }
