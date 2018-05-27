@@ -7,6 +7,13 @@ body { font: 14px "微软雅黑", Arial, Helvetica, sans-serif; background: url(
 img { border: 0; display: block }
 ul, li { list-style: none; }
 
+/*默认链接颜色 */
+a { text-decoration: none; color: #333; outline: none }
+.clear { clear: both; }
+.blank { height: 50px; overflow: hidden; width: 100%; margin: auto; clear: both }
+.f_l { float: left }
+.f_r { float: right }
+
 /*topnav*/
 .topnav { line-height: 50px; height: 50px; color: #000; text-align: center; background: rgba(255, 255, 255, 0.58); position: fixed; width: 100%; top: 0; z-index: 999; box-shadow: #333 0px 2px 2px }
 .topnav a { color: #000; font-weight: bold; margin: 0 5px }
@@ -23,6 +30,53 @@ nav { margin: 0 0 15px 0 }
 .navigation { height: 64px; background: url(../../imgs/base/navbg.png) no-repeat; font-family: "微软雅黑"; }
 .menu { position: relative; margin-left: 70px; padding-top: 10px }
 .menu li { float: left; width: 110px; text-align: center; position: relative; line-height: 46px; }
+.menu li a.avatar img{
+  position: relative;
+  top: 0;
+  z-index: 10;
+  margin: 0 auto;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  transition: all 0.5s ease 0.1s;
+}
+.menu li.userInfo:hover a.avatar img{
+  top: 10px;
+  width: 80px;
+  height: 80px;
+}
+.menu li .userInfo-wrapper{
+  position: absolute;
+  top: 46px;
+  width: 200px;
+  margin-left: -50px;
+  padding: 40px 0 10px;
+  background: rgba(0,0,0,0.8);
+  border-radius: 5px;
+}
+.menu li .userInfo-wrapper .nickname-wrapper{
+  margin: 0 15px 10px;
+  border-bottom: 1px dashed #fff;
+}
+
+.menu li .userInfo-wrapper .userCenter-wrapper .nickname{
+  display: block;
+  text-decoration: none;
+  color: #fff;
+  font-size: 15px;
+  font-weight: bold;
+  width: 100px;
+  text-align: center;
+  margin: 0 auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.menu li .userInfo-wrapper .userCenter-wrapper .userCenter-options{
+  display: flex;
+  justify-content: space-around;
+}
 .menu li a { display: block; text-decoration: none; color: #fff; font-size: 15px; font-weight: bold }
 .menu ul { position: relative; background: url(../../imgs/base/footerbg.png); z-index: 300; }
 .menu li ul { display: none; width: 110px; position: absolute; TOP: 40px; left: 0; }

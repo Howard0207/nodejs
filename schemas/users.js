@@ -5,6 +5,13 @@ module.exports = new mongoose.Schema({
   username: String,
   // 密码
   password: String,
+  
+  // 昵称
+  nickname: {
+    type: String,
+    default: 'gest'+ new Date().getTime()
+  },
+
   // 是否是管理员
   isAdmin: {
     type: Boolean,

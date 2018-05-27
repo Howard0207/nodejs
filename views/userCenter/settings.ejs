@@ -17,46 +17,40 @@
     <header>
       <div class="headtop"></div>
       <div class="contenttop">
-        <div class="logo f_l">
-          <a href="/settings/basic">
-            <img src="/public/imgs/avatar/default.jpg" alt="">
-            <%= userInfo.username %></a>
-        </div>
         <div class="blank"></div>
 
         <nav>
           <div class="navigation">
             <ul class="menu">
-              <li>
-                <a href="/">博客首页</a>
+              <li><a href="/">首页</a></li>
+              <li><a href="/blog/<%= userInfo._uid%>">博客</a></li>
+              <li class="userInfo">
+                <% if(userInfo._uid) {%>
+                  <a href="javascript:void(0)" class="avatar"><img src="/public/imgs/avatar/default.jpg"></a>
+                  <div class="userInfo-wrapper">
+                    <div class="userCenter-wrapper nickname-wrapper">
+                      <span class="nickname" title="<%= userInfo.nickname %>"><%= userInfo.nickname %></span>
+                    </div>
+                    <div class="userCenter-wrapper">
+                      <div class="userCenter-options">
+                        <a href="/blog/<%= userInfo._uid%>">我的博客</a>
+                        <a href="/settings/basic">账号设置</a>
+                      </div>
+                      <div class="userCenter-options">
+                        <a href="/admin">管理中心</a>
+                        <a href="/api/user/logout">退出登录</a>
+                      </div>
+                    </div>
+                  </div>
+                <%} else {%>
+                  <a href="javascript:void(0)" class="avatar"><img src="/public/imgs/avatar/default.jpg"></a>
+                <% } %>
               </li>
               <li>
-                <a href="/blog/<%= userInfo._uid%>">我的博客</a>
+                <a href="#">写博客</a>
               </li>
               <li>
-                <a href="/admin">后台管理</a>
-              </li>
-              <li>
-                <a href="javascript:void(0)">分类管理</a>
-                <ul class="category-list">
-                  <li>
-                    <a href="/admin/category">分类首页</a>
-                  </li>
-                  <li>
-                    <a href="/admin/category/add">添加分类</a>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <a href="javascript:void(0)">内容管理</a>
-                <ul class="content-list">
-                  <li>
-                    <a href="/admin/content">内容首页</a>
-                  </li>
-                  <li>
-                    <a href="/admin/content/add">添加内容</a>
-                  </li>
-                </ul>
+                <a href="#">每日一诗</a>
               </li>
             </ul>
           </div>

@@ -52,6 +52,8 @@ router.post('/user/emailCheck',function(req,res) {
   validateCode = Math.floor(Math.random()*10000)
   // session 存储
   req.session.validateCode = validateCode
+
+  return res.json({code: 101 , message: 'ok', validateCode: validateCode })
   // 邮件发送
   nodemailer.createTestAccount((err, account) => {
     // create reusable transporter object using the default SMTP transport
@@ -67,10 +69,10 @@ router.post('/user/emailCheck',function(req,res) {
 
     // setup email data with unicode symbols
     let mailOptions = {
-        from: '"Blog World👻" <wode163_youjian@163.com>', // sender address
-        to: '"User👻 " '+mailTo+'', // list of receivers
-        subject: 'Blog Wrold 邮箱验证', // Subject line
-        text: '', // plain text body
+        from: '"Blog" <wode163_youjian@163.com>', // sender address
+        to: '"User " '+mailTo+'', // list of receivers
+        subject: 'Microsoft Outlook 测试消息', // Subject line
+        text: 'test info', // plain text body
         html: '<h2>注册验证：</h2><div style="padding: 0 20px;display: flex;line-height: 30px;font-size: 20px;"><p style="margin: 0;">验证码：</p><span style="display: block;">'+validateCode+'</span></div> ' // html body
     };
 
@@ -157,7 +159,8 @@ router.post('/user/register',function(req,res) {
     }).then((newUserInfo) => {
       res.cookie('userInfo',{
         _uid: newUserInfo._id,
-        username: newUserInfo.username
+        username: newUserInfo.username,
+        nickname: newUserInfo.nickname
       })
       res.redirect('/')
     })
@@ -207,7 +210,8 @@ router.post('/user/login',(req,res) => {
         }
         res.cookie('userInfo',{
           _uid: userInfo._id,
-          username: userInfo.username
+          username: userInfo.username,
+          nickname: userInfo.nickname
         })
         res.redirect('/')
         return true

@@ -14,38 +14,41 @@
     <header>
       <div class="headtop"></div>
       <div class="contenttop">
-        <div class="logo f_l">
-          <% if(userInfo._uid) {%>
-            <a href="/settings/basic"><img src="/public/imgs/avatar/default.jpg" alt=""><%= userInfo.username %>的博客</a>
-          <% } %>
-        </div>
         <div class="blank"></div>
-
         <nav>
           <div class="navigation">
-            <ul class="menu">
-              <li><a href="/">博客首页</a></li>
-              <li>
-                <a href="#">关于我</a>
-                <ul>
-                  <li><a href="about.html">个人简介</a></li>
-                  <li><a href="listpic.html">个人相册</a></li>
-                </ul>
-              </li>
-              <li>
-                <a href="#">我的日记</a>
-                <ul>
-                  <li><a href="newslistpic.html">个人日记</a></li>
-                  <li><a href="newslistpic.html">学习笔记</a></li>
-                </ul>
-              </li>
-              <% if(userInfo._uid) {%>
-                <li><a href="/admin">管理</a></li>
-              <%} else {%>
-                <li><a href="/api/user/login">管理</a></li>
-                <li><a href="/api/user/login">登录|注册</a></li>
-              <% } %>
-            </ul>
+              <ul class="menu">
+                <li><a href="/">首页</a></li>
+                <li><a href="/blog/<%= userInfo._uid%>">博客</a></li>
+                <li class="userInfo">
+                  <% if(userInfo._uid) {%>
+                    <a href="javascript:void(0)" class="avatar"><img src="/public/imgs/avatar/default.jpg"></a>
+                    <div class="userInfo-wrapper">
+                      <div class="userCenter-wrapper nickname-wrapper">
+                        <span class="nickname" title="<%= userInfo.nickname %>"><%= userInfo.nickname %></span>
+                      </div>
+                      <div class="userCenter-wrapper">
+                        <div class="userCenter-options">
+                          <a href="/blog/<%= userInfo._uid%>">我的博客</a>
+                          <a href="/settings/basic">账号设置</a>
+                        </div>
+                        <div class="userCenter-options">
+                          <a href="/admin">管理中心</a>
+                          <a href="/api/user/logout">退出登录</a>
+                        </div>
+                      </div>
+                    </div>
+                  <%} else {%>
+                    <a href="javascript:void(0)" class="avatar"><img src="/public/imgs/avatar/default.jpg"></a>
+                  <% } %>
+                </li>
+                <li>
+                  <a href="#">写博客</a>
+                </li>
+                <li>
+                  <a href="#">每日一诗</a>
+                </li>
+              </ul>
           </div>
         </nav>
       </div>
@@ -58,7 +61,9 @@
             <li>
               <h3 class="blogtitle">
                 <span>个人博客</span>
-                <a href="/view?contentid=<%=contents[i]._id%>" target="_blank"><%= contents[i].title%></a>
+                <a href="/view?contentid=<%=contents[i]._id%>" target="_blank">
+                  <%= contents[i].title%>
+                </a>
               </h3>
               <div class="bloginfo">
                 <div class="blogpic">
@@ -66,14 +71,22 @@
                     <img src="/public/imgs/base/01.jpg" alt="帝国cms 首页或者列表无图，不使用默认图片的方法">
                   </a>
                 </div>
-                <p><%= contents[i].description%></p>
+                <p>
+                  <%= contents[i].description%>
+                </p>
               </div>
               <div class="autor">
                 <span class="lm f_l"></span>
-                <span class="dtime f_l"><%= contents[i].addFormateTime%></span>
-                <span class="viewnum f_l">浏览（<%= contents[i].views%>）</span>
-                <span class="viewnum f_l">评论（<%= contents[i].views%>）</span>
-                <span class="f_r"><a href="/view?contentid=<%=contents[i]._id%>" class="more">阅读原文&gt;&gt;</a></span>
+                <span class="dtime f_l">
+                  <%= contents[i].addFormateTime%>
+                </span>
+                <span class="viewnum f_l">浏览（
+                  <%= contents[i].views%>）</span>
+                <span class="viewnum f_l">评论（
+                  <%= contents[i].views%>）</span>
+                <span class="f_r">
+                  <a href="/view?contentid=<%=contents[i]._id%>" class="more">阅读原文&gt;&gt;</a>
+                </span>
               </div>
             </li>
             <% } %>
@@ -82,28 +95,60 @@
           <% if(pages>0) {%>
             <ul class="pagination">
               <% if(page===1) {%>
-                <li class="disabled"><a href="javascript:void(0)" aria-label="Previous"><span aria-hidden="true">上一页</span></a></li>
-              <%} else {%>
-                <li><a href="/?category=<%=category%>&page=<%= page-1 %>" aria-label="Previous"><span aria-hidden="true">上一页</span></a></li>
-              <% } %>
-              <% for(let i=0;i<pages;i++) { %>
-                <% if(i+1 === page) { %>
-                  <li class="active"><a href="#"><%=i+1%></a></li>
+                <li class="disabled">
+                  <a href="javascript:void(0)" aria-label="Previous">
+                    <span aria-hidden="true">上一页</span>
+                  </a>
+                </li>
                 <%} else {%>
-                  <li><a href="?page=<%=i+1%>"><%=i+1%></a></li>
-                <%}%>
-              <% } %>
-              <% if(page===pages) {%>
-                <li class="disabled"><a href="javascript:void(0)" aria-label="Next"><span aria-hidden="true">下一页</span></a></li>
-              <%} else {%>
-                <li><a href="/?category=<%=category%>&page=<%= page+1 %>" aria-label="Next"><span aria-hidden="true">下一页</span></a></li>
-              <% } %>
-              <li><a>总共<%=pages %>页</a></li>
-              <li><a>跳转至<input type="text">页</a></li>
+                  <li>
+                    <a href="/?category=<%=category%>&page=<%= page-1 %>" aria-label="Previous">
+                      <span aria-hidden="true">上一页</span>
+                    </a>
+                  </li>
+                  <% } %>
+                    <% for(let i=0;i<pages;i++) { %>
+                      <% if(i+1 === page) { %>
+                        <li class="active">
+                          <a href="#">
+                            <%=i+1%>
+                          </a>
+                        </li>
+                        <%} else {%>
+                          <li>
+                            <a href="?page=<%=i+1%>">
+                              <%=i+1%>
+                            </a>
+                          </li>
+                          <%}%>
+                            <% } %>
+                              <% if(page===pages) {%>
+                                <li class="disabled">
+                                  <a href="javascript:void(0)" aria-label="Next">
+                                    <span aria-hidden="true">下一页</span>
+                                  </a>
+                                </li>
+                                <%} else {%>
+                                  <li>
+                                    <a href="/?category=<%=category%>&page=<%= page+1 %>" aria-label="Next">
+                                      <span aria-hidden="true">下一页</span>
+                                    </a>
+                                  </li>
+                                  <% } %>
+                                    <li>
+                                      <a>总共
+                                        <%=pages %>页</a>
+                                    </li>
+                                    <li>
+                                      <a>跳转至
+                                        <input type="text">页</a>
+                                    </li>
             </ul>
-          <% } else {%>
-            <div><p>当前分类没有内容</p></div>
-          <% } %>
+            <% } else {%>
+              <div>
+                <p>当前分类没有内容</p>
+              </div>
+              <% } %>
         </section>
       </div>
       <div class="r_box f_r">
@@ -133,11 +178,19 @@
           <ul>
             <% for(let i = 0, len = categories.length; i < len; i++) { %>
               <% if (category == categories[i]._id ) { %>
-                <li><a href="/?category=<%=categories[i]._id%>" class="focus"><%= categories[i].name %></a></li>
-              <% } else {%>
-                <li><a href="/?category=<%=categories[i]._id%>"><%= categories[i].name %></a></li>
-              <% } %>
-            <% } %>
+                <li>
+                  <a href="/?category=<%=categories[i]._id%>" class="focus">
+                    <%= categories[i].name %>
+                  </a>
+                </li>
+                <% } else {%>
+                  <li>
+                    <a href="/?category=<%=categories[i]._id%>">
+                      <%= categories[i].name %>
+                    </a>
+                  </li>
+                  <% } %>
+                    <% } %>
           </ul>
         </div>
         <div class="ph">
@@ -211,6 +264,12 @@
       $(this).find('ul:first').css({visibility: "visible",display: "none"}).slideDown("normal");
     },function(){
       $(this).find('ul:first').css({visibility: "hidden"});
+    });
+    $(".menu .userInfo-wrapper").css({display: "none"}); // Opera Fix
+    $(".menu .userInfo").hover(function(){
+      $(this).find('.userInfo-wrapper').css({visibility: "visible",display: "none"}).slideDown("normal");
+    },function(){
+      $(this).find('.userInfo-wrapper').slideUp("normal");
     });
   });
 </script>
