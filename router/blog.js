@@ -38,6 +38,25 @@ router.param('id',(req, res, next,id) => {
 })
 
 
+router.get('/index', function(req,res) {
+
+  // 读取所有分类信息
+  Content.find().select('-content').limit(20).populate(['category','user']).sort({views: -1, addTime: -1}).then((contents) => {
+    for(let i=0,len=contents.length;i<len;i++) {
+      let timeStamp = contents[i].addTime
+      let day = fillZero(timeStamp.getDate())
+      let month = fillZero(timeStamp.getMonth() + 1)
+      let year = timeStamp.getFullYear()
+      contents[i].addFormateTime = year+'-'+month+'-'+day
+    }
+    data.contents = contents
+    data.userInfo = req.userInfo
+    // return res.json({data: data})
+    res.render('blog/index',data)
+  })
+})
+
+
 // 博主的公开主页
 router.get('/:id',function(req,res) {
 
@@ -91,7 +110,6 @@ router.get('/:id',function(req,res) {
       contents[i].addFormateTime = year+'-'+month+'-'+day
     }
     data.contents = contents
-    console.log(data)
     res.render('main/self_index',data)
   })
 })

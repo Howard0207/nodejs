@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="/public/css/admin/common.css">
+  <link rel="stylesheet" href="/public/css/blog/index.css">
+  <title>Document</title>
+</head>
+<body>
+  <div id="wrapper">
+    <header>
+      <div class="headtop"></div>
+      <div class="contenttop">
+        <div class="blank"></div>
+        <nav>
+          <div class="navigation">
+            <ul class="menu">
+              <li><a href="/">首页</a></li>
+              <li><a href="/blog/index">博客</a></li>
+              <li class="userInfo">
+                <% if(userInfo._uid) {%>
+                  <a href="javascript:void(0)" class="avatar-wrapper"><img src="/public/imgs/avatar/default.jpg" class="avatar"></a>
+                  <div class="userInfo-wrapper">
+                      <div class="userCenter-wrapper nickname-wrapper">
+                        <span class="nickname" title="<%= userInfo.nickname %>"><%= userInfo.nickname %></span>
+                      </div>
+                      <div class="userCenter-wrapper">
+                        <div class="userCenter-options">
+                          <a href="/blog/<%= userInfo._uid%>">我的博客</a>
+                          <a href="/settings/basic">账号设置</a>
+                        </div>
+                        <div class="userCenter-options">
+                          <a href="/admin">管理中心</a>
+                          <a href="/api/user/logout">退出登录</a>
+                        </div>
+                      </div>
+                    </div>
+                <%} else {%>
+                  <a href="javascript:void(0)" class="avatar-wrapper"><img src="/public/imgs/avatar/default.jpg"></a>
+                <% } %>
+              </li>
+              <li>
+                <a href="#">写博客</a>
+              </li>
+              <li>
+                <a href="#">每日一诗</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <div class="jztop"></div>
+    <div class="container">
+      <div class="bloglist">
+        <ul>
+          <% for(let i=0,len=contents.length;i<len;i++) { %>
+            <li>
+              <h3 class="blogtitle">
+                <span>个人博客</span>
+                <a href="/view?contentid=<%=contents[i]._id%>" target="_blank"><%= contents[i].title%></a>
+              </h3>
+              <div class="bloginfo">
+                <div class="blogpic">
+                  <a href="/view?contentid=<%=contents[i]._id%>" title="帝国cms 首页或者列表无图，不使用默认图片的方法">
+                    <img src="/public/imgs/base/01.jpg" alt="帝国cms 首页或者列表无图，不使用默认图片的方法">
+                  </a>
+                </div>
+                <p><%= contents[i].description%></p>
+              </div>
+              <div class="autor">
+                <span class="lm f_l"></span>
+                <span class="dtime f_l"><%= contents[i].addFormateTime%></span>
+                <span class="viewnum f_l">浏览（<%= contents[i].views%>）</span>
+                <span class="viewnum f_l">评论（<%= contents[i].comments.length%>）</span>
+                <span class="f_r"><a href="/view?contentid=<%=contents[i]._id%>" class="more">阅读原文&gt;&gt;</a></span>
+              </div>
+            </li>
+            <% } %>
+        </ul>
+      </div>
+    </div>
+    <!-- container代码 结束 -->
+    <div class="jzend"></div>
+    <footer>
+      <div class="footer">
+        <div class="f_l">
+          <p>All Rights Reserved 版权所有：
+            <a href="http://www.yangqq.com">杨青个人博客</a> 备案号：蜀ICP备00000000号</p>
+        </div>
+        <div class="f_r textr">
+          <p>Design by DanceSmile</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+</body>
+<script src="/public/js/jquery-3.3.1.js"></script>
+<script src="/public/js/index.js"></script>
+<script type=text/javascript>
+  // Navigation Menu
+  $(function() {
+    // $(".menu ul").css({display: "none"}); // Opera Fix
+    // $(".menu li").hover(function(){
+    //   $(this).find('ul:first').css({visibility: "visible",display: "none"}).slideDown("normal");
+    // },function(){
+    //   $(this).find('ul:first').slideUp("normal");
+    // });
+
+    $(".menu .userInfo-wrapper").css({display: "none"}); // Opera Fix
+    $(".menu .userInfo").hover(function(){
+      $(this).find('.userInfo-wrapper').css({visibility: "visible",display: "none"}).slideDown("normal");
+    },function(){
+      $(this).find('.userInfo-wrapper').slideUp("normal");
+    });
+  });
+</script>
+
+</html>

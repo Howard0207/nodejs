@@ -8,6 +8,7 @@ $(function () {
   $('#messageBtn').click(() => {
     // 获取评论
     let content = $('#messageContent').val()
+
     // 符号转义
     content = content.replace(/</g,'&lt;').replace(/>/g,'&gt;')
 
@@ -16,7 +17,7 @@ $(function () {
       url: '/api/comment/post',
       data: {
         contentid: $('#contentId').val(),
-        content: $('#messageContent').val()
+        content: content
       },
       success: function (responseData) {
         // 评论-num 的Dom
@@ -116,10 +117,10 @@ $(function () {
     $('.limit-wrapper').find('.limit').text(left)
   })
   // 菜单hover事件
-  $('.menu ul').css({ display: 'none' }) // Opera Fix
-  $('.menu li').hover(function () {
-    $(this).find('ul:first').css({ visibility: 'visible', display: 'none' }).slideDown('normal')
-  }, function () {
-    $(this).find('ul:first').css({ visibility: 'hidden' })
+  $('.menu .userInfo-wrapper').css({display: 'none'}) // Opera Fix
+  $('.menu .userInfo').hover(function(){
+    $(this).find('.userInfo-wrapper').css({visibility: 'visible',display: 'none'}).slideDown('normal')
+  },function(){
+    $(this).find('.userInfo-wrapper').slideUp('normal')
   })
 })

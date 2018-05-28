@@ -16,7 +16,7 @@ function fillZero(num) {
 }
 
 router.use((req, res, next) => {
-  if (!req.userInfo.isAdmin) {
+  if (!req.userInfo._uid) {
     res.send('对不起，只有管理员才可以进入后台管理')
     return false
   }
