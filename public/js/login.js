@@ -12,7 +12,7 @@ function initEvent() {
     let password = $('#login-password')
 
     // 邮件正则
-    let reg = /^[A-Za-z0-9]+([-_.][A-Za-z0-9]+)*@([A-Za-z0-9]+[-.])+[A-Za-z0-9]{2,5}$/;
+    let reg = /^[A-Za-z0-9]+([-_.][A-Za-z0-9]+)*@([A-Za-z0-9]+[-.])+[A-Za-z0-9]{2,5}$/
 
     // 获取值
     let userval    = username.val()
@@ -56,5 +56,5 @@ function focusRemove(selector){
 }
 
 $(function(){
-  initEvent();
+  initEvent()
 })

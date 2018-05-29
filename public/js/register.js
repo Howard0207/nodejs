@@ -59,7 +59,7 @@ function initEvent() {
     let valival  = validate.val()
 
     let submitFlag = true
-    let reg = /^[A-Za-z0-9]+([-_.][A-Za-z0-9]+)*@([A-Za-z0-9]+[-.])+[A-Za-z0-9]{2,5}$/;
+    let reg = /^[A-Za-z0-9]+([-_.][A-Za-z0-9]+)*@([A-Za-z0-9]+[-.])+[A-Za-z0-9]{2,5}$/
    
     // 邮箱
     if (!userval || !userval.match(reg)) {
@@ -119,7 +119,7 @@ function initEvent() {
     let username = $('#register-username')
 
     // 邮件正则
-    let reg = /^[A-Za-z0-9]+([-_.][A-Za-z0-9]+)*@([A-Za-z0-9]+[-.])+[A-Za-z0-9]{2,5}$/;
+    let reg = /^[A-Za-z0-9]+([-_.][A-Za-z0-9]+)*@([A-Za-z0-9]+[-.])+[A-Za-z0-9]{2,5}$/
 
     // 获取值
     let userval  = username.val()
@@ -138,7 +138,7 @@ function initEvent() {
       dataType: 'json',
       data: {email: userval},
       success: function(msg) {
-        countDown();
+        countDown()
       },
       error: function(err) {
         throw new Error(err)
@@ -148,5 +148,5 @@ function initEvent() {
 }
 
 $(function(){
-  initEvent();
+  initEvent()
 })

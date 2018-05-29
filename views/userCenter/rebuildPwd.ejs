@@ -24,26 +24,22 @@
               <li><a href="/">首页</a></li>
               <li><a href="/blog/index">博客</a></li>
               <li class="userInfo">
-                <% if(userInfo._uid) {%>
-                  <a href="javascript:void(0)" class="avatar"><img src="/public/imgs/avatar/default.jpg"></a>
-                  <div class="userInfo-wrapper">
-                    <div class="userCenter-wrapper nickname-wrapper">
-                      <span class="nickname" title="<%= userInfo.nickname %>"><%= userInfo.nickname %></span>
+                <a href="javascript:void(0)" class="avatar-wrapper"><img src="/public/imgs/avatar/default.jpg" class="avatar"></a>
+                <div class="userInfo-wrapper">
+                  <div class="userCenter-wrapper nickname-wrapper">
+                    <span class="nickname" title="<%= userInfo.nickname %>"><%= userInfo.nickname %></span>
+                  </div>
+                  <div class="userCenter-wrapper">
+                    <div class="userCenter-options">
+                      <a href="/blog/<%= userInfo._uid%>">我的博客</a>
+                      <a href="/settings/basic">账号设置</a>
                     </div>
-                    <div class="userCenter-wrapper">
-                      <div class="userCenter-options">
-                        <a href="/blog/<%= userInfo._uid%>">我的博客</a>
-                        <a href="/settings/basic">账号设置</a>
-                      </div>
-                      <div class="userCenter-options">
-                        <a href="/admin">管理中心</a>
-                        <a href="/api/user/logout">退出登录</a>
-                      </div>
+                    <div class="userCenter-options">
+                      <a href="/admin">管理中心</a>
+                      <a href="/api/user/logout">退出登录</a>
                     </div>
                   </div>
-                <%} else {%>
-                  <a href="javascript:void(0)" class="avatar"><img src="/public/imgs/avatar/default.jpg"></a>
-                <% } %>
+                </div>
               </li>
               <li>
                 <a href="#">写博客</a>
@@ -108,7 +104,7 @@
     <div class="footer">
       <div class="f_l">
         <p>All Rights Reserved 版权所有：
-          <a href="http://www.yangqq.com">杨青个人博客</a> 备案号：蜀ICP备00000000号</p>
+          <a href="javascript:void(0)">Blog World!</a> 备案号：粤ICP备00100100号</p>
       </div>
       <div class="f_r textr">
         <p>Design by DanceSmile</p>
@@ -120,12 +116,46 @@
 <script type=text/javascript>
   // Navigation Menu
   $(function() {
-    $(".menu ul").css({display: "none"}); // Opera Fix
-    $(".menu li").hover(function(){
-      $(this).find('ul:first').css({visibility: "visible",display: "none"}).slideDown("normal");
+    $('.menu .userInfo-wrapper').css({display: 'none'}) // Opera Fix
+    $('.menu .userInfo').hover(function(){
+      $(this).find('.userInfo-wrapper').css({visibility: 'visible',display: 'none'}).slideDown('normal')
     },function(){
-      $(this).find('ul:first').css({visibility: "hidden"});
-    });
+      $(this).find('.userInfo-wrapper').slideUp('normal')
+    })
+
+    // Submit change password request
+    $('.submit').click(() => {
+      // get Info
+      let oldpassword = $('#oldpassword').val()
+      let newpassword = $('#newpassword').val()
+      let recheckpassword = $('#recheckpassword').val()
+      if(!oldpassword) {
+        // oldpassword does not exit
+        return false
+      }
+      if( newpassword !== recheckpassword ) {
+        // newpassword and recheckpassword are not equal
+        return false
+      }
+
+      $.ajax({
+        url: '/settings/changepwd',
+        type: 'post',
+        dataType: 'json',
+        data: {
+          oldpassword: oldpassword,
+          newpassword: newpassword,
+          recheckpassword: recheckpassword
+        },
+        success: function(res) {
+          console.log(res)
+        },
+        error: function(e) {
+          throw new Error(e)
+        }
+      })
+    })
+
   });
 </script>
 

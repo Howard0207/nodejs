@@ -3,6 +3,7 @@ const express = require('express')
 const router = express.Router()
 const fs = require('fs')
 const formidable = require('formidable')
+const User = require('../models/User')
 // User 模型
 
 
@@ -47,6 +48,24 @@ router.get('/changepwd', (req, res) => {
     userInfo: req.userInfo
   })
 })
+
+router.post('/changepwd', (req, res) => {
+  let _uid = req.userInfo._uid
+  let old = req.body.oldpassword
+  let new = req.body.newpassword
+  let check = req.body.recheckpassword
+  User.findOne({ _id: _uid }).select('password').then((pwd) => {
+    if(pwd === null) {
+
+    }
+    if(old === pwd.password) {
+
+    }
+    if(re)
+  })
+})
+
+
 
 router.get('/changeemail', (req, res) => {
   res.render('userCenter/rebuildEmail', {
