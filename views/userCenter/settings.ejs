@@ -73,28 +73,38 @@
                 <div class="row">
                   <div class="nickname rowContent">
                     <label for="nickname">昵称:</label>
-                    <input type="text" id="nickname">
+                    <input type="text" id="nickname" value="<%= userInfo.nickname%>">
                   </div>
                   <div class="gender rowContent">
                       <label>性别:</label>
-                      <input type="radio" name="gender" value="1" checked="checked" id="man">
-                      <label for="man">男</label> 
-                      <input type="radio" name="gender" value="0" id="lady">
+                      <%if(userInfo.gender === "1"){%>
+                        <input type="radio" name="gender" value="1" checked="checked" id="man">
+                      <% } else { %>
+                        <input type="radio" name="gender" value="1" id="man">
+                      <%}%>
+                      <label for="man">男</label>
+                      <%if(userInfo.gender === "0"){%>
+                        <input type="radio" name="gender" value="0" checked="checked" id="lady">
+                      <% } else { %>
+                        <input type="radio" name="gender" value="0" id="lady">
+                      <%}%>
                       <label for="lady">女</label>
                   </div>
                 </div>
                 <div class="row">
                   <div class="job rowContent">
                     <label for="curjob">职位:</label>
-                    <input type="text" id="curjob" name="curjob">
+                    <input type="text" id="curjob" name="curjob" maxlength="10" value="<%= userInfo.post%>">
                   </div>
                   <div class="birthday rowContent">
                     <label for="birthday">生日:</label>
-                    <input type="text" id="birthday" name="birthday">
+                    <input type="text" id="birthday" name="birthday" value="<%= userInfo.birthday%>">
                   </div>
                 </div>
                 <div class="row">
                   <div class="pos rowContent">地区:</div>
+                  <input type="hidden" id="u_province" value="<%=userInfo.province%>">
+                  <input type="hidden" id="u_city" value="<%=userInfo.city%>">
                   <div class="info rowContent">
                     <select id="s_province" name="s_province"></select>
                   </div>
@@ -130,8 +140,8 @@
                 </a>
               </div>
               <div class="opt-cancel-save">
-                <a href="" class="cancel">取消</a>
-                <a href="" class="save">保存</a>
+                <a href="javascript:void(0)" class="cancel">取消</a>
+                <a href="javascript:void(0)" class="save">保存</a>
               </div>
             </div>
           </div>
@@ -156,115 +166,5 @@
 <script src="/public/js/jquery-3.3.1.js"></script>
 <script src="/public/js/layDate/laydate.js"></script>
 <script src="/public/js/userCenter/dsy.js"></script>
-<script type=text/javascript>
-  // Navigation Menu
-  $(function() {
-    $('.menu .userInfo-wrapper').css({display: 'none'}) // Opera Fix
-    $('.menu .userInfo').hover(function(){
-      $(this).find('.userInfo-wrapper').css({visibility: 'visible',display: 'none'}).slideDown('normal')
-    },function(){
-      $(this).find('.userInfo-wrapper').slideUp('normal')
-    })
-
-    // laydate plugin init
-    laydate.render({
-      elem: '#birthday',
-      format: 'yyyy-MM-dd'
-    });
-
-    // avatar edit List Show
-    $('#avatar').click(function() {
-      let avatar_src = $('#avatar').attr('src')
-      $('#avatar-new').attr('src',avatar_src)
-      $('.upload').show('normal')
-    })
-
-    // avatar edit List Hide
-    $('.cancel').click(function() {
-      $('.upload').hide()
-    })
-
-    // avatar select
-    $('#avatar-file').on('change',function() {
-
-      var docObj=document.getElementById("avatar-file");
-
-      var imgObjPreview=document.getElementById("avatar-new");
-
-      if(docObj.files &&docObj.files[0]) {
-        // 判断文件格式
-        if(docObj.files[0].type === 'image/jpeg' || docObj.files[0].type === 'image/png') {
-          //火狐下，直接设img属性
-          imgObjPreview.style.display = 'block';
-          imgObjPreview.style.width = '200px';
-          imgObjPreview.style.height = '200px';
-          //火狐7以上版本不能用上面的getAsDataURL()方式获取，需要一下方式
-          imgObjPreview.src = window.URL.createObjectURL(docObj.files[0]);
-        } else {
-          return
-        }
-      } else {
-        //IE下，使用滤镜
-        docObj.select();
-        var imgSrc = document.selection.createRange().text;
-        var localImagId = document.getElementById("localImag");
-        //必须设置初始大小
-        localImagId.style.width = "150px";
-        localImagId.style.height = "150px";
-        //图片异常的捕捉，防止用户修改后缀来伪造图片
-        try {
-          localImagId.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
-          localImagId.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = imgSrc;
-        }
-        catch (e) {
-          alert("您上传的图片格式不正确，请重新选择!");
-          return false;
-        }
-        imgObjPreview.style.display = 'none';
-        document.selection.empty();
-      }
-    })
-
-    // avatar - cut
-    $('#avatar-cut').on('mousedown',function(e) {
-      e.preventDefault()
-      if(e == window.event) {
-        e.cancleBubble()
-      } else {
-        e.stopPropagation()
-      }
-      let max = $('#upload-preview').width() - $('#avatar-cut').width() - 1
-      let left = $('#avatar-cut').position().left,top = $('#avatar-cut').position().top
-      let curL = e.clientX, curT = e.clientY
-
-      $(document).on('mousemove',function(e) {
-        e.preventDefault()
-        if(e === window.event) {
-          e.cancleBubble()
-        } else {
-          e.stopPropagation()
-        }
-        let actL = e.clientX,actT = e.clientY
-        let newL = left + actL - curL, newT = top + actT - curT
-        newL = Math.max(0,newL)
-        newT = Math.max(0,newT)
-
-        newL = Math.min(max,newL)
-        newT = Math.min(max,newT)
-        $('#avatar-cut').css({left: newL,top:newT});
-      })
-      $(document).on('mouseup',function(e) {
-        e.preventDefault()
-        if(e === window.event) {
-          e.cancleBubble()
-        } else {
-          e.stopPropagation()
-        }
-        $(document).unbind('mousemove').unbind('mouseup')
-      })
-    })
-
-  });
-</script>
-
+<script src="/public/js/userCenter/settings.js"></script>
 </html>

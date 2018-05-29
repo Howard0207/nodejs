@@ -77,4 +77,16 @@ function _init_area(){ //初始化函数
   change(0)
 }
 
+function _initSelection() {
+  let province = $('#u_province').val()
+  let city = $('#u_city').val()
+  let psel = $('#s_province')
+  let csel = $('#s_city')
+  psel.val(province)
+  change(1)
+  csel.val(city)
+}
+
 _init_area()
+
+_initSelection()

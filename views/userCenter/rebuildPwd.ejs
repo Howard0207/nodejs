@@ -131,10 +131,12 @@
       let recheckpassword = $('#recheckpassword').val()
       if(!oldpassword) {
         // oldpassword does not exit
+        alert('请填写旧密码！')
         return false
       }
       if( newpassword !== recheckpassword ) {
         // newpassword and recheckpassword are not equal
+        alert('两次输入密码不一致')
         return false
       }
 
@@ -148,7 +150,9 @@
           recheckpassword: recheckpassword
         },
         success: function(res) {
-          console.log(res)
+          if(res.code === 102) {
+            alert('修改成功！')
+          }
         },
         error: function(e) {
           throw new Error(e)

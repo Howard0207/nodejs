@@ -160,7 +160,13 @@ router.post('/user/register',function(req,res) {
       res.cookie('userInfo',{
         _uid: newUserInfo._id,
         username: newUserInfo.username,
-        nickname: newUserInfo.nickname
+        nickname: newUserInfo.nickname,
+        gender: newUserInfo.gender,
+        post: newUserInfo.post,
+        birthday: newUserInfo.birthday,
+        province: newUserInfo.province,
+        city: newUserInfo.city,
+        avatar: newUserInfo.avatar
       })
       res.redirect('/')
     })
@@ -211,7 +217,13 @@ router.post('/user/login',(req,res) => {
         res.cookie('userInfo',{
           _uid: userInfo._id,
           username: userInfo.username,
-          nickname: userInfo.nickname
+          nickname: userInfo.nickname,
+          gender: userInfo.gender,
+          post: userInfo.post,
+          birthday: userInfo.birthday,
+          province: userInfo.province,
+          city: userInfo.city,
+          avatar: userInfo.avatar
         })
         res.redirect('/')
         return true

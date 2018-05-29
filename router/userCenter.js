@@ -9,6 +9,8 @@ const User = require('../models/User')
 
 const cacheFolder = '../public/imgs/cacheFolder/temp'
 
+const avatar = '../public/imgs/avatar'
+
 // 清空缓存文件夹
 let emptyDir = function (fileUrl) {
 
@@ -43,25 +45,80 @@ router.get('/basic', (req, res) => {
   })
 })
 
+router.post('/basic',(req,res) => {
+  let _uid = req.userInfo._uid,
+    nickname = req.body.nickname,
+    gender = req.body.gender,
+    post = req.body.post,
+    birthday = req.body.birthday,
+    province = req.body.province,
+    city = req.body.city
+    User.update({_id:_uid},{$set:{
+      nickname: nickname,
+      gender: gender,
+      post: post,
+      birthday: birthday,
+      province: province,
+      city: city
+    }},(err) => {
+      if(err) {
+        res.json({code: 100,message: "更新失败"})
+      } else {
+        res.cookie('userInfo',{
+          _uid: _uid,
+          username: req.userInfo.username,
+          nickname: nickname,
+          gender: gender,
+          post: post,
+          birthday: birthday,
+          province: province,
+          city: city,
+          avatar: req.userInfo.avatar
+        })
+        res.json({code: 101,message: "更新成功"})
+      }
+    })
+
+})
+
+
+
+
 router.get('/changepwd', (req, res) => {
   res.render('userCenter/rebuildPwd', {
     userInfo: req.userInfo
   })
 })
 
+
+
 router.post('/changepwd', (req, res) => {
   let _uid = req.userInfo._uid
-  let old = req.body.oldpassword
-  let new = req.body.newpassword
-  let check = req.body.recheckpassword
+  let oldpassword = req.body.oldpassword
+  let newpassword = req.body.newpassword
+  let recheckpassword = req.body.recheckpassword
   User.findOne({ _id: _uid }).select('password').then((pwd) => {
     if(pwd === null) {
-
+      res.json({
+        code: 100,
+        message: '更新失败，未找到该用户！'
+      })
     }
-    if(old === pwd.password) {
-
+    if(oldpassword === pwd.password && newpassword === recheckpassword) {
+      pwd.set({ password: newpassword })
+      pwd.save(function (err) {
+        if (err) {
+          res.json({ code: 101,message: '更新失败，服务器错误！' })
+        } else {
+          res.json({ code: 102,message: '更新成功'})
+        }
+      })
+    } else {
+      res.json({
+        code: 103,
+        message: '更新失败，输入错误！'
+      })
     }
-    if(re)
   })
 })
 
@@ -77,13 +134,13 @@ router.get('/changeemail', (req, res) => {
 router.post('/save_avatar', function (req, res) {
   let form = new formidable.IncomingForm() //创建上传表单
   form.encoding = 'utf-8'//设置编辑
-  form.uploadDir = cacheFolder //设置上传目录
+  form.uploadDir = avatar //设置上传目录
   form.keepExtensions = true //保留后缀
   form.maxFieldsSize = 2 * 1024 * 1024 //文件大小
   form.type = true
   form.parse(req, function (err, fields) {
     // 获取图片的base64信息
-    let imgData = fields.imgData
+    let imgData = fields.avatar
     let base64Data = imgData.replace(/^data:image\/\w+;base64,/, '')
 
     // 获取图片的大小 判断是否合规
@@ -95,7 +152,7 @@ router.post('/save_avatar', function (req, res) {
     let dataBuffer = new Buffer(base64Data, 'base64')
 
     // 将buffer写入文件
-    let path = './public/avatar/' + Date.now() + '.jpg'
+    let path = './public/imgs/avatar/1527613402940.jpg'
     fs.writeFile(path, dataBuffer, function (err) {
       if (err) {
         res.json({
