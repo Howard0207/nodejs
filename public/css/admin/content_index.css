@@ -3,7 +3,7 @@ html,body{
   position: relative;
 }
 #wrapper{
-  min-height: calc(100% - 88px);
+  min-height: calc(100% - 64px);
 }
 #wrapper .container .table {
   width: 100%;

@@ -19,34 +19,41 @@
             <ul class="menu">
               <li><a href="/">首页</a></li>
               <li><a href="/blog/index">博客</a></li>
+              <% if(userInfo._uid) {%>
               <li class="userInfo">
-                <% if(userInfo._uid) {%>
-                  <a href="javascript:void(0)" class="avatar-wrapper"><img src="/public/imgs/avatar/default.jpg" class="avatar"></a>
-                  <div class="userInfo-wrapper">
-                      <div class="userCenter-wrapper nickname-wrapper">
-                        <span class="nickname" title="<%= userInfo.nickname %>"><%= userInfo.nickname %></span>
-                      </div>
-                      <div class="userCenter-wrapper">
-                        <div class="userCenter-options">
-                          <a href="/blog/<%= userInfo._uid%>">我的博客</a>
-                          <a href="/settings/basic">账号设置</a>
-                        </div>
-                        <div class="userCenter-options">
-                          <a href="/admin">管理中心</a>
-                          <a href="/api/user/logout">退出登录</a>
-                        </div>
-                      </div>
+                <a href="javascript:void(0)" class="avatar-wrapper"><img src="<%=userInfo.avatar%>" class="avatar"></a>
+                <div class="userInfo-wrapper">
+                  <div class="userCenter-wrapper nickname-wrapper">
+                    <span class="nickname" title="<%= userInfo.nickname %>"><%= userInfo.nickname %></span>
+                  </div>
+                  <div class="userCenter-wrapper">
+                    <div class="userCenter-options">
+                      <a href="/blog/<%= userInfo._uid%>">我的博客</a>
+                      <a href="/settings/basic">账号设置</a>
                     </div>
-                <%} else {%>
-                  <a href="javascript:void(0)" class="avatar-wrapper"><img src="/public/imgs/avatar/default.jpg"></a>
-                <% } %>
+                    <div class="userCenter-options">
+                      <a href="/admin">管理中心</a>
+                      <a href="/api/user/logout">退出登录</a>
+                    </div>
+                  </div>
+                </div>
               </li>
               <li>
-                <a href="#">写博客</a>
+                <a href="/admin/content/add">写博客</a>
               </li>
+              <%} else {%>
+              <li>
+                  <a href="/api/user/login">写博客</a>
+              </li>
+              <% } %>
               <li>
                 <a href="#">每日一诗</a>
               </li>
+              <% if(!userInfo._uid) {%>
+              <li class="sign-wrapper">
+                <a href="/api/user/login">登录</a><span>|</span><a href="/api/user/register">注册</a>
+              </li>  
+              <%}%>
             </ul>
           </div>
         </nav>
