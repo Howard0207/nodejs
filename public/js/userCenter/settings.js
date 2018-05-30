@@ -50,8 +50,8 @@
       var imgSrc = document.selection.createRange().text;
       var localImagId = document.getElementById("localImag");
       //必须设置初始大小
-      localImagId.style.width = "150px";
-      localImagId.style.height = "150px";
+      localImagId.style.width = "200px";
+      localImagId.style.height = "200px";
       //图片异常的捕捉，防止用户修改后缀来伪造图片
       try {
         localImagId.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
@@ -111,13 +111,13 @@
     var img = new Image();
     img.src = path || $('#avatar').attr('src')
     var canvas = document.createElement('canvas')
-    canvas.width = 80
-    canvas.height = 80
+    canvas.width = 150
+    canvas.height = 150
     var ctx = canvas.getContext('2d')
     var start = $('.avatar-cut').position().left, end = $('.avatar-cut').position().top
     img.onload = function () {
       var width = img.width, height = img.height
-      ctx.drawImage(img, start * width / 150, end * height / 150, 80 * width / 150, 80 * height / 150, 0, 0, canvas.width, canvas.height)
+      ctx.drawImage(img, start * width / 200, end * height / 200, 150 * width / 200, 150 * height / 200, 0, 0, canvas.width, canvas.height)
       var imgBase = canvas.toDataURL("image/jpg")
       $('#avatar-preview').attr('src', imgBase)
       let formdata = new FormData()

@@ -25,7 +25,7 @@
               <li><a href="/">首页</a></li>
               <li><a href="/blog/index">博客</a></li>
               <li class="userInfo">
-                <a href="javascript:void(0)" class="avatar-wrapper"><img src="/public/imgs/avatar/default.jpg" class="avatar"></a>
+                <a href="javascript:void(0)" class="avatar-wrapper"><img src="<%=userInfo.avatar%>" class="avatar"></a>
                 <div class="userInfo-wrapper">
                   <div class="userCenter-wrapper nickname-wrapper">
                     <span class="nickname" title="<%= userInfo.nickname %>"><%= userInfo.nickname %></span>
@@ -119,7 +119,7 @@
               <!-- password_edit 结束-->
             </div>
             <div class="avatar-wrapper">
-              <img src="/public/imgs/avatar/default.jpg" alt="" class="avatar" id="avatar"
+              <img src="<%=userInfo.avatar%>" alt="" class="avatar" id="avatar"
               <span class="avatar-edit"></span>
             </div>
           </div>
