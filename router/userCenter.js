@@ -53,7 +53,8 @@ router.post('/basic',(req,res) => {
     birthday = req.body.birthday,
     province = req.body.province,
     city = req.body.city
-    User.update({_id:_uid},{$set:{
+  User.update({_id:_uid},
+    {$set:{
       nickname: nickname,
       gender: gender,
       post: post,
@@ -62,7 +63,7 @@ router.post('/basic',(req,res) => {
       city: city
     }},(err) => {
       if(err) {
-        res.json({code: 100,message: "更新失败"})
+        res.json({code: 100,message: '更新失败'})
       } else {
         res.cookie('userInfo',{
           _uid: _uid,
@@ -75,10 +76,9 @@ router.post('/basic',(req,res) => {
           city: city,
           avatar: req.userInfo.avatar
         })
-        res.json({code: 101,message: "更新成功"})
+        res.json({code: 101,message: '更新成功'})
       }
     })
-
 })
 
 
@@ -133,6 +133,8 @@ router.get('/changeemail', (req, res) => {
 
 router.post('/save_avatar', function (req, res) {
   let form = new formidable.IncomingForm() //创建上传表单
+  let uid = req.userInfo._uid
+  let avatarPath = req.userInfo.avatar
   form.encoding = 'utf-8'//设置编辑
   form.uploadDir = avatar //设置上传目录
   form.keepExtensions = true //保留后缀
@@ -146,24 +148,45 @@ router.post('/save_avatar', function (req, res) {
     // 获取图片的大小 判断是否合规
     let len = base64Data.length
     let size = len - (len / 8) * 2
-    console.info(size)
-
+    if (size > 2*1024*1024) {
+      return res.json({
+        code: 402,
+        msg: '图片过大'
+      })
+    }
     // 将base64 写入buffer
     let dataBuffer = new Buffer(base64Data, 'base64')
 
     // 将buffer写入文件
-    let path = './public/imgs/avatar/1527613402940.jpg'
+    let path = './public/imgs/avatar/'+ uid +'.jpg'
     fs.writeFile(path, dataBuffer, function (err) {
       if (err) {
-        res.json({
+        return res.json({
           code: 400,
           msg: '图片上传失败'
+        })
+      }
+
+      if(avatarPath === '/public/imgs/avatar/default.jpg') {
+        let newAvatarPath = '/public/imgs/avatar/'+ uid +'.jpg'
+        return User.update({_id: uid},{$set:{
+          avatar: newAvatarPath
+        }},(err) => {
+          if(err) {
+            return res.json({
+              code: 401,
+              msg: '图片上传失败'
+            })
+          }
+          let userInfo = req.cookies.userInfo
+          userInfo.avatar = newAvatarPath
+          res.cookie('userInfo',userInfo)
+          return res.json({code: 200,msg: '上传成功'})
         })
       } else {
         res.json({
           code: 200,
-          msg: '上传成功',
-          urlLogo: path
+          msg: '上传成功'
         })
       }
     })
