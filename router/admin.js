@@ -461,4 +461,20 @@ router.get('/content/delete', (req, res) => {
     })
   })
 })
+
+
+
+router.post('/user/dataview', (req,res) => {
+  let id = req.userInfo._uid
+  let year = new Date().getFullYear()
+  let dateV = new Date(year,0,1)
+  Content.find({ user: id, addTime: { $gt: dateV}}).select('-content').populate(['category', 'user']).then((contents) => {
+    if(!contents) {
+      res.json({message: 'error'})
+      return Promise.reject()
+    }
+    console.log(contents)
+    res.json({message: contents})
+  })
+})
 module.exports = router
