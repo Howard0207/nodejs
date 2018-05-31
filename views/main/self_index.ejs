@@ -21,7 +21,7 @@
               <li><a href="/blog/index">博客</a></li>
               <% if(userInfo._uid) {%>
               <li class="userInfo">
-                <a href="javascript:void(0)" class="avatar-wrapper"><img src="<%=userInfo.avatar%>" class="avatar"></a>
+                <a href="javascript:void(0)" class="avatar-wrapper"><img src="<%=userInfo.avatar%>" class="avatar active"></a>
                 <div class="userInfo-wrapper">
                   <div class="userCenter-wrapper nickname-wrapper">
                     <span class="nickname" title="<%= userInfo.nickname %>"><%= userInfo.nickname %></span>

@@ -14,18 +14,16 @@
         <div class="headtop"></div>
         <div class="contenttop">
           <div class="logo f_l">
-            <span><%= userInfo.nickname %>的博客</span>
+            <img src="<%=userInfo.avatar%>" class="avatar"><span><%= userInfo.nickname %>的博客</span>
           </div>
           <div class="blank"></div>
   
           <nav>
             <div class="navigation">
               <ul class="menu">
-                <li><a href="/">博客首页</a></li>
-                <li><a href="/blog/<%= userInfo._uid%>">我的博客</a></li>
-                <li><a href="/admin">后台管理</a></li>
+                <li><a href="/admin">管理中心</a></li>
                 <li>
-                  <a href="javascript:void(0)">分类管理</a>
+                  <a href="javascript:void(0)" class="active">分类管理</a>
                   <ul class="category-list">
                     <li><a href="/admin/category">分类首页</a></li>
                     <li><a href="/admin/category/add">添加分类</a></li>
@@ -36,6 +34,14 @@
                   <ul class="content-list">
                     <li><a href="/admin/content">内容首页</a></li>
                     <li><a href="/admin/content/add">添加内容</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="/admin">个人中心</a>
+                  <ul class="content-list">
+                    <li><a href="/blog/<%= userInfo._uid%>">我的博客</a></li>
+                    <li><a href="/settings/basic">账号设置</a></li>
+                    <li><a href="/api/user/logout">退出登录</a></li>
                   </ul>
                 </li>
               </ul>
@@ -103,7 +109,7 @@
       <div class="footer">
         <div class="f_l">
           <p>All Rights Reserved 版权所有：
-            <a href="http://www.yangqq.com">杨青个人博客</a> 备案号：蜀ICP备00000000号</p>
+            <a href="javascript:void(0)">Blog World!</a> 备案号：粤ICP备00100100号</p>
         </div>
         <div class="f_r textr">
           <p>Design by DanceSmile</p>

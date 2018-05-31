@@ -31,7 +31,7 @@ a { text-decoration: none; color: #333; outline: none }
 header { width: 100%; background: url(../../imgs/base/yuanshan.jpg) right bottom no-repeat }
 .headtop { background: url(../../imgs/base/topbg.jpg) repeat-x; height: 28px; }
 .contenttop { width: 1026px; margin: auto; }
-.logo { padding: 50px 0 20px 20px; font-size: 26px; font-family: "微软雅黑", sans-serif; color: #333; font-weight: bold; }
+.logo { padding: 50px 0 0 20px; font-size: 26px; font-family: "微软雅黑", sans-serif; color: #333; font-weight: bold; }
 .logo>a{ display:block; font-size: 26px; cursor: pointer;}
 .logo>a>img{ display: inline-block; margin-right: 10px; width: 50px; height: 50px; border-radius: 50%; vertical-align: middle;  user-select: none;}
 
@@ -60,6 +60,11 @@ nav { margin: 0 0 15px 0 }
   border-radius: 50%;
   transition: all 0.5s ease 0.1s;
 }
+
+.menu li a.avatar-wrapper img.active{
+  box-shadow: 0 1px 1px 3px #f08080;
+}
+
 .menu li.userInfo:hover a.avatar-wrapper img.avatar{
   top: 10px;
   width: 80px;
@@ -101,6 +106,7 @@ nav { margin: 0 0 15px 0 }
   justify-content: space-around;
 }
 .menu li a { display: block; text-decoration: none; color: #fff; font-size: 15px; font-weight: bold }
+.menu li a.active{  color: rgb(240, 128, 128); }
 .menu ul { position: relative; background: url(../../imgs/base/footerbg.png); z-index: 300; }
 .menu li ul { display: none; width: 110px; position: absolute; TOP: 40px; left: 0; }
 .menu li ul li { font-size: 12px; height: 28px; line-height: 28px }

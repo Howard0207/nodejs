@@ -105,6 +105,7 @@ nav { margin: 0 0 15px 0 }
   font-weight: bolder;
 }
 .menu li a { display: block; text-decoration: none; color: #fff; font-size: 15px; font-weight: bold }
+.menu li a.active{  color: rgb(240, 128, 128); }
 .menu li a.avatar-wrapper img{
   position: relative;
   top: 0;
@@ -115,11 +116,19 @@ nav { margin: 0 0 15px 0 }
   border-radius: 50%;
   transition: all 0.5s ease 0.1s;
 }
+
+.menu li a.avatar-wrapper img.active{
+  box-shadow: 0 1px 1px 3px #f08080;
+}
+
 .menu li.userInfo:hover a.avatar-wrapper img.avatar{
   top: 10px;
   width: 80px;
   height: 80px;
 }
+
+
+
 .menu li .userInfo-wrapper{
   position: absolute;
   top: 46px;
@@ -227,7 +236,9 @@ h3.blogtitle { line-height: 30px; height: 30px; margin: 10px 0; }
 .gzwm li a:hover { opacity: 0.6; }
 /*图文列表*/
 .tuwen { width: 100%; clear: both; overflow: hidden; margin: 20px 0 }
-.tuwen li { overflow: hidden; clear: both; margin-bottom: 10px }
+.tuwen ul{ display: flex;  flex-wrap: wrap;  justify-content: space-between; }
+.tuwen li { overflow: hidden; clear: both; margin: 10px; padding: 0 20px; width: 130px;  box-sizing: border-box;  border-radius: 5px;  background: #fff;  text-align: left;  text-overflow: ellipsis;  white-space: nowrap;  font-size: 16px;}
+.tuwen li a{ display: block; cursor: pointer; }
 .tuwen li i{width: 70px; float: left; margin-right: 15px; overflow:hidden}
 .tuwen li img { width:100% ;-webkit-transition: all 0.5s;
     -moz-transition: all 0.5s;

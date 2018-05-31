@@ -4,6 +4,21 @@
   margin: 0 auto;
 }
 
+
+header .contenttop .logo{
+  display: flex;
+  align-items: center;
+}
+
+header .contenttop .logo .avatar{
+  display: block;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  margin-right: 20px;
+}
+
+
 #content {
   display: none;
 }

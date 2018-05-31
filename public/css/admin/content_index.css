@@ -5,6 +5,22 @@ html,body{
 #wrapper{
   min-height: calc(100% - 64px);
 }
+
+#wrapper header .contenttop .logo{
+  display: flex;
+  align-items: center;
+}
+
+#wrapper header .contenttop .logo .avatar{
+  display: block;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  margin-right: 20px;
+}
+
+
+
 #wrapper .container .table {
   width: 100%;
   max-width: 100%;

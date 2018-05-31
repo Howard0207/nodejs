@@ -25,7 +25,7 @@
               <li><a href="/">首页</a></li>
               <li><a href="/blog/index">博客</a></li>
               <li class="userInfo">
-                <a href="javascript:void(0)" class="avatar-wrapper"><img src="/public/imgs/avatar/default.jpg" class="avatar"></a>
+                <a href="javascript:void(0)" class="avatar-wrapper"><img src="<%=userInfo.avatar%>" class="avatar active"></a>
                 <div class="userInfo-wrapper">
                   <div class="userCenter-wrapper nickname-wrapper">
                     <span class="nickname" title="<%= userInfo.nickname %>"><%= userInfo.nickname %></span>
@@ -43,7 +43,7 @@
                 </div>
               </li>
               <li>
-                <a href="#">写博客</a>
+                <a href="/admin/content/add">写博客</a>
               </li>
               <li>
                 <a href="#">每日一诗</a>
@@ -61,11 +61,11 @@
           <div class="tabs clearfix">
             <a href="/settings/basic">基本信息</a>
             <a href="/settings/changepwd">修改密码</a>
-            <a href="/my/account/secureqa">密码保护</a>
+            <a href="#">密码保护</a>
             <a href="/settings/changeemail" class="active">修改邮箱</a>
-            <a href="/my/account/loginlog">登录日志</a>
-            <a href="/my/account/bind">第三方帐号绑定</a>
-            <a href="/my/account/privacy">个人主页隐私设置</a>
+            <a href="#">登录日志</a>
+            <a href="#">第三方帐号绑定</a>
+            <a href="#">个人主页隐私设置</a>
           </div>
           <div class="tab-content security-tab-content">
             <div class="tab-pane active">

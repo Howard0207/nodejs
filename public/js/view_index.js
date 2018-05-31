@@ -13,6 +13,7 @@ $(function () {
       this.pages = options.pages
       this.container = options.container
       this.limit = options.limit
+      this.containerClear()
       this.init()
       this.cb = cb || function() {}
     }
@@ -196,16 +197,23 @@ $(function () {
         let commentsNum = $('.comments-num')
         
         // 接收数据
-        let comments = responseData.data.comments
+        comments = responseData.data.comments.reverse()
         
         // 清空评论区
         $('#messageContent').val('')
         
         // 评论数更新
         commentsNum.text(comments.length)
-
+        
+        // 评论分页更新
+        let pages = Math.ceil(comments.length/limit)
+        pagenation = new Pagenation({
+          container: '.pagenation',
+          pages: pages,
+          limit: limit
+        },renderComment)
         // 评论内容更新
-        renderComment(comments.reverse())
+        renderComment(1)
       }
     })
   })
@@ -235,12 +243,12 @@ $(function () {
         `<div class='messageBox'>
           <div class='message-header>
             <a class='message-user'>
-              <span class='message-username'>${comments[val].username}</span>
+              <span class='message-username'>${temp[val].username}</span>
             </a>
-            <span class='message-addTime'>${comments[val].addFormateTime}</span>
+            <span class='message-addTime'>${temp[val].addFormateTime}</span>
           </div>
           <div class='message-content'>
-            <p class='message-detail'>${comments[val].content}</p>
+            <p class='message-detail'>${temp[val].content}</p>
           </div>
         </div>`
     }
