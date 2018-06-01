@@ -65,61 +65,13 @@
       </header>
       <div class="jztop"></div>
       <div class="container">
-        <div class="bloglist">
-          <main>
-            <section id="blog-wrapper">
-              <div class="blog">
-                <h1 class="blog-title">
-                  <%= content.title%>
-                </h1>
-                <p class="blog-detail">
-                  作者：
-                  <span>
-                    <%= content.user.nickname%>
-                  </span>
-                  时间：
-                  <span>
-                    <%= content.addFormateTime%>
-                  </span>
-                  阅读：
-                  <span>
-                    <%= content.views%>
-                  </span>
-                  评论：
-                  <span class="comments-num"><%= content.comments.length%></span>
-                </p>
-                <div class="blog-content">
-                  <%- content.content%>
-                </div>
-              </div>
-            </section>
-            <section id="comments-wrapper">
-              <div class="listBox message">
-                <input type="hidden" id="contentId" value="<%=content._id%>">
-                <% if(userInfo._uid) { %>
-                  <div class="textLeft comments-header">
-                    <span class="text">评论:</span>
-                    <span class="count">一共有<em id="messageCount" class="comments-num"><%= content.comments.length%></em>条评论</span>
-                  </div>
-                  <div class="textLeft clear">
-                    <textarea id="messageContent" maxlength="600"></textarea>
-                    <div class="submit-wrapper">
-                      <span class="limit-wrapper">还能输入<em class="limit">600</em>个字符</span>
-                      <button id="messageBtn" class="submit">提交</button>
-                    </div>
-                  </div>
-                <% } else { %>
-                  <p>你还没有登陆，请先登陆！</p>
-                <% } %>
-              </div>
-              <div class="messageList">
+        <div class="poem">
+          <div class="title">
+            <p><h2 class="poemname"></h2><span class="dynasty"></span>-<span class="poet"></span></p>
+          </div>
+          <div class="content">
 
-              </div>
-              <div class="comments-pagenation">
-                <ul class="pagenation"></ul>
-              </div>
-            </section>
-          </main>
+          </div>
         </div>
       </div>
       <!-- container代码 结束 -->
@@ -139,5 +91,25 @@
   </body>
   <script src="/public/js/jquery-3.3.1.js"></script>
   <script src="/public/js/view_index.js"></script>
+  <script>
+    $.ajax({
+      url: '/api/poem',
+      type: 'post',
+      dataType: 'json',
+      data: {},
+      success: function(res) {
+        console.log(res)
+        $('.poemname').text(res.message.poemname)
+        $('.dynasty').text(res.message.dynasty)
+        $('.poet').text(res.message.poet)
+        let content = res.message.poem.split('b')
+        for(let key of content) {
+          $('.content').append('<p>'+key+'</p')
+        }
+      },
+      error: function() {
 
+      }
+    })
+  </script>
 </html>

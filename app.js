@@ -41,7 +41,10 @@ app.set('view engine', 'ejs')
 app.set('view cache', false)
 
 // bodyparser设置
-app.use(bodyParser.urlencoded({ extended: true }))
+// handle request entity too large
+app.use(bodyParser.json({limit:'50mb'}))
+app.use(bodyParser.urlencoded({limit:'50mb', extended: true }))
+
 
 // cookie-parser设置
 app.use(cookieParser())

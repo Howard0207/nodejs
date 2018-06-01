@@ -473,8 +473,14 @@ router.post('/user/dataview', (req,res) => {
       res.json({message: 'error'})
       return Promise.reject()
     }
-    console.log(contents)
     res.json({message: contents})
   })
 })
+
+router.get('/poem',(req,res) => {
+  res.render('main/poem',{
+    userInfo: req.userInfo
+  })
+})
+
 module.exports = router

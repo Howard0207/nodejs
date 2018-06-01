@@ -1,8 +1,9 @@
 let express = require('express')
 let router = express.Router()
 let User = require('../models/User')
+let Poem = require('../models/Poem')
 let Content = require('../models/Content')
-let nodemailer = require('nodemailer');
+// let nodemailer = require('nodemailer')
 
 // 统一返回格式
 let responseData
@@ -43,9 +44,9 @@ router.post('/user/emailCheck',function(req,res) {
   let mailTo = req.body.email
 
   // 邮件验证
-  let reg = /^[A-Za-z0-9]+([-_.][A-Za-z0-9]+)*@([A-Za-z0-9]+[-.])+[A-Za-z0-9]{2,5}$/;
+  let reg = /^[A-Za-z0-9]+([-_.][A-Za-z0-9]+)*@([A-Za-z0-9]+[-.])+[A-Za-z0-9]{2,5}$/
   if (!mailTo.match(reg)) {
-    return res.json({code: 100, message: "邮箱地址不符合规范，请重新输入！"});
+    return res.json({code: 100, message: '邮箱地址不符合规范，请重新输入！'})
   }
 
   // 随机验证code
@@ -55,41 +56,41 @@ router.post('/user/emailCheck',function(req,res) {
 
   return res.json({code: 101 , message: 'ok', validateCode: validateCode })
   // 邮件发送
-  nodemailer.createTestAccount((err, account) => {
-    // create reusable transporter object using the default SMTP transport
-    let transporter = nodemailer.createTransport({
-        host: 'smtp.163.com',
-        port: 465,
-        secure: true, // true for 465, false for other ports
-        auth: {
-            user: 'wode163_youjian@163.com', // generated ethereal user
-            pass: 'wodeyoujian163' // generated ethereal password
-        }
-    });
+//   nodemailer.createTestAccount((err, account) => {
+//     // create reusable transporter object using the default SMTP transport
+//     let transporter = nodemailer.createTransport({
+//         host: 'smtp.163.com',
+//         port: 465,
+//         secure: true, // true for 465, false for other ports
+//         auth: {
+//             user: 'wode163_youjian@163.com', // generated ethereal user
+//             pass: 'wodeyoujian163' // generated ethereal password
+//         }
+//     });
 
-    // setup email data with unicode symbols
-    let mailOptions = {
-        from: '"Blog" <wode163_youjian@163.com>', // sender address
-        to: '"User " '+mailTo+'', // list of receivers
-        subject: 'Microsoft Outlook 测试消息', // Subject line
-        text: 'test info', // plain text body
-        html: '<h2>注册验证：</h2><div style="padding: 0 20px;display: flex;line-height: 30px;font-size: 20px;"><p style="margin: 0;">验证码：</p><span style="display: block;">'+validateCode+'</span></div> ' // html body
-    };
+//     // setup email data with unicode symbols
+//     let mailOptions = {
+//         from: '"Blog" <wode163_youjian@163.com>', // sender address
+//         to: '"User " '+mailTo+'', // list of receivers
+//         subject: 'Microsoft Outlook 测试消息', // Subject line
+//         text: 'test info', // plain text body
+//         html: '<h2>注册验证：</h2><div style="padding: 0 20px;display: flex;line-height: 30px;font-size: 20px;"><p style="margin: 0;">验证码：</p><span style="display: block;">'+validateCode+'</span></div> ' // html body
+//     };
 
-    // send mail with defined transport object
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            return console.log(error);
-            res.json({code: 102 , message: 'error'})
-        }
-        //console.log('Message sent: %s', info.messageId);
-        // Preview only available when sending through an Ethereal account
-        //console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-        res.json({code: 101 , message: 'ok'})
-        // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-        // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
-    });
-});
+//     // send mail with defined transport object
+//     transporter.sendMail(mailOptions, (error, info) => {
+//         if (error) {
+//             return console.log(error);
+//             res.json({code: 102 , message: 'error'})
+//         }
+//         //console.log('Message sent: %s', info.messageId);
+//         // Preview only available when sending through an Ethereal account
+//         //console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+//         res.json({code: 101 , message: 'ok'})
+//         // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+//         // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+//     });
+// });
 })
 
 // 进入注册页面
@@ -298,6 +299,19 @@ router.post('/comment/post', (req,res) => {
     }
     res.json(responseData)
   })
+})
+
+
+
+router.post('/poem',(req,res) => {
+  Poem.findOne({id: 1991}).then((content) => {
+    if(!content) {
+      res.json({code: 100, message: '查询失败'})
+      return Promise.reject()
+    } else {
+      res.json({code: 101, message: content})
+    }
+  }) 
 })
 
 module.exports = router
