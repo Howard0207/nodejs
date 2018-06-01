@@ -1,0 +1,63 @@
+
+html,body{ height: 100%;}
+#wrapper { min-height: calc(100% - 84px);}
+#wrapper .container .poem{
+  margin: 0 auto;
+  width: 80%; 
+  text-align: center;
+}
+
+#wrapper .container .poem .header{
+  margin: 50px 0 0;
+  padding: 4px 20px;
+  border-radius: 5px;
+  background: -webkit-linear-gradient(left, #c1c1c1, #e5e5e5);
+  background: -o-linear-gradient(right, #c1c1c1, #e5e5e5);
+  background: -moz-linear-gradient(right, #c1c1c1, #e5e5e5);
+  background: linear-gradient(to right, #c1c1c1 , #e5e5e5);
+  border-radius: 5px;
+  text-align: left;
+}
+
+#wrapper .container .poem .poem-body{
+  margin-top: 10px;
+  margin-bottom: 50px;
+  padding: 20px;
+  border-radius: 5px;
+  background: rgba(212, 212, 212, 0.5);
+}
+
+#wrapper .container .poem .poem-body .title p{
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+#wrapper .container .poem .poem-body .content{
+  font-size: 18px;
+  line-height: 30px;
+  text-align: center;
+}
+
+#wrapper .container .poem .analysis{
+  margin-top: 50px;
+}
+#wrapper .container .poem .analysis .title{
+  padding: 4px 20px;
+  background: -webkit-linear-gradient(left, #c1c1c1, #e5e5e5);
+  background: -o-linear-gradient(right, #c1c1c1, #e5e5e5);
+  background: -moz-linear-gradient(right, #c1c1c1, #e5e5e5);
+  background: linear-gradient(to right, #c1c1c1 , #e5e5e5);
+  border-radius: 5px;
+  text-align: left;
+}
+
+#wrapper .container .poem .analysis .details{
+  margin-top: 10px;
+  margin-bottom: 50px;
+  padding: 20px;
+  font-size: 18px;
+  text-indent: 36px;
+  text-align: left;
+  border-radius: 5px;
+  background: rgba(212, 212, 212, 0.5);
+}

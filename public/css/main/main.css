@@ -65,7 +65,7 @@ section	.pagination>li:last-child>a{
 
 
 
-
+html,body{ min-height: 100%;}
 /* 共用css */
 body { font: 14px "微软雅黑", Arial, Helvetica, sans-serif; background: url(../../imgs/base/bg.jpg) repeat; color: #555 }
 img { border: 0; display: block }
@@ -79,7 +79,7 @@ a { text-decoration: none; color: #333; outline: none }
 /*topnav*/
 .topnav { line-height: 50px; height: 50px; color: #000; text-align: center; background: rgba(255, 255, 255, 0.58); position: fixed; width: 100%; top: 0; z-index: 999; box-shadow: #333 0px 2px 2px }
 .topnav a { color: #000; font-weight: bold; margin: 0 5px }
-#wrapper { background: url(../../imgs/base/footside.jpg) bottom center no-repeat; overflow: hidden; }
+#wrapper { min-height: calc(100% - 64px); padding-bottom: 20px; background: url(../../imgs/base/footside.jpg) bottom center no-repeat; overflow: hidden; }
 header { width: 100%; background: url(../../imgs/base/yuanshan.jpg) right bottom no-repeat }
 .headtop { background: url(../../imgs/base/topbg.jpg) repeat-x; height: 28px; }
 .contenttop { width: 1026px; margin: auto; }
@@ -188,7 +188,7 @@ nav { margin: 0 0 15px 0 }
 .links li img { height: 51px }
 .links li img:hover { opacity: 0.5 }
 /*footer*/
-footer { background: url(../../imgs/base/footerbg.png) repeat-x; padding: 20px 0; color: #ccc; margin: 20px 0 0 0 }
+footer { background: url(../../imgs/base/footerbg.png) repeat-x; padding: 20px 0; color: #ccc;}
 .footer { width: 1000px; margin: auto; overflow: hidden }
 .footer p { line-height: 24px; }
 .footer a{ color:#ccc}

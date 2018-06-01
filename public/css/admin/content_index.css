@@ -1,9 +1,5 @@
 html,body{
   height: 100%;
-  position: relative;
-}
-#wrapper{
-  min-height: calc(100% - 64px);
 }
 
 #wrapper header .contenttop .logo{
@@ -111,6 +107,3 @@ html,body{
   border-bottom-right-radius: 4px;
 }
 
-footer{
-  margin: 0;
-}
