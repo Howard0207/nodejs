@@ -477,10 +477,6 @@ router.post('/user/dataview', (req,res) => {
   })
 })
 
-router.get('/poem',(req,res) => {
-  res.render('main/poem',{
-    userInfo: req.userInfo
-  })
-})
+
 
 module.exports = router
