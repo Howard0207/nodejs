@@ -175,6 +175,15 @@ $(function () {
     }
   }
 
+
+  /**
+   * highlight 初始化
+   */
+  hljs.configure({useBR: false});
+
+  $('pre').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
   /**
    * 提交评论-- view.ejs
    */
