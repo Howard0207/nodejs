@@ -82,6 +82,7 @@ app.use('/api', require('./router/api'))
 app.use('/', require('./router/main'))
 app.use('/blog',require('./router/blog'))
 app.use('/settings', require('./router/userCenter'))
+app.use('/poem',require('./router/poem'))
 app.use('/public/ueditor/ue', ueditor(__dirname + '/public', function (req, res) {
   //客户端上传文件设置
   var imgDir = '/img/ueditor/'

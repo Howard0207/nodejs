@@ -304,7 +304,8 @@ router.post('/comment/post', (req,res) => {
 
 
 router.post('/poem',(req,res) => {
-  Poem.findOne({id: 1673}).then((content) => {
+  var poemName = ['登高','蜀道难','琵琶行','锦瑟','虞美人','春望','茅屋为秋风所破歌','望岳','雁门太守行','泊秦淮'];
+  Poem.findOne({poemName: poemName[Math.floor(Math.random()*10)]}).then((content) => {
     if(!content) {
       res.json({code: 100, message: '查询失败'})
       return Promise.reject()
